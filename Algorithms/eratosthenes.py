@@ -3,7 +3,8 @@ import math
 def get_primes(n):
     m = n+1
     numbers = [True for i in range(m)]
-    #You only need to start crossing out multiples at p2, because any smaller multiple
+    # List of 2 to n; 
+    # You only need to start crossing out multiples at p2, because any smaller multiple
     # of p has a prime divisor less than p and has already been crossed out as a multiple
     # of that. This is also the reason why we can stop after we’ve reached sqrt(n)
 .
