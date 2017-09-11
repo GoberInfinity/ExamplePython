@@ -55,3 +55,19 @@ a_tuple = ("a", "b", "mpilgrim", "z", "example")
 
 #Sets
 # A set is an unordered “bag” of unique values.
+b_set = {1, 2, 3, 5, 6, 8, 9, 12, 15, 17, 18, 21}
+a_set_2 = set(a_list)  
+a_set = {1, 2}
+a_set.add(4)
+a_set.update([10, 20, 30])  
+#	The discard() method takes a single value as an argument and removes that value from the set
+a_set.discard(21)  
+#if the value doesn’t exist in the set, the remove() method raises a KeyError exception.
+a_set.remove(21)  
+a_set.discard(10)  
+a_set.difference(b_set) 
+
+#Dictionaries 
+a_dict = {'server': 'db.diveintopython3.org', 'database': 'mysql'}
+#Modifying A Dictionary
+a_dict['database'] = 'blog'
