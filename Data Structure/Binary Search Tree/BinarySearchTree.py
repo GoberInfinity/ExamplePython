@@ -199,9 +199,6 @@ class BinarySearchTree:
                                     currentNode.rightChild.leftChild,
                                     currentNode.rightChild.rightChild)
 
-
-
-
 mytree = BinarySearchTree()
 mytree[3]="red"
 mytree[4]="blue"
