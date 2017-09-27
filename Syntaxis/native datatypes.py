@@ -2,21 +2,21 @@
 
 import fractions
 
-def numerical_operations:
+def numerical_operations():
     """
     Common Numerical Operations
     """
     print(11 / 2)
     print(11 // 2)
 
-def fractions:
+def fraction():
     """
     Usage of Python fractions
     """
     x = fractions.Fraction(1, 3)
     print(x)
 
-def lists:
+def lists():
     """
     Common List Operations
     The list can expand dinamically as new items are added
@@ -64,7 +64,7 @@ def lists:
     # removes the last item in the list
     a_list.pop()
 
-def tuples:
+def tuples():
     """
     A tuple is an immutable list. A tuple can not be changed in any way once it
     is created.
@@ -73,11 +73,13 @@ def tuples:
     instead of a list.
     """
     a_tuple = ("a", "b", "mpilgrim", "z", "example")
+    print(a_tuple)
 
-def sets:
+def sets():
     """
     A set is an unordered “bag” of unique values.
     """
+    a_list = ['a', 'b', 'mpilgrim', 'z', 'example']
     b_set = {1, 2, 3, 5, 6, 8, 9, 12, 15, 17, 18, 21}
     a_set_2 = set(a_list)  
     a_set = {1, 2}
@@ -94,7 +96,7 @@ def sets:
     a_set.discard(10)  
     a_set.difference(b_set) 
 
-def dictionary:
+def dictionary():
     """
     It is best to think of a dictionary as an unordered set of key: value pairs
     with the requirement that the keys are unique (within one dictionary)
@@ -103,3 +105,4 @@ def dictionary:
     a_dict = {'server': 'db.diveintopython3.org', 'database': 'mysql'}
     #Modifying A Dictionary
     a_dict['database'] = 'blog'
+    
