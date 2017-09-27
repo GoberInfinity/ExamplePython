@@ -9,7 +9,7 @@ Algorithms and Data Structures implementations with Python.
 
 1. Binary Search.
 2. Eratosthenes.
-3. Fibonacci with dinamic programming.
+3. Fibonacci with dynamic programming.
 
 ## Implemented Data Structures
 
