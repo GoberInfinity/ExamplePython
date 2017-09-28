@@ -48,9 +48,34 @@ class Graph:
             node = stack.popleft()
             if node not in path:
                 path.append(node)
-                print(self.grap[node])
                 stack.extend(self.grap[node])
         return path
+    
+    def find_path(self, start, end, path):
+        path = path + [start]
+        if start == end:
+            return path
+        if not start in self.grap:
+            return None
+        for node in self.grap[start]:
+            if not node in path:
+                newpath  = self.find_path(node,end,path)
+                if newpath: return newpath
+        return None
+    
+    def find_all_path(self, start, end, path):
+        path = path + [start]
+        if start == end:
+            return [path]
+        if not start in self.grap:
+            return []
+        paths=[]
+        for node in self.grap[start]:
+            if not node in path:
+                newpaths  = self.find_all_path(node,end,path)
+                for newpath in newpaths:
+                    paths.append(newpath)
+        return paths
     
 graph = Graph()
 graphTree = Graph()
@@ -60,6 +85,8 @@ graphTree.addGraph({1:[2,3], 2:[4,5],4:[2],5:[2],3:[1]})
  
 print (graph.recursive_dfs('A',[])) 
 print (graph.iterative_dfs('A',[])) 
+print (graph.find_path('A','E',[])) 
+print (graph.find_all_path('A','E',[])) 
 print (graphTree.recursive_dfs(1,[]))
 print (graphTree.iterative_dfs(1,[]))
 print (graphTree.iterative_bfs(1,[]))
