@@ -17,5 +17,5 @@ class Solution:
         return res
 
 if __name__ == '__main__':
-    print (Solution().reverse(1534236469)) 
+    print (Solution().romanToInt("XV")) 
         
