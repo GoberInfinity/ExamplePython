@@ -11,7 +11,7 @@ class Solution:
             if char in dict.values():
                 stack.append(char)
             elif char in dict.keys():
-                if stack == [] or dict[char] != stack.pop():
+                if stack == [] or dict.get(char) != stack.pop():
                     return False
             else:
                 return False
