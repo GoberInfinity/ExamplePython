@@ -1,4 +1,10 @@
+# -*- coding: utf-8 -*-
 def binarySearch(a_numbers, e_lookup):
+    """
+    :type a_numbers: list
+    :type a_numbers: int
+    :rtype: Boolean
+    """
     found = False
     i_first = 0
     i_last = len(a_numbers)-1
