@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
-
-This is a temporary script file.
+Given the array of IDs, which contains many duplicate integers and one unique integer, find the unique integer.
+Note: All integers except one appear exactly 2 times.
 """
 
 class Solution:
