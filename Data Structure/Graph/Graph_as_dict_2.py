@@ -57,20 +57,16 @@ class Graph:
  
         # Mark the current node as visited.
         visited[v] = True
-        print(v)
  
         # Recur for all the vertices adjacent to this vertex
         for i in self.graph[v]:
-            print("Si paso")
             if visited[i] == False:
                 self.topologicalSortUtil(i,visited,stack)
  
-        print("paso despues al final ")
         
         # Push current vertex to stack which stores result
         stack.insert(0,v)
         print(stack)
-        print("---"*10)
     
     # The function to do Topological Sort. It uses recursive 
     # topologicalSortUtil()
@@ -82,7 +78,6 @@ class Graph:
         # Call the recursive helper function to store Topological
         # Sort starting from all vertices one by one
         for i in range(self.V):
-            print(f"visitando {i}")
             print(visited)
             if visited[i] == False:
                 self.topologicalSortUtil(i,visited,stack)
