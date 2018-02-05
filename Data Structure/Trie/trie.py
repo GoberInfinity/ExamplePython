@@ -32,5 +32,5 @@ test.insert('baz')
 test.insert('barz')
 test.insert('foo')
 print(test.search('foo'))
-
+print(test.root)
 
