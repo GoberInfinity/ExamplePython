@@ -24,3 +24,8 @@ class Solution:
             prev1 = current
         return current
         
+        """ Second approach
+        answer = [0] * (len(nums)+2)
+        for num in range(2,len(nums)+2): 
+            answer[num] = max(nums[num-2] + answer[num-2], answer[num-1])
+        return answer[len(nums)+1] """
