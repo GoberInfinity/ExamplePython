@@ -13,8 +13,7 @@ Algorithms and Data Structures implementations with Python.
 
 ## Implemented Data Structures
 
-1. AVL Tree.
-2. Binary Heap.
+1. Binary Heap.
 3. Binary Search Tree.
 4. Binary Tree.
 5. Deque.
