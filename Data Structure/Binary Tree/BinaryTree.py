@@ -1,73 +1,49 @@
 # -*- coding: utf-8 -*-
-"""
-Binary Tree
-http://interactivepython.org/runestone/static/pythonds/Trees/TreeTraversals.html 
-http://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
-"""
-class BinaryTree:
-    def __init__(self,rootObj):
-        self.key = rootObj
-        self.leftChild = None
-        self.rightChild = None
+
+class Node(object):
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
         
-    def insertLeft(self,newNode):
-        if self.leftChild == None:
-            self.leftChild = BinaryTree(newNode)
-        else:
-            t = BinaryTree(newNode)
-            t.leftChild = self.leftChild
-            self.leftChild = t
-    
-    def insertRight(self,newNode):
-        if self.rightChild == None:
-            self.rightChild = BinaryTree(newNode)
-        else:
-            t = BinaryTree(newNode)
-            t.rightChild = self.rightChild
-            self.rightChild = t
-    
-    def getRightChild(self):
-        return self.rightChild
+class BinaryTree(object):
+    def __init__(self, root):
+        self.root = Node(root)
 
-    def getLeftChild(self):
-        return self.leftChild
-    
-    def setRootVal(self,obj):
-        self.key = obj
-    
-    def getRootVal(self):
-        return self.key
+    def search(self, find_val):
+        return self.preorder_search(tree.root, find_val)
 
-#Tree Traversals 
-#Preorder (Root, Left, Right)  
-def preorder(tree):
-    if tree:
-        print(tree.getRootVal())
-        preorder(tree.getLeftChild())
-        preorder(tree.getRightChild())
-#Postorder (Left, Right, Root)
-def postorder(tree):
-    if tree != None:
-        postorder(tree.getLeftChild())
-        postorder(tree.getRightChild())
-        print(tree.getRootVal())
+    def print_tree(self):
+        return self.preorder_print(tree.root, "")[:-1]
 
-#Inorder (Left, Root, Right) 
-def inorder(tree):
-  if tree != None:
-      inorder(tree.getLeftChild())
-      print(tree.getRootVal())
-      inorder(tree.getRightChild())        
-   
-r = BinaryTree('a')
-print(r.getRootVal())
-print(r.getLeftChild())
-r.insertLeft('b')
-print(r.getLeftChild())
-print(r.getLeftChild().getRootVal())
-r.insertRight('c')
-print(r.getRightChild())
-print(r.getRightChild().getRootVal())
-r.getRightChild().setRootVal('hello')
-print(r.getRightChild().getRootVal())
-preorder(r)
+    def preorder_search(self, start, find_val):
+        if start:
+            if start.value == find_val:
+                return True
+            else:
+                return self.preorder_search(start.left, find_val) or self.preorder_search(start.right, find_val)
+        return False
+
+    def preorder_print(self, start, traversal):
+        if start:
+            traversal += (str(start.value) + "-")
+            traversal = self.preorder_print(start.left, traversal)
+            traversal = self.preorder_print(start.right, traversal)
+        return traversal
+
+# Set up tree
+tree = BinaryTree(1)
+tree.root.left = Node(2)
+tree.root.right = Node(3)
+tree.root.left.left = Node(4)
+tree.root.left.right = Node(5)
+
+# Test search
+# Should be True
+print(tree.search(4))
+# Should be False
+print(tree.search(6))
+
+# Test print_tree
+# Should be 1-2-4-5-3
+print(tree.print_tree())

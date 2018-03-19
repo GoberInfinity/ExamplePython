@@ -1,110 +1,120 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Sep 12 02:08:09 2017
-
-@author: Gober
 """
 
-class ListNode:
-    """
-    A node in a singly-linked list.
-    """
-    def __init__(self, data=None, next=None):
-        self.data = data
-        self.next = next
+class Element:    
+    def __init__(self,value):
+        self.next = None 
+        self.value = value
 
-    def __repr__(self):
-        return repr(self.data)
-
-
-class SinglyLinkedList:
-    def __init__(self):
-        """
-        Create a new singly-linked list.
-        Takes O(1) time.
-        """
-        self.head = None
-
-    def __repr__(self):
-        """
-        Return a string representation of the list.
-        Takes O(n) time.
-        """
-        nodes = []
-        curr = self.head
-        while curr:
-            nodes.append(repr(curr))
-            curr = curr.next
-        return '[' + ', '.join(nodes) + ']'
-
-    def prepend(self, data):
-        """
-        Insert a new element at the beginning of the list.
-        Takes O(1) time.
-        """
-        self.head = ListNode(data=data, next=self.head)
-
-    def append(self, data):
-        """
-        Insert a new element at the end of the list.
-        Takes O(n) time.
-        """
-        if not self.head:
-            self.head = ListNode(data=data)
-            return
-        curr = self.head
-        while curr.next:
-            curr = curr.next
-        curr.next = ListNode(data=data)
-
-    def find(self, key):
-        """
-        Search for the first element with `data` matching
-        `key`. Return the element or `None` if not found.
-        Takes O(n) time.
-        """
-        curr = self.head
-        while curr and curr.data != key:
-            curr = curr.next
-        return curr  # Will be None if not found
-
-    def remove(self, key):
-        """
-        Remove the first occurrence of `key` in the list.
-        Takes O(n) time.
-        """
-        # Find the element and keep a
-        # reference to the element preceding it
-        curr = self.head
-        prev = None
-        while curr and curr.data != key:
-            prev = curr
-            curr = curr.next
-        # Unlink it from the list
-        if prev is None:
-            self.head = curr.next
-        elif curr:
-            prev.next = curr.next
-            curr.next = None
-
-    def reverse(self):
-        """
-        Reverse the list in-place.
-        Takes O(n) time.
-        """
-        curr = self.head
-        prev_node = None
-        next_node = None
-        while curr:
-            next_node = curr.next
-            curr.next = prev_node
-            prev_node = curr
-            curr = next_node
-        self.head = prev_node
+class LinkedList:
+    def __init__(self,head=None):
+        self.head = head
+    
+    def append(self,new_element):
+        current = self.head
+        if current:
+            while current.next:
+                current = current.next
+            current.next = new_element
+        else:   
+            self.head = new_element
+            
+    def get_position(self, position):
+        """Get an element from a particular position.
+        Assume the first position is "1".
+        Return "None" if position is not in the list."""
+        counter = 1
+        current = self.head
+        if position < 1:
+            return None
         
-lst = SinglyLinkedList()
-lst.prepend(23)
-lst.prepend('a')
-lst.prepend(42)
-lst.append('the')
-lst.find('X')
+        if current:
+            while current:
+                if counter == position:
+                    return current
+                else:
+                    counter += 1
+                    current = current.next 
+        else:
+            return None 
+        return None 
+    
+    def insert(self, new_element, position):
+        """Insert a new node at the given position.
+        Assume the first position is "1".
+        Inserting at position 3 means between
+        the 2nd and 3rd elements."""
+        counter = 1
+        current = self.head
+    
+        if position == 1 :
+            new_element.next = current
+            self.head = new_element
+        else:
+            counter += 1
+            while current:
+                if counter == position:        
+                    tail = current.next
+                    current.next = new_element
+                    new_element.next = tail
+                    break
+                else:
+                    current = current.next
+                    counter += 1  
+        pass
+    
+    def delete(self, value):
+        """Delete the first node with a given value."""
+        current = self.head
+        
+        if value == current.value:
+            self.head = current.next
+        else:
+            while current:
+                if current.next == None:
+                    break
+                elif current.next.value == value:
+                    current.next = current.next.next
+                    break
+                else:
+                    current = current.next
+        pass
+    
+    def print_linked(self):
+        current = self.head
+        while current:
+            print(current.value, end=" ")
+            current = current.next
+        
+        
+e1 = Element(1)
+e2 = Element(2)
+e3 = Element(3)
+e4 = Element(4)
+
+# Start setting up a LinkedList
+ll = LinkedList(e1)
+ll.append(e2)
+ll.append(e3)
+
+# Test get_position
+# Should print 3
+print(ll.head.next.next.value)
+# Should also print 3
+print(ll.get_position(3).value)
+
+# Test insert
+ll.insert(e4,3)
+# Should print 4 now
+print(ll.get_position(3).value)
+
+# Test delete
+ll.delete(1)
+# Should print 2 now
+print(ll.get_position(1).value)
+# Should print 4 now
+print(ll.get_position(2).value)
+# Should print 3 now
+print(ll.get_position(3).value)
+print("-"*10)
