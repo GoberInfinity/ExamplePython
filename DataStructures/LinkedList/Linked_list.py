@@ -87,7 +87,7 @@ class LinkedList:
             print(current.value, end=" ")
             current = current.next
         
-        
+"""    
 e1 = Element(1)
 e2 = Element(2)
 e3 = Element(3)
@@ -118,3 +118,4 @@ print(ll.get_position(2).value)
 # Should print 3 now
 print(ll.get_position(3).value)
 print("-"*10)
+"""
