@@ -23,4 +23,4 @@ class Solution(object):
         return inverted_number if inverted_number <= 0x7fffffff else 0
         
 if __name__ == '__main__':
-    print (Solution().reverse(1534236469)) 
+    print (Solution().reverse(1534236469))  
