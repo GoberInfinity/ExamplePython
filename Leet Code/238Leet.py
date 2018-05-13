@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Apr 18 09:15:48 2018
-
-@author: Gober
 """
 
 class Solution:
