@@ -8,7 +8,7 @@ and it will automatically contact the police if two adjacent houses were broken
 
 Given a list of non-negative integers representing the amount of money of each 
 , determine the maximum amount of money you can rob tonight without alerting 
-the police.
+the police. 
 """
 
 class Solution:
