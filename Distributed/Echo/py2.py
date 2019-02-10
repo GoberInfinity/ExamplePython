@@ -113,7 +113,12 @@ class Aplication:
         self.socket = None 
         self.createConexion()
         
-        self.originalClock = None
+        self.clock1 = None
+        self.clock2 = None
+        self.clock3 = None
+        self.clock4 = None
+        
+        self.counter = 0
 
         # Set up the thread to do asynchronous I/O
         # More threads can also be created and used, if necessary
@@ -167,9 +172,8 @@ class Aplication:
         while self.running:
             time.sleep(1)
             btn_id, is_editable_btn = self.gui.getEditable(n_thread)
-            
-            if n_thread == 1:
-                self.originalClock = current_time
+                       
+            setattr(self, 'clock' + str(n_thread), current_time)
             
             if is_editable_btn and btn_id == n_thread:
                 current_time = self.gui.getTextFromEditable(btn_id)
@@ -180,16 +184,26 @@ class Aplication:
             
     def workerThreadNewtork(self):
         while self.running:
-                connection, address = self.sockobj.accept()   
-                print('Server connected by', address)
-                while True:
-                    data = connection.recv(1024)        
-                    if not data: break 
-                    connection.send(br'Echo=>' + self.originalClock.encode())
-                connection.close()
-                    
+            connection, address = self.sockobj.accept()   
+            print('Server connected by', address)
+            hn = threading.Thread(target=self.handleClient, args=[connection])
+            hn.start()
+                
+    def handleClient(self, connection): 
+        self.counter += 1
+        if self.counter > 5: self.counter = 1
+        local_id = self.counter
+        while True:
+            data = connection.recv(1024)
+            if not data: break
+            connection.send(br'Echo=>' + self.getClock(local_id).encode())
+        connection.close()
+
     def endApplication(self):
         self.running = 0
+        
+    def getClock(self, number):
+        return getattr(self, 'clock' + str(number))
         
     def createConexion(self):
         self.sockobj = socket(AF_INET, SOCK_STREAM)
