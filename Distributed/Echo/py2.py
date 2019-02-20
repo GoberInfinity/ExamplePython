@@ -20,79 +20,92 @@ class GuiPart:
         self.isEditable_2 = False
         self.isEditable_3 = False
         self.isEditable_4 = False
+        
+        self.isSet_1 = False
+        self.isSet_2 = False
+        self.isSet_3 = False
+        self.isSet_4 = False
                
         # Set up the GUI
-        self.fs_txt_clock = tkinter.Label(master, text='', width=20)
-        self.sd_txt_clock = tkinter.Label(master, text='', width=20)
-        self.td_txt_clock = tkinter.Label(master, text='', width=20)
-        self.ft_txt_clock = tkinter.Label(master, text='', width=20)
+        self.txt_clock_1 = tkinter.Label(master, text='', width=20)
+        self.txt_clock_2 = tkinter.Label(master, text='', width=20)
+        self.txt_clock_3 = tkinter.Label(master, text='', width=20)
+        self.txt_clock_4 = tkinter.Label(master, text='', width=20)
         
-        self.fs_input_clock = tkinter.Entry(master, text='', width=40)
-        self.sd_input_clock = tkinter.Entry(master, text='', width=40)
-        self.td_input_clock = tkinter.Entry(master, text='', width=40)
-        self.ft_input_clock = tkinter.Entry(master, text='', width=40)
+        self.input_clock_1 = tkinter.Entry(master, text='', width=40)
+        self.input_clock_2 = tkinter.Entry(master, text='', width=40)
+        self.input_clock_3 = tkinter.Entry(master, text='', width=40)
+        self.input_clock_4 = tkinter.Entry(master, text='', width=40)
         
-        self.fs_edit_btn = tkinter.Button(master, text='Editar', command=lambda: self.OnButtonClick(1), width=10)
-        self.sd_edit_btn = tkinter.Button(master, text='Editar', command=lambda: self.OnButtonClick(2), width=10)
-        self.td_edit_btn = tkinter.Button(master, text='Editar', command=lambda: self.OnButtonClick(3), width=10)
-        self.ft_edit_btn = tkinter.Button(master, text='Editar', command=lambda: self.OnButtonClick(4), width=10)
+        self.edit_1 = tkinter.Button(master, text='Editar', command=lambda: self.OnEdit(1), width=10)
+        self.edit_2 = tkinter.Button(master, text='Editar', command=lambda: self.OnEdit(2), width=10)
+        self.edit_3 = tkinter.Button(master, text='Editar', command=lambda: self.OnEdit(3), width=10)
+        self.edit_4 = tkinter.Button(master, text='Editar', command=lambda: self.OnEdit(4), width=10)
+        
+        self.set_1 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(1), width=10)
+        self.set_2 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(2), width=10)
+        self.set_3 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(3), width=10)
+        self.set_4 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(4), width=10)
         
         self.end = tkinter.Button(master, text='Done', command=endCommand, width=20)
         
-        self.fs_txt_clock.grid(row=0, column=0)
-        self.sd_txt_clock.grid(row=1, column=0)
-        self.td_txt_clock.grid(row=2, column=0)
-        self.ft_txt_clock.grid(row=3, column=0)
+        self.txt_clock_1.grid(row=0, column=0)
+        self.txt_clock_2.grid(row=1, column=0)
+        self.txt_clock_3.grid(row=2, column=0)
+        self.txt_clock_4.grid(row=3, column=0)
         
-        self.fs_input_clock.grid(row=0, column=1)
-        self.sd_input_clock.grid(row=1, column=1)
-        self.td_input_clock.grid(row=2, column=1)
-        self.ft_input_clock.grid(row=3, column=1)
+        self.input_clock_1.grid(row=0, column=1)
+        self.input_clock_2.grid(row=1, column=1)
+        self.input_clock_3.grid(row=2, column=1)
+        self.input_clock_4.grid(row=3, column=1)
         
-        self.fs_edit_btn.grid(row=0, column=2)
-        self.sd_edit_btn.grid(row=1, column=2)
-        self.td_edit_btn.grid(row=2, column=2)
-        self.ft_edit_btn.grid(row=3, column=2)
+        self.edit_1.grid(row=0, column=2)
+        self.edit_2.grid(row=1, column=2)
+        self.edit_3.grid(row=2, column=2)
+        self.edit_4.grid(row=3, column=2)
+        
+        self.set_1.grid(row=0, column=3)
+        self.set_2.grid(row=1, column=3)
+        self.set_3.grid(row=2, column=3)
+        self.set_4.grid(row=3, column=3)
         
         self.end.grid(row=4, column=0)
         
-    def OnButtonClick(self, button_id):
-        if button_id == 1:
-            self.isEditable_1 = not self.isEditable_1
-        elif button_id == 2:
-            self.isEditable_2 = not self.isEditable_2
-        elif button_id == 3:
-            self.isEditable_3 = not self.isEditable_3
-        else:
-            self.isEditable_4 = not self.isEditable_4
+    def OnEdit(self, button_id):
+        setattr(self, 'isEditable_' + str(button_id), True)
+        setattr(self, 'isSet_' + str(button_id), False)
             
+    def OnSet(self, button_id):
+        setattr(self, 'isEditable_' + str(button_id), False)
+        setattr(self, 'isSet_' + str(button_id), True)
+           
     def getEditable(self, number):
         return number, getattr(self, 'isEditable_' + str(number))
     
-    def getTextFromEditable(self, number):
-        if number == 1:
-            return self.fs_input_clock.get()
-        elif number == 2:
-            return self.sd_input_clock.get()
-        elif number == 3:
-            return self.td_input_clock.get()
-        else:
-            return self.ft_input_clock.get()
-        
+    def getSeteable(self, number):
+        return getattr(self, 'isSet_' + str(number))
 
+    def getTextFromEditable(self, number):
+         return getattr(self, 'input_clock_' + str(number)).get()
+    
+    def turnOffSet(self, number):
+        setattr(self, 'isSet_' + str(number), False)
+        att = getattr(self, "input_clock_" + str(number))
+        att.delete(0, 'end')
+        
     def processIncoming(self):
         """Handle all messages currently in the queue, if any."""
         while self.queue.qsize():
             try:
                 msg = self.queue.get(0).split("|")
                 if msg[0] == "1":
-                    self.fs_txt_clock["text"] = msg
+                    self.txt_clock_1["text"] = msg
                 elif msg[0] == "2":
-                    self.sd_txt_clock["text"] = msg
+                    self.txt_clock_2["text"] = msg
                 elif msg[0] == "3":
-                    self.td_txt_clock["text"] = msg
+                    self.txt_clock_3["text"] = msg
                 else:
-                    self.ft_txt_clock["text"] = msg
+                    self.txt_clock_4["text"] = msg
             except queue.Empty:
                 pass
 
@@ -171,6 +184,19 @@ class Aplication:
         
         while self.running:
             time.sleep(1)
+            btn_id, is_editeable_btn = self.gui.getEditable(n_thread)
+            setattr(self, 'clock' + str(n_thread), current_time)
+            if is_editeable_btn and btn_id == n_thread:
+               pass              
+            else:
+                if self.gui.getSeteable(btn_id):
+                    current_time = self.gui.getTextFromEditable(btn_id)
+                    self.gui.turnOffSet(btn_id)
+                    print(f"This is thread {n_thread} and is editable")
+                else:
+                    current_time = tools.generateNextTime(current_time)
+            self.queue.put(str(n_thread) + "|" + current_time)
+            """
             btn_id, is_editable_btn = self.gui.getEditable(n_thread)
                        
             setattr(self, 'clock' + str(n_thread), current_time)
@@ -181,6 +207,7 @@ class Aplication:
             else:
                 current_time = tools.generateNextTime(current_time)
             self.queue.put(str(n_thread) + "|" + current_time)
+            """
             
     def workerThreadNewtork(self):
         while self.running:
