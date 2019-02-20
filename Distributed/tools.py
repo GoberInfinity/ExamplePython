@@ -11,12 +11,12 @@ def checkHours(number):
     return False, number
     
 def checkMinutes(number):
-    if number > 60:
+    if number >= 60:
         return True, 0
     return False, number
 
 def checkSeconds(number):
-    if number > 60:
+    if number >= 60:
         return True, 0
     return False, number
 
