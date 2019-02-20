@@ -6,7 +6,7 @@ def getCurrentTime():
     return datetime.now().strftime('%H:%M:%S')
 
 def checkHours(number):
-    if number > 12:
+    if number >= 24:
         return True, 0
     return False, number
     
