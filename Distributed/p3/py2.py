@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import sys
 import tkinter
 import tools
 import time
@@ -7,14 +7,12 @@ import threading
 import random
 import queue
 import dbtools as db
+from PIL import ImageTk, Image
 #This is the server part
 from socket import *
 myHost = '' 
 myPort = 50007
 
-books = {
-            'name': 'Pepe'
-        }
             
 class GuiPart:
     def __init__(self, master, queue, endCommand):
@@ -53,6 +51,9 @@ class GuiPart:
         self.set_3 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(3), width=10)
         self.set_4 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(4), width=10)
         
+        img_none = ImageTk.PhotoImage(Image.open("1.jpg"))   
+        self.book_image = tkinter.PhotoImage(file=Image.open("./1.jpg"))
+        
         self.end = tkinter.Button(master, text='Done', command=endCommand, width=10)
         self.reset = tkinter.Button(master, text='Reiniciar', state="disabled", command=lambda: self.resetButton(), width=10)
         
@@ -76,8 +77,10 @@ class GuiPart:
         self.set_3.grid(row=2, column=3)
         self.set_4.grid(row=3, column=3)
         
-        self.end.grid(row=4, column=2)
-        self.reset.grid(row=4,column=3)
+        self.book_image.grid(row=4, column=1)
+        
+        self.end.grid(row=5, column=2)
+        self.reset.grid(row=5,column=3)
          
     def resetButton(self):
         self.isReset = True
