@@ -2,7 +2,7 @@
 import sqlite3
 from datetime import datetime
 
-database_file = 'database.db'
+database_file = 'dump_database.db'
 
 class Database:
 
@@ -12,7 +12,8 @@ class Database:
         self.connection = sqlite3.connect(database_file, check_same_thread=False)
         #self.__createTables()
         #self.__insertBooks()
-        #self.selectAllBooks()
+        self.getAllSessions()
+        self.getAllDetaill()
 
     def __insertBooks(self):
         cursor = self.createCursor()
@@ -30,31 +31,14 @@ class Database:
         response = []
         for row in cursor.execute('SELECT * FROM book'):
             response.append(','.join(map(str, row)))
+        print(response)
         return response
 
     def __createTables(self):
         cursor = self.createCursor()
-        cursor.execute('''CREATE TABLE book
-                           (book_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            name text,
-                            author text,
-                            editorial text,
-                            price real,
-                            image text)''')
-        cursor.execute('''CREATE TABLE user
-                           (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            ip text UNIQUE)''')
-        cursor.execute('''CREATE TABLE session
-                           (session_id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            user_id integer,
-                            created DATETIME,
-                            exited DATETIME)
-                            ''')
-        cursor.execute('''CREATE TABLE detail
-                           (detail_id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                            session integer,
-                            book_id integer)
-                            ''')
+        f = open('dump.sql','r')
+        sql = f.read()
+        cursor.execute(sql)
 
     def insertIntoUser(self, ip):
         cursor = self.createCursor()
@@ -90,11 +74,6 @@ class Database:
         for row in cursor.execute('SELECT * FROM detail'):
             print(row)
 
-    def exportDatabase(self):
-        with open('dump.sql', 'w') as f:
-            for line in self.connection.iterdump():
-                f.write('%s\n' % line)
-
     def getSession(self, ip):
         cursor = self.createCursor()
         user_id = self.getIdUser(ip)
@@ -113,3 +92,5 @@ class Database:
 
     def closeConnection(self):
         self.connection.close()
+
+a = Database()
