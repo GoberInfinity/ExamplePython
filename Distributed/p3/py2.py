@@ -245,6 +245,9 @@ class Aplication:
             if request_book:
                 if self.counter_books == len(self.books)-1:
                     self.gui.reset['state'] = "normal"
+                    new_image =  self.gui.createImage("na.jpg")
+                    self.gui.book_image.config(image = new_image)
+                    self.gui.book_image.image =new_image
                     connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode())
                 else:
                     connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode() + br" " + self.books[self.counter_books].encode())
@@ -271,7 +274,7 @@ class Aplication:
     def createConexion(self):
         self.sockobj = socket(AF_INET, SOCK_STREAM)
         self.sockobj.bind((myHost, myPort))
-        self.sockobj.listen(5)
+        self.sockobj.listen(6)
 
 
 rand = random.Random(  )
