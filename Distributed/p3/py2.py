@@ -51,8 +51,9 @@ class GuiPart:
         self.set_3 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(3), width=10)
         self.set_4 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(4), width=10)
         
-        img_none = ImageTk.PhotoImage(Image.open("1.jpg"))   
-        self.book_image = tkinter.PhotoImage(file=Image.open("./1.jpg"))
+        img_none = self.createImage("na.jpg")
+        self.book_image = tkinter.Label(master, image=img_none, text="Grafica1")
+        self.book_image.image = img_none
         
         self.end = tkinter.Button(master, text='Done', command=endCommand, width=10)
         self.reset = tkinter.Button(master, text='Reiniciar', state="disabled", command=lambda: self.resetButton(), width=10)
@@ -123,6 +124,9 @@ class GuiPart:
                     self.txt_clock_4["text"] = msg
             except queue.Empty:
                 pass
+    
+    def createImage(self, path):
+        return ImageTk.PhotoImage(Image.open(path))
 
 class Aplication:
     def __init__(self, master):
@@ -244,6 +248,9 @@ class Aplication:
                     connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode())
                 else:
                     connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode() + br" " + self.books[self.counter_books].encode())
+                    new_image =  self.gui.createImage(self.books[self.counter_books].split(",")[-1])
+                    self.gui.book_image.config(image = new_image)
+                    self.gui.book_image.image =new_image
                     self.counter_books += 1
             else:
                 connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode())
