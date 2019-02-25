@@ -7,7 +7,7 @@ import queue
 
 #This is the server part
 from socket import *
-serverHost = 'localhost'
+serverHost = '192.168.1.67'
 serverPort = 50007
 
 
