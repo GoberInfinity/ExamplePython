@@ -226,6 +226,7 @@ class Aplication:
         while self.running:
             connection, address = self.sockobj.accept()   
             print('Server connected by', address)
+            self.databaseConnection.insertIntoUser(str(address[0]))
             hn = threading.Thread(target=self.handleClient, args=[connection])
             hn.start()
                 
@@ -236,6 +237,8 @@ class Aplication:
         while True:
             data = connection.recv(1024)
             request_book = int(data.decode())
+            
+            print(connection.getpeername())
             
             if self.gui.isReset:
                 self.shuffleBooks()
