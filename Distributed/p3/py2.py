@@ -6,7 +6,16 @@ import time
 import threading
 import random
 import queue
+import dbtools as db
+#This is the server part
+from socket import *
+myHost = '' 
+myPort = 50007
 
+books = {
+            'name': 'Pepe'
+        }
+            
 class GuiPart:
     def __init__(self, master, queue, endCommand):
         self.queue = queue
@@ -20,6 +29,8 @@ class GuiPart:
         self.isSet_2 = False
         self.isSet_3 = False
         self.isSet_4 = False
+        
+        self.isReset = False
                
         # Set up the GUI
         self.txt_clock_1 = tkinter.Label(master, text='', width=20)
@@ -37,12 +48,13 @@ class GuiPart:
         self.edit_3 = tkinter.Button(master, text='Editar', command=lambda: self.OnEdit(3), width=10)
         self.edit_4 = tkinter.Button(master, text='Editar', command=lambda: self.OnEdit(4), width=10)
         
-        self.set_1 = tkinter.Button(master, text='Settear', command=lambda: self.OnSet(1), width=10)
-        self.set_2 = tkinter.Button(master, text='Settear', command=lambda: self.OnSet(2), width=10)
-        self.set_3 = tkinter.Button(master, text='Settear', command=lambda: self.OnSet(3), width=10)
-        self.set_4 = tkinter.Button(master, text='Settear', command=lambda: self.OnSet(4), width=10)
+        self.set_1 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(1), width=10)
+        self.set_2 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(2), width=10)
+        self.set_3 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(3), width=10)
+        self.set_4 = tkinter.Button(master, text='Enviar', command=lambda: self.OnSet(4), width=10)
         
-        self.end = tkinter.Button(master, text='Done', command=endCommand, width=20)
+        self.end = tkinter.Button(master, text='Done', command=endCommand, width=10)
+        self.reset = tkinter.Button(master, text='Reiniciar', state="disabled", command=lambda: self.resetButton(), width=10)
         
         self.txt_clock_1.grid(row=0, column=0)
         self.txt_clock_2.grid(row=1, column=0)
@@ -64,7 +76,12 @@ class GuiPart:
         self.set_3.grid(row=2, column=3)
         self.set_4.grid(row=3, column=3)
         
-        self.end.grid(row=4, column=0)
+        self.end.grid(row=4, column=2)
+        self.reset.grid(row=4,column=3)
+         
+    def resetButton(self):
+        self.isReset = True
+        self.reset["state"] = "disabled"
         
     def OnEdit(self, button_id):
         setattr(self, 'isEditable_' + str(button_id), True)
@@ -116,6 +133,23 @@ class Aplication:
 
         # Set up the GUI part
         self.gui = GuiPart(master, self.queue, self.endApplication)
+        
+        #Database
+        self.databaseConnection = db.Database()
+        self.books = self.databaseConnection.selectAllBooks()
+        self.shuffleBooks()
+        self.counter_books = 0
+        
+        #Set up the network part
+        self.socket = None 
+        self.createConexion()
+      
+        self.clock1 = None
+        self.clock2 = None
+        self.clock3 = None
+        self.clock4 = None
+        
+        self.counter = 0
 
         # Set up the thread to do asynchronous I/O
         # More threads can also be created and used, if necessary
@@ -132,6 +166,9 @@ class Aplication:
         
         self.thread4 = threading.Thread(target=self.workerThread, args=[4])
         self.thread4.start()
+        
+        self.threadN = threading.Thread(target=self.workerThreadNewtork)
+        self.threadN.start()
 
         # Start the periodic call in the GUI to check if the queue contains
         # anything
@@ -146,6 +183,8 @@ class Aplication:
             # This is the brutal stop of the system. You may want to do
             # some cleanup before actually shutting it down.
             import sys
+            global root
+            root.destroy()
             sys.exit(1)
         self.master.after(100, self.periodicCall)
 
@@ -162,24 +201,67 @@ class Aplication:
             current_time = tools.getRandomTime()
         
         while self.running:
-            # To simulate asynchronous I/O, we create a random number at
-            # random intervals. Replace the following two lines with the real
-            # thing.
-            time.sleep(5)
+            time.sleep(1)
             btn_id, is_editeable_btn = self.gui.getEditable(n_thread)
+            setattr(self, 'clock' + str(n_thread), current_time)
             if is_editeable_btn and btn_id == n_thread:
                pass              
             else:
                 if self.gui.getSeteable(btn_id):
                     current_time = self.gui.getTextFromEditable(btn_id)
                     self.gui.turnOffSet(btn_id)
-                    print(f"This is thread {n_thread} and is editable")
                 else:
                     current_time = tools.generateNextTime(current_time)
             self.queue.put(str(n_thread) + "|" + current_time)
+
             
+    def workerThreadNewtork(self):
+        while self.running:
+            connection, address = self.sockobj.accept()   
+            print('Server connected by', address)
+            hn = threading.Thread(target=self.handleClient, args=[connection])
+            hn.start()
+                
+    def handleClient(self, connection): 
+        self.counter += 1
+        if self.counter > 5: self.counter = 1
+        local_id = self.counter
+        while True:
+            data = connection.recv(1024)
+            request_book = int(data.decode())
+            
+            if self.gui.isReset:
+                self.shuffleBooks()
+                self.counter_books = 0
+                self.gui.isReset = False
+            
+            if request_book:
+                if self.counter_books == len(self.books)-1:
+                    self.gui.reset['state'] = "normal"
+                    connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode())
+                else:
+                    connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode() + br" " + self.books[self.counter_books].encode())
+                    self.counter_books += 1
+            else:
+                connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode())
+            if not data: break
+            #connection.send(br"")
+            
+        connection.close()
+
     def endApplication(self):
         self.running = 0
+        
+    def getClock(self, number):
+        return getattr(self, 'clock' + str(number))
+    
+    def shuffleBooks(self):
+        random.shuffle(self.books)
+        
+    def createConexion(self):
+        self.sockobj = socket(AF_INET, SOCK_STREAM)
+        self.sockobj.bind((myHost, myPort))
+        self.sockobj.listen(5)
 
 
 rand = random.Random(  )
