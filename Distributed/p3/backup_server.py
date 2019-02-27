@@ -17,8 +17,13 @@ while True:
 
     #sockobj.send(b"1")
     total = sockobj.recv(1024)
-    total_size = int(total.decode())
+    try:
+        total_size = int(total.decode())
+    except ValueError:
+        total_size = 0
+        continue
     terminated = False
+    sockobj.send(b"Ready to recieve")
     print(total_size)
     with open('dump_backup.sql','wb') as f:
         print("File opened")

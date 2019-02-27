@@ -10,21 +10,8 @@ class Database:
 
     def __init__(self):
         self.connection = sqlite3.connect(database_file, check_same_thread=False)
-        #self.__createTables()
-        #self.__insertBooks()
         self.getAllSessions()
         self.getAllDetaill()
-
-    def __insertBooks(self):
-        cursor = self.createCursor()
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Uno','Pepe','EdPepe',100.00,'1.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Dos','Pepe','EdPepe',200.00,'2.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Tres','Pepe','EdPepe',300.00,'3.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Cuatro','Pepe','EdPepe',400.00,'4.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Cinco','Pepe','EdPepe',500.00,'5.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Seis','Pepe','EdPepe',600.00,'6.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Siete','Pepe','EdPepe',700.00,'7.png')")
-        self.connection.commit()
 
     def selectAllBooks(self):
         cursor = self.createCursor()
@@ -33,12 +20,6 @@ class Database:
             response.append(','.join(map(str, row)))
         print(response)
         return response
-
-    def __createTables(self):
-        cursor = self.createCursor()
-        f = open('dump.sql','r')
-        sql = f.read()
-        cursor.execute(sql)
 
     def insertIntoUser(self, ip):
         cursor = self.createCursor()

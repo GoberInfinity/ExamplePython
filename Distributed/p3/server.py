@@ -18,6 +18,7 @@ myPort = 50007
 class GuiPart:
     def __init__(self, master, queue, endCommand):
         self.queue = queue
+        self.master = master
 
         self.isEditable_1 = False
         self.isEditable_2 = False
@@ -126,6 +127,15 @@ class GuiPart:
             except queue.Empty:
                 pass
 
+    def createEmptyPopup(self):
+        top = tkinter.Toplevel()
+        top.title("Alerta")
+        msg = tkinter.Message(top, text="Ya no hay libros, presione el botón REINICIAR")
+        msg.pack()
+
+        button = tkinter.Button(top, text="Aceptar", command=top.destroy)
+        button.pack()
+
     def createImage(self, path):
         return ImageTk.PhotoImage(Image.open(path))
 
@@ -164,19 +174,19 @@ class Aplication:
         # More threads can also be created and used, if necessary
         self.running = 1
 
-        self.thread1 = threading.Thread(target=self.workerThread, args=[1])
+        self.thread1 = threading.Thread(target=self.workerThread, args=[1], daemon=True)
         self.thread1.start()
 
-        self.thread2 = threading.Thread(target=self.workerThread, args=[2])
+        self.thread2 = threading.Thread(target=self.workerThread, args=[2], daemon=True)
         self.thread2.start()
 
-        self.thread3 = threading.Thread(target=self.workerThread, args=[3])
+        self.thread3 = threading.Thread(target=self.workerThread, args=[3], daemon=True)
         self.thread3.start()
 
-        self.thread4 = threading.Thread(target=self.workerThread, args=[4])
+        self.thread4 = threading.Thread(target=self.workerThread, args=[4], daemon=True)
         self.thread4.start()
 
-        self.threadN = threading.Thread(target=self.workerThreadNewtork)
+        self.threadN = threading.Thread(target=self.workerThreadNewtork, daemon=True)
         self.threadN.start()
 
         # Start the periodic call in the GUI to check if the queue contains
@@ -228,7 +238,8 @@ class Aplication:
             connection, address = self.sockobj.accept()
             print('Server connected by', address)
             self.databaseConnection.insertIntoUser(str(address[0]))
-            hn = threading.Thread(target=self.handleClient, args=[connection])
+            self.isBackup = True
+            hn = threading.Thread(target=self.handleClient, args=[connection], daemon=True)
             hn.start()
 
     def handleClient(self, connection): 
@@ -240,9 +251,9 @@ class Aplication:
         if not self.counter:
             while True:
                 if self.isBackup:
-                    #connection.send(str(os.path.getsize('database.db')).encode())
                     self.databaseConnection.exportDatabase()
                     connection.send(str(os.path.getsize('dump.sql')).encode())
+                    data = connection.recv(1024)
                     file = 'dump.sql'
                     f = open(file, 'rb')
                     l = f.read(1024)
@@ -266,13 +277,14 @@ class Aplication:
                 if request_book:
                     if self.counter_books == len(self.books)-1:
                         self.gui.reset['state'] = "normal"
+                        self.gui.createEmptyPopup()
                         new_image =  self.gui.createImage("na.jpg")
                         self.gui.book_image.config(image = new_image)
                         self.gui.book_image.image =new_image
-                        connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode())
+                        connection.send(str(local_id).encode() + br"_" + self.getClock(local_id).encode() + br"_" + br"00")
                     else:
                         selected_book = self.books[self.counter_books]
-                        connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode() + br" " + selected_book.encode())
+                        connection.send(str(local_id).encode() + br"_" + self.getClock(local_id).encode() + br"_" + selected_book.encode() + br"_" + br"data")
                         new_image =  self.gui.createImage(self.books[self.counter_books].split(",")[-1])
                         self.gui.book_image.config(image = new_image)
                         self.gui.book_image.image =new_image
@@ -280,9 +292,8 @@ class Aplication:
                         self.databaseConnection.insertDetail(connection.getpeername()[0],selected_book[0])
                         self.isBackup = True
                 else:
-                    connection.send(str(local_id).encode() + br" " + self.getClock(local_id).encode())
+                    connection.send(str(local_id).encode() + br"_" + self.getClock(local_id).encode())
                 if not data: break
-                #connection.send(br"")
         connection.close()
 
     def endApplication(self):

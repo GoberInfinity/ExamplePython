@@ -6,8 +6,6 @@ database_file = 'database.db'
 
 class Database:
 
-    connection = None
-
     def __init__(self):
         self.connection = sqlite3.connect(database_file, check_same_thread=False)
         #self.__createTables()
@@ -16,13 +14,13 @@ class Database:
 
     def __insertBooks(self):
         cursor = self.createCursor()
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Uno','Pepe','EdPepe',100.00,'1.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Dos','Pepe','EdPepe',200.00,'2.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Tres','Pepe','EdPepe',300.00,'3.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Cuatro','Pepe','EdPepe',400.00,'4.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Cinco','Pepe','EdPepe',500.00,'5.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Seis','Pepe','EdPepe',600.00,'6.png')")
-        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Siete','Pepe','EdPepe',700.00,'7.png')")
+        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Viaje al centro de la tierra','Julio Verne','Porrua',100.00,'1.png')")
+        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('50 Sombras de Gray','E L James','Vintage',200.00,'2.png')")
+        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('1984','George Orwell','Debolsillo',300.00,'3.png')")
+        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('IT','Stephen King','Debolsillo',400.00,'4.png')")
+        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('La Perla','John Steinbeck','Esfinge',500.00,'5.png')")
+        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Introduction to algorithms','Tomas Cormen','Limusa',600.00,'6.png')")
+        cursor.execute("INSERT INTO book (name, author, editorial, price, image) VALUES ('Cracking the coding interview','Gayle Mcdowell','Laakman',700.00,'7.png')")
         self.connection.commit()
 
     def selectAllBooks(self):
@@ -47,11 +45,10 @@ class Database:
         cursor.execute('''CREATE TABLE session
                            (session_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             user_id integer,
-                            created DATETIME,
-                            exited DATETIME)
+                            created DATETIME)
                             ''')
         cursor.execute('''CREATE TABLE detail
-                           (detail_id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                           (detail_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             session integer,
                             book_id integer)
                             ''')
@@ -61,13 +58,13 @@ class Database:
         time=datetime.now()
         cursor.execute('INSERT OR IGNORE INTO user (ip) VALUES (?)', [ip])
         user_id = self.getIdUser(ip)
-        cursor.execute('INSERT INTO session (user_id, created) VALUES (?,?)', [user_id, time.strftime('%Y-%m-%d')])
+        cursor.execute('INSERT INTO session (user_id, created) VALUES (?,?)', [user_id, time])
         self.connection.commit()
         self.getAllUsers()
         self.getAllSessions()
 
     def getAllUsers(self):
-        print("User table")
+        print("--USER TABLE--")
         cursor = self.createCursor()
         for row in cursor.execute('SELECT * FROM user'):
             print(row)
@@ -79,13 +76,13 @@ class Database:
                 return row[0]
 
     def getAllSessions(self):
-        print("SESSION TABLE")
+        print("--SESSION TABLE--")
         cursor = self.createCursor()
         for row in cursor.execute('SELECT * FROM session'):
             print(row)
 
     def getAllDetaill(self):
-        print("DETAILL TABLE")
+        print("--DETAILL TABLE--")
         cursor = self.createCursor()
         for row in cursor.execute('SELECT * FROM detail'):
             print(row)
@@ -113,3 +110,5 @@ class Database:
 
     def closeConnection(self):
         self.connection.close()
+
+#a = Database()
