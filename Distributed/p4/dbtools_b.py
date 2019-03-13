@@ -10,8 +10,11 @@ class Database:
 
     def __init__(self):
         self.connection = sqlite3.connect(database_file, check_same_thread=False)
-        self.getAllSessions()
-        self.getAllDetaill()
+        #self.getAllSessions()
+        #self.getAllDetaill()
+
+    def closeDatabase(self):
+        self.connection = None
 
     def selectAllBooks(self):
         cursor = self.createCursor()

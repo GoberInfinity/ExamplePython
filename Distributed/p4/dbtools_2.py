@@ -2,7 +2,7 @@
 import sqlite3
 from datetime import datetime
 
-database_file = 'database.db'
+database_file = 'database_2.db'
 
 class Database:
 
@@ -94,7 +94,7 @@ class Database:
             print(row)
 
     def exportDatabase(self):
-        with open('dump.sql', 'w') as f:
+        with open('dump_2.sql', 'w') as f:
             for line in self.connection.iterdump():
                 f.write('%s\n' % line)
 

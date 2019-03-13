@@ -9,11 +9,13 @@ import random
 import queue
 import dbtools as db
 from PIL import ImageTk, Image
+import json
 #This is the server part
 from socket import *
 myHost = ''
 myPort = 50007
 
+CHUNK_SIZE = 8 * 1024
 
 class GuiPart:
     def __init__(self, master, queue, endCommand):
@@ -242,7 +244,7 @@ class Aplication:
             hn = threading.Thread(target=self.handleClient, args=[connection], daemon=True)
             hn.start()
 
-    def handleClient(self, connection): 
+    def handleClient(self, connection):
         self.counter += 1
         if self.counter > 5: self.counter = 1
         local_id = self.counter
@@ -250,6 +252,60 @@ class Aplication:
         #backup server
         if not self.counter:
             while True:
+
+                #We send the array information
+                data = json.dumps({"a": self.books, 'b': self.counter})
+                connection.send(data.encode())
+                #We recieve the information about the other server
+                data2 = connection.recv(1024)
+                data2 = json.loads(data2.decode())
+
+                #We send if our server changed
+                server1changed = int(self.isBackup)
+                connection.send(str(server1changed).encode())
+                server2changed = int(connection.recv(1024).decode())
+                print(f"Server 1 {server1changed} - Server 2 {server2changed}")
+
+                #If server1 changes send the file
+                if server1changed:
+                    self.databaseConnection.exportDatabase()
+                    connection.send(str(os.path.getsize('dump.sql')).encode())
+                    data = connection.recv(1024)
+                    file = 'dump.sql'
+                    f = open(file, 'rb')
+                    l = f.read(1024)
+                    while(l):
+                        connection.send(l)
+                        l = f.read(1024)
+                    f.close
+                    print('Done sending')
+                    self.isBackup = False
+                    connection.recv(1024)
+
+                #If server2 changed recieve the file
+                if server2changed:
+                    connection.send(b"Ready to server2")
+                    total_size = int(connection.recv(1024).decode())
+                    connection.send(b"Ready to recieve")
+                    with open('dump_backup_s1.sql','wb') as f:
+                        print("File opened")
+                        size = 0
+                        while True:
+                            print("Recieveing Data")
+                            datan = connection.recv(1024)
+                            if not datan: break
+                            size += len(datan)
+                            f.write(datan)
+                            if size == int(total_size):
+                                #terminated = True
+                                break
+                    self.databaseConnection.closeConnection()
+                    os.system('rm -rf database.db')
+                    os.system('cat dump_backup_s1.sql | sqlite3 database.db')
+                    self.databaseConnection.createConnection()
+                    print("CREATED")
+
+                """
                 if self.isBackup:
                     self.databaseConnection.exportDatabase()
                     connection.send(str(os.path.getsize('dump.sql')).encode())
@@ -263,6 +319,7 @@ class Aplication:
                     f.close
                     print('Done sending')
                     self.isBackup = False
+                """
 
         else:
             while True:
