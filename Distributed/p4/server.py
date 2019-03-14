@@ -162,8 +162,10 @@ class Aplication:
         self.isBackup = True
 
         #Set up the network part
-        self.socket = None 
+        self.socket = None
         self.createConexion()
+
+        self.isSelfRest = 0
 
         self.clock1 = None
         self.clock2 = None
@@ -252,9 +254,9 @@ class Aplication:
         #backup server
         if not self.counter:
             while True:
-
+                
                 #We send the array information
-                data = json.dumps({"a": self.books, 'b': self.counter})
+                data = json.dumps({"a": self.books, 'b': self.counter_books, 'c':self.isSelfRest})
                 connection.send(data.encode())
                 #We recieve the information about the other server
                 data2 = connection.recv(1024)
@@ -264,7 +266,7 @@ class Aplication:
                 server1changed = int(self.isBackup)
                 connection.send(str(server1changed).encode())
                 server2changed = int(connection.recv(1024).decode())
-                print(f"Server 1 {server1changed} - Server 2 {server2changed}")
+                print(f"Server1 recievied2  =  {data2['c']}  counter of server2 {data2['b']} ")
 
                 #If server1 changes send the file
                 if server1changed:
@@ -304,7 +306,20 @@ class Aplication:
                     os.system('cat dump_backup_s1.sql | sqlite3 database.db')
                     self.databaseConnection.createConnection()
                     print("CREATED")
+                    
+                counter_server2 = int(data2['b'])
+                is_other_server_reseted = int(data2['c'])
 
+                if counter_server2 == 7:
+                    self.books = data2['a']
+                    self.counter_books = 0
+                    counter_server2 = 0
+                    
+                if(counter_server2 == 7 and self.counter_books == 0) or (counter_server2 == 0 and self.counter_books == 7):
+                    self.counter_books = 0
+                else:   
+                    self.counter_books = max(self.counter_books, counter_server2)
+                
                 """
                 if self.isBackup:
                     self.databaseConnection.exportDatabase()
@@ -323,13 +338,15 @@ class Aplication:
 
         else:
             while True:
-                data = connection.recv(1024)
-                request_book = int(data.decode())
 
                 if self.gui.isReset:
                     self.shuffleBooks()
-                    self.counter_books = 0
+                    self.counter_books += 1
                     self.gui.isReset = False
+                    self.isSelfRest = 1
+
+                data = connection.recv(1024)
+                request_book = int(data.decode())
 
                 if request_book:
                     if self.counter_books == len(self.books)-1:

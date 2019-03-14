@@ -157,8 +157,10 @@ class Aplication:
         self.databaseConnection = db.Database()
         self.books = self.databaseConnection.selectAllBooks()
         self.shuffleBooks()
-        self.counter_books = 0
+        self.counter_books2 = 0
         self.isBackup = True
+        self.firstConecction = True
+        self.isSelfRest = 0
 
         #Set up the network part
         self.socket = None
@@ -169,7 +171,7 @@ class Aplication:
         self.clock3 = None
         self.clock4 = None
 
-        self.counter = -1
+        self.counter = 0
 
         # Set up the thread to do asynchronous I/O
         # More threads can also be created and used, if necessary
@@ -273,16 +275,18 @@ class Aplication:
 
         else:
             while True:
-                data = connection.recv(1024)
-                request_book = int(data.decode())
 
                 if self.gui.isReset:
                     self.shuffleBooks()
-                    self.counter_books = 0
+                    self.counter_books2 += 1
                     self.gui.isReset = False
+                    self.isSelfRest = 1
+
+                data = connection.recv(1024)
+                request_book = int(data.decode())
 
                 if request_book:
-                    if self.counter_books == len(self.books)-1:
+                    if self.counter_books2 == len(self.books)-1:
                         self.gui.reset['state'] = "normal"
                         self.gui.createEmptyPopup()
                         new_image =  self.gui.createImage("na.jpg")
@@ -290,12 +294,12 @@ class Aplication:
                         self.gui.book_image.image =new_image
                         connection.send(str(local_id).encode() + br"_" + self.getClock(local_id).encode() + br"_" + br"00")
                     else:
-                        selected_book = self.books[self.counter_books]
+                        selected_book = self.books[self.counter_books2]
                         connection.send(str(local_id).encode() + br"_" + self.getClock(local_id).encode() + br"_" + selected_book.encode() + br"_" + br"data")
-                        new_image =  self.gui.createImage(self.books[self.counter_books].split(",")[-1])
+                        new_image =  self.gui.createImage(self.books[self.counter_books2].split(",")[-1])
                         self.gui.book_image.config(image = new_image)
                         self.gui.book_image.image =new_image
-                        self.counter_books += 1
+                        self.counter_books2 += 1
                         self.databaseConnection.insertDetail(connection.getpeername()[0],selected_book[0])
                         self.isBackup = True
                 else:
@@ -324,12 +328,13 @@ class Aplication:
         connection = socket(AF_INET, SOCK_STREAM)
         connection.connect((serverHost, serverPort))
         while True:
+            
             #We recieve the array information
             data2 = connection.recv(1024)
             data2 = json.loads(data2.decode())
 
             #We recieve the information about the other server
-            data = json.dumps({"a": self.books, 'b': self.counter})
+            data = json.dumps({"a": self.books, 'b': self.counter_books2, 'c':self.isSelfRest})
             connection.send(data.encode())
 
             #We send if our server changed
@@ -337,7 +342,8 @@ class Aplication:
             server2changed = int(self.isBackup)
             connection.send(str(server2changed).encode())
 
-            print(f"Server 1 {server1changed} - Server 2 {server2changed}")
+            #print(f"Server 1 {server1changed} - Server 2 {server2changed}")
+            print(f"Server2 recieved1 =  {data2['c']} counter of server1 {data2['b']} currentCounter {self.counter_books2} ")
 
             #If server2 changed recieve the file
             if server1changed:
@@ -377,8 +383,25 @@ class Aplication:
                 print('Done sending')
                 self.isBackup = False
                 connection.recv(1024)
-            
-            time.sleep(1)
+
+            counter_server1 = int(data2['b'])
+            is_other_server_reseted = int(data2['c'])
+
+            if self.firstConecction:
+                self.books = data2['a']
+                self.firstConecction = False
+
+            if counter_server1 == 7:
+                self.books = data2['a']
+                self.counter_books2 = 0
+                counter_server1 = 0
+
+            if(counter_server1 == 7 and self.counter_books2 == 0) or (counter_server1 == 0 and self.counter_books2 == 7):
+                self.counter_books2 = 0
+            else:   
+                self.counter_books2 = max(self.counter_books2, counter_server1)
+
+            time.sleep(0.5)
         connection.close()
         """
             #sockobj.send(b"1")

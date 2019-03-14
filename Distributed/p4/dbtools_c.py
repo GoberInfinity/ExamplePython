@@ -2,7 +2,7 @@
 import sqlite3
 from datetime import datetime
 
-database_file = 'database.db'
+database_file = 'database_2.db'
 
 class Database:
 
