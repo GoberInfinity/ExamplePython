@@ -40,11 +40,17 @@ class Services(services_pb2_grpc.InformationServicer):
         return services_pb2.HourReply(hour = g_hour)
 
     def SendBook(self, request, context):
-        global g_update_book_gui
+        global g_update_book_gui, g_book_counter
+
         g_update_book_gui = True
+
         metadata = dict(context.invocation_metadata())
-        print(metadata)
-        return services_pb2.BookReply(book = "Drinking a lot")
+        book_reply = 'None'
+        if g_book_counter < len(g_books):
+            book_reply = g_books[g_book_counter]
+            g_book_counter += 1
+
+        return services_pb2.BookReply(book = book_reply)
 
     #Missing Chunker
 
@@ -260,6 +266,8 @@ class Aplication:
 
     def shuffleBooks(self):
         random.shuffle(self.books)
+        global g_books
+        g_books = self.books
 
 
 root = tkinter.Tk()

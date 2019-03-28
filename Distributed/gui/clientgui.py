@@ -40,12 +40,12 @@ class GuiPart:
                 msg = self.queue.get(0).split('_')
                 print(msg)
 
-                if len(msg) == 3:
-                    self.createEmptyPopup()
                 if msg[0] == 'T':
                     print("Entered")
                     self.ds_clock["text"] = msg[1]
                 elif msg[0] == 'B':
+                    if msg[1] == 'None':
+                        self.createEmptyPopup()
                     self.info_data = msg[1]
                 self.info["text"] = self.info_data
             except queue.Empty:
