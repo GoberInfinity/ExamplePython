@@ -20,13 +20,13 @@ database_location = "../../data/firstdb/f_db.db"
 database_script_location = '../../data/firstdb/dump.sql'
 database_recieved_script_location = "../../data/firstdb/dumped.sql"
 
-g_book_counter = 0
+g_book_counter = -1
 g_books = []
 g_hour = ""
 g_book = ""
 
 g_update_book_gui = False
-
+g_empty_books = False
 
 class Services(services_pb2_grpc.InformationServicer):
     def SendCounter(self, request, context):
@@ -40,16 +40,17 @@ class Services(services_pb2_grpc.InformationServicer):
         return services_pb2.HourReply(hour = g_hour)
 
     def SendBook(self, request, context):
-        global g_update_book_gui, g_book_counter
-
-        g_update_book_gui = True
+        global g_update_book_gui, g_book_counter, g_empty_books
 
         metadata = dict(context.invocation_metadata())
         book_reply = 'None'
-        if g_book_counter < len(g_books):
-            book_reply = g_books[g_book_counter]
+        if g_book_counter < len(g_books)-1:
             g_book_counter += 1
+            book_reply = g_books[g_book_counter]
+        else:
+            g_empty_books = True
 
+        g_update_book_gui = True
         return services_pb2.BookReply(book = book_reply)
 
     #Missing Chunker
@@ -129,16 +130,34 @@ class Aplication:
             self.queue.put(str(n_thread) + "|" + current_time)
 
     def updateGUI(self):
-        global g_update_book_gui
+        global g_update_book_gui, g_empty_books, g_book_counter
         while True:
+
+            if self.gui.isReset:
+                global g_empty_books
+
+                g_empty_books = False
+                g_book_counter = 0 
+                self.shuffleBooks()
+                self.gui.isReset = False
+
+
             if g_update_book_gui:
-                selected_book = self.books[self.counter_books]
-                new_image =  self.gui.createImage("../../images/" + self.books[self.counter_books].split(",")[-1])
-                self.gui.book_image.config(image = new_image)
-                self.gui.book_image.image =new_image
-                self.counter_books += 1
+                print(g_book_counter)
+                if g_empty_books:
+                        self.gui.reset['state'] = "normal"
+                        self.gui.createEmptyPopup()
+                        new_image =  self.gui.createImage("../../images/na.jpg")
+                        self.gui.book_image.config(image = new_image)
+                        self.gui.book_image.image =new_image
+                else:
+                    selected_book = g_books[g_book_counter]
+                    new_image =  self.gui.createImage("../../images/" + g_books[g_book_counter].split(",")[-1])
+                    self.gui.book_image.config(image = new_image)
+                    self.gui.book_image.image =new_image
                 #self.databaseConnection.insertDetail(connection.getpeername()[0],selected_book[0])
                 g_update_book_gui = False
+
             time.sleep(1)
 
     def serve(self):
