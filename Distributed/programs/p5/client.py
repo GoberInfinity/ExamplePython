@@ -19,45 +19,38 @@ class Aplication:
         self.gui =  clientgui.GuiPart(master, self.queue)
         self.counter = 0
 
-        self.thread1 = threading.Thread(target=self.workerThreadNewtork).start()
+        self.thread1 = threading.Thread(target=self.workerHour).start()
+        self.thread2 = threading.Thread(target=self.workerBook).start()
         self.periodicCall()
 
     def periodicCall(self):
         self.gui.processIncoming()
         self.master.after(100, self.periodicCall)
 
-    def workerThreadNewtork(self):
+    def workerHour(self):
         while True:
-            """
-            is_editable = self.gui.getIsRequest()
-            message = [str(is_editable).encode()]
-            if is_editable:
-                self.gui.turnOffIsRequest()
-            self.sockobj.send(message[0])
-            data = self.sockobj.recv(1024)
-            self.queue.put(data)
-            self.counter +=1
-            time.sleep(0.5)
-            """
             try:
-                is_request = self.gui.getIsRequest()
-                if is_request:
-                    self.gui.turnOffIsRequest()
                 with grpc.insecure_channel('localhost:50060') as channel:
                     stub = services_pb2_grpc.InformationStub(channel)
                     response = stub.SendHour(empty_pb2.Empty())
-                    self.queue.put(response.hour)
-
-                    if is_request:
-                        print("fdsafdsafdsafdsa")
-                        response2 = stub.SendBook(empty_pb2.Empty())
-                        self.queue.put(response2.book)
-                        print(response2)
-                    print(response.hour)
-                    sys.stdout.flush()
+                    self.queue.put("T_" + response.hour)
             except:
-                print("Error trying to do that1")
+                print("Error trying to get the clock")
             time.sleep(1)
+
+    def workerBook(self):
+        while True:
+            if self.gui.getIsRequest():
+                    self.gui.turnOffIsRequest()
+                    try:
+                        with grpc.insecure_channel('localhost:50060') as channel:
+                            stub = services_pb2_grpc.InformationStub(channel)
+                            metadata = [('ip', '127.0.0.1')]
+                            response2 = stub.SendBook(empty_pb2.Empty() , metadata = metadata)
+                            self.queue.put("B_" + response2.book)
+                    except:
+                        print("Error trying to get a book")
+        time.sleep(1)
 
 root = tkinter.Tk()
 client = Aplication(root)

@@ -36,13 +36,14 @@ class Services(services_pb2_grpc.InformationServicer):
         return services_pb2.BooksReply(books = ','.join(g_books))
 
     def SendHour(self, request, context):
-        print("Arrived Something")
         sys.stdout.flush()
         return services_pb2.HourReply(hour = g_hour)
 
     def SendBook(self, request, context):
         global g_update_book_gui
         g_update_book_gui = True
+        metadata = dict(context.invocation_metadata())
+        print(metadata)
         return services_pb2.BookReply(book = "Drinking a lot")
 
     #Missing Chunker
@@ -84,7 +85,7 @@ class Aplication:
         self.thread2 = threading.Thread(target=self.workerThread, args=[2], daemon=True).start()
         self.thread3 = threading.Thread(target=self.workerThread, args=[3], daemon=True).start()
         self.thread4 = threading.Thread(target=self.workerThread, args=[4], daemon=True).start()
-        #self.thread5 = threading.Thread(target=self.updateGUI, daemon=True).start()
+        self.thread5 = threading.Thread(target=self.updateGUI, daemon=True).start()
 
         #thread to server
         self.thread6 = threading.Thread(target=self.serve).start()
@@ -120,7 +121,7 @@ class Aplication:
             if n_thread == 1:
                 g_hour = current_time
             self.queue.put(str(n_thread) + "|" + current_time)
-    """
+
     def updateGUI(self):
         global g_update_book_gui
         while True:
@@ -130,8 +131,9 @@ class Aplication:
                 self.gui.book_image.config(image = new_image)
                 self.gui.book_image.image =new_image
                 self.counter_books += 1
-                self.databaseConnection.insertDetail(connection.getpeername()[0],selected_book[0])
-    """
+                #self.databaseConnection.insertDetail(connection.getpeername()[0],selected_book[0])
+                g_update_book_gui = False
+            time.sleep(1)
 
     def serve(self):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
