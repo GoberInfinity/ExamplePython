@@ -97,7 +97,7 @@ class Aplication:
         #thread to server
         self.thread6 = threading.Thread(target=self.serve).start()
         #thread to consume servers
-
+        self.thread7 = threading.Thread(target=self.consume).start()
 
         self.periodicCall()
 
@@ -134,16 +134,12 @@ class Aplication:
         while True:
 
             if self.gui.isReset:
-                global g_empty_books
-
                 g_empty_books = False
-                g_book_counter = 0 
+                g_book_counter = 0
                 self.shuffleBooks()
                 self.gui.isReset = False
 
-
             if g_update_book_gui:
-                print(g_book_counter)
                 if g_empty_books:
                         self.gui.reset['state'] = "normal"
                         self.gui.createEmptyPopup()
@@ -170,6 +166,18 @@ class Aplication:
                 time.sleep(_ONE_DAY_IN_SECONDS)
         except KeyboardInterrupt:
             server.stop(0)
+
+    def consume(self):
+        other_servers_counters = []
+        for server in self.servers:
+            try:
+                with grpc.insecure_channel('localhost:50060') as channel:
+                        stub = services_pb2_grpc.InformationStub(channel)
+                        response = stub.SendCounter(empty_pb2.Empty())
+                        other_servers_counters.append(response.counter)
+                except:
+                    print("Error trying to get the counter")
+        #values.index(min(values))
 
     """
     def handleClient(self, connection):
@@ -280,6 +288,7 @@ class Aplication:
                 if not data: break
         connection.close()
     """
+
     def getClock(self, number):
         return getattr(self, 'clock' + str(number))
 
