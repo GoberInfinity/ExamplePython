@@ -37,7 +37,9 @@ class GuiPart:
                 pass
             """
             try:
-                msg = self.queue.get(0).decode().split("_")
+                #msg = self.queue.get(0).decode().split("_")
+                msg = self.queue.get(0)
+                print(msg)
                 if len(msg) == 3:
                     self.createEmptyPopup()
                 elif len(msg) == 4:
@@ -47,7 +49,7 @@ class GuiPart:
                     editorial = "Editorial: " + book_data[3]
                     precio = "Precio: " + book_data[4]
                     self.info_data = name + ' ' + autor + ' ' + editorial + ' ' + precio
-                self.ds_clock["text"] = msg[1]
+                self.ds_clock["text"] = msg
                 self.info["text"] = self.info_data
             except queue.Empty:
                 pass
