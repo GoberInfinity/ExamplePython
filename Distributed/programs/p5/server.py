@@ -214,6 +214,7 @@ class Aplication:
         ip_server = server1[0]
         port_server = server1[1]
         first_time = True
+        was_restarted = False
 
         while True:
             other_servers_counter = -2
@@ -258,14 +259,17 @@ class Aplication:
             index_of_max_in_other_server, max_in_other_server = max(enumerate(self.servers_responses_counter), key=operator.itemgetter(1))
 
             reset_in_other_server = -1 in self.servers_responses_counter
+            inverted_reset_in_other_servers = len(g_books)-1 in self.servers_responses_counter
 
-            if reset_in_other_server and g_book_counter == -1:
-                time.sleep(1)
-                continue
+            #if reset_in_other_server and g_book_counter == -1:
+            #    time.sleep(1)
+            #    continue
 
             #Only triggers when a server needs to restart the books
-            if reset_in_other_server and g_book_counter == len(g_books)-1:
+            if (reset_in_other_server and g_book_counter == len(g_books)-1) or (g_book_counter == -1 and inverted_reset_in_other_servers):
                 g_book_counter = -1
+                if was_restarted:
+                    continue
                 print("Server restarted")
                 sys.stdout.flush()
                 restarted_server = self.servers_responses_counter.index(-1)
@@ -280,6 +284,7 @@ class Aplication:
                     print("Error trying to get the books")
                     sys.stdout.flush()
                 something_changed = True
+                was_restarted = True
             elif max_in_other_server == -1 and first_time:
                 pass
             elif max_in_other_server > g_book_counter:
@@ -287,6 +292,7 @@ class Aplication:
                 sys.stdout.flush()
                 g_book_counter = max_in_other_server
                 something_changed = True
+                was_restarted = False
 
             #Triggers when you have to dowload the lastest data from the server that changed
             if something_changed:
