@@ -33,6 +33,7 @@ g_empty_books = False
 
 g_path_of_watched_file = None
 g_path_of_replica_file = None
+g_path_of_database = None
 
 g_last_ip = ""
 
@@ -54,7 +55,15 @@ class Services(services_pb2_grpc.InformationServicer):
         return services_pb2.BookReply(book = self.__get_new_book())
 
     def SendDB(self, request, unused_context):
+        self.__createScriptBeforeSend()
         return fchunk.chunk_bytes(g_path_of_watched_file)
+
+    def __createScriptBeforeSend(self):
+        while g_update_book_gui:
+            time.sleep(0.1)
+        databaseConnection = database.Database(g_path_of_database)
+        databaseConnection.exportDatabase(g_path_of_watched_file)
+        databaseConnection.closeConnection()
 
     def __setLastIp(self, context):
         global g_last_ip
@@ -101,7 +110,7 @@ class Aplication:
         self.setFilePaths()
 
         #Database
-        self.databaseConnection = database.Database(database_location)
+        self.databaseConnection = database.Database(g_path_of_database)
         self.books = self.databaseConnection.selectAllBooks()
         self.shuffleBooks()
         self.counter_books = 0
@@ -118,9 +127,10 @@ class Aplication:
         self.periodicCall()
 
     def setFilePaths(self):
-        global g_path_of_watched_file, g_path_of_replica_file
+        global g_path_of_watched_file, g_path_of_replica_file, g_path_of_database
         g_path_of_watched_file = str(sys.argv[4])
         g_path_of_replica_file = str(sys.argv[5])
+        g_path_of_database = str(sys.argv[6])
 
     def periodicCall(self):
         self.gui.processIncoming()
@@ -177,9 +187,9 @@ class Aplication:
                     if g_last_ip not in ips:
                         ips.add(g_last_ip)
                         self.databaseConnection.insertIntoUser(g_last_ip)
-                self.databaseConnection.insertDetail(g_last_ip,selected_book[0])
+                    self.databaseConnection.insertDetail(g_last_ip,selected_book[0])
                 g_update_book_gui = False
-            time.sleep(1)
+            time.sleep(0.5)
 
     def serve(self):
         server = grpc.server(futures.ThreadPoolExecutor(max_workers=20))
@@ -201,6 +211,7 @@ class Aplication:
 
         while True:
             other_servers_counter = -2
+            something_changed = False
 
             try:
                 c_response = conection.callService('GetCounter','localhost',str(port_server))
@@ -218,6 +229,7 @@ class Aplication:
                     print(g_books)
                     sys.stdout.flush()
                     first_time = False
+                    something_changed = True
                 except:
                     print("Error trying to get the books")
                     sys.stdout.flush()
@@ -235,24 +247,29 @@ class Aplication:
                 except:
                     print("Error trying to get the books")
                     sys.stdout.flush()
+                something_changed = True
             elif other_servers_counter == -1 and first_time:
                 pass
             elif other_servers_counter > g_book_counter:
                 print("Server needs to update")
                 sys.stdout.flush()
                 g_book_counter = other_servers_counter
+                something_changed = True
+
+            if something_changed:
                 try:
                     f_response = conection.callService('GetFile','localhost',str(port_server))
                     f = open(g_path_of_replica_file, 'wb')
                     f.write(f_response)
                     f.close()
+                    self.createNewDatabase()
                     sys.stdout.flush()
                 except:
                     print("Error trying to get the file")
                     sys.stdout.flush()
                 print("Server updated")
                 sys.stdout.flush()
-                #first_time = False
+                something_changed = False
 
             time.sleep(1)
         """
@@ -386,6 +403,12 @@ class Aplication:
         global g_books
         g_books = self.books
 
+    def createNewDatabase(self):
+        self.databaseConnection.closeConnection()
+        os.remove(g_path_of_database)
+        os.system('cat ' + g_path_of_replica_file + ' | sqlite3 ' + g_path_of_database)
+        self.databaseConnection.createConnection(g_path_of_database)
+        print("Database Created")
 
 root = tkinter.Tk()
 client = Aplication(root)
