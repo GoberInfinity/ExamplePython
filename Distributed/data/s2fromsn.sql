@@ -152,7 +152,6 @@ INSERT INTO "detail" VALUES(132,1,3);
 INSERT INTO "detail" VALUES(133,1,2);
 INSERT INTO "detail" VALUES(134,1,7);
 INSERT INTO "detail" VALUES(135,1,6);
-INSERT INTO "detail" VALUES(136,1,7);
 CREATE TABLE session
                            (session_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             user_id integer,
@@ -228,7 +227,7 @@ DELETE FROM "sqlite_sequence";
 INSERT INTO "sqlite_sequence" VALUES('book',7);
 INSERT INTO "sqlite_sequence" VALUES('user',67);
 INSERT INTO "sqlite_sequence" VALUES('session',67);
-INSERT INTO "sqlite_sequence" VALUES('detail',136);
+INSERT INTO "sqlite_sequence" VALUES('detail',135);
 CREATE TABLE user
                            (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             ip text UNIQUE);

@@ -1,8 +1,11 @@
 #python server.py 50070 10:50060 0 ../../data/seconddb/dump.sql ../../data/s2froms1.sql ../../data/seconddb/s_db.db
+#python server.py 50060 localhost:50070,localhost:50080 0 ../../data/firstdb/dump.sql ../../data/s1fromsn.sql ../../data/firstdb/f_db.db
+
 from __future__ import print_function
 from concurrent import futures
 from google.protobuf import empty_pb2
 
+import operator
 import sys, os
 import logging, grpc
 
@@ -110,6 +113,8 @@ class Aplication:
         self.master_server = int(sys.argv[3])
         self.setFilePaths()
 
+        self.servers_responses_counter = [-10 for _ in range(len(self.servers))]
+
         #Database
         self.databaseConnection = database.Database(g_path_of_database)
         self.books = self.databaseConnection.selectAllBooks()
@@ -213,21 +218,16 @@ class Aplication:
         while True:
             other_servers_counter = -2
             something_changed = False
+            restarted_server = None
+            self.servers_responses_counter = []
 
-            try:
-                c_response = conection.callService('GetCounter','localhost',str(port_server))
-                other_servers_counter = c_response.counter
-                print(c_response.counter)
-                sys.stdout.flush()
-            except:
-                print("Error trying to get the counter S1")
-                sys.stdout.flush()
-
+            #get first data from master
             if first_time and not self.master_server:
+                print("Sync from first time")
                 try:
                     b_response = conection.callService('GetBooks','localhost',str(port_server))
                     g_books = (b_response.books).split('_')
-                    print(g_books)
+                    print(f"Books SINKED {g_books}")
                     sys.stdout.flush()
                     first_time = False
                     something_changed = True
@@ -235,13 +235,44 @@ class Aplication:
                     print("Error trying to get the books")
                     sys.stdout.flush()
 
+            for server in self.servers:
+                server_data = server.split(':')
+                ip_server = str(server_data[0])
+                port_server = str(server_data[1])
 
-            if other_servers_counter == -1 and g_book_counter == len(g_books)-1:
+                #get all the counters from the other servers, if you cannot get the response, add -10
+                try:
+                    c_response = conection.callService('GetCounter',ip_server,port_server)
+                    other_servers_counter = c_response.counter
+                    self.servers_responses_counter.append(other_servers_counter)
+                    print(c_response.counter)
+                    sys.stdout.flush()
+                except:
+                    self.servers_responses_counter.append(-10)
+                    print("Error trying to get the counter S1")
+                    sys.stdout.flush()
+
+            print(self.servers_responses_counter)
+            sys.stdout.flush()
+            #get the maximum index
+            index_of_max_in_other_server, max_in_other_server = max(enumerate(self.servers_responses_counter), key=operator.itemgetter(1))
+
+            reset_in_other_server = -1 in self.servers_responses_counter
+
+            if reset_in_other_server and g_book_counter == -1:
+                time.sleep(1)
+                continue
+
+            #Only triggers when a server needs to restart the books
+            if reset_in_other_server and g_book_counter == len(g_books)-1:
                 g_book_counter = -1
                 print("Server restarted")
                 sys.stdout.flush()
+                restarted_server = self.servers_responses_counter.index(-1)
+                data_ser = self.servers[restarted_server].split(':')
+                #Get the new book from the server that was the lowest key
                 try:
-                    br_response = conection.callService('GetBooks','localhost',str(port_server))
+                    br_response = conection.callService('GetBooks',data_ser[0],data_ser[1])
                     g_books = (br_response.books).split('_')
                     print(g_books)
                     sys.stdout.flush()
@@ -249,17 +280,23 @@ class Aplication:
                     print("Error trying to get the books")
                     sys.stdout.flush()
                 something_changed = True
-            elif other_servers_counter == -1 and first_time:
+            elif max_in_other_server == -1 and first_time:
                 pass
-            elif other_servers_counter > g_book_counter:
+            elif max_in_other_server > g_book_counter:
                 print("Server needs to update")
                 sys.stdout.flush()
-                g_book_counter = other_servers_counter
+                g_book_counter = max_in_other_server
                 something_changed = True
 
+            #Triggers when you have to dowload the lastest data from the server that changed
             if something_changed:
+                if not restarted_server:
+                    restarted_server = index_of_max_in_other_server
+                data_ser = self.servers[restarted_server].split(':')
+                print(f"Gettinf information from {data_ser}")
+                sys.stdout.flush()
                 try:
-                    f_response = conection.callService('GetFile','localhost',str(port_server))
+                    f_response = conection.callService('GetFile',data_ser[0],data_ser[1])
                     f = open(g_path_of_replica_file, 'wb')
                     f.write(f_response)
                     f.close()
@@ -271,8 +308,8 @@ class Aplication:
                 print("Server updated")
                 sys.stdout.flush()
                 something_changed = False
-
             time.sleep(1)
+
 
     def getClock(self, number):
         return getattr(self, 'clock' + str(number))

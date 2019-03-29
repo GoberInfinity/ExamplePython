@@ -139,20 +139,6 @@ INSERT INTO "detail" VALUES(119,1,3);
 INSERT INTO "detail" VALUES(120,1,2);
 INSERT INTO "detail" VALUES(121,1,4);
 INSERT INTO "detail" VALUES(122,1,7);
-INSERT INTO "detail" VALUES(123,1,5);
-INSERT INTO "detail" VALUES(124,1,3);
-INSERT INTO "detail" VALUES(125,1,6);
-INSERT INTO "detail" VALUES(126,1,2);
-INSERT INTO "detail" VALUES(127,1,1);
-INSERT INTO "detail" VALUES(128,1,4);
-INSERT INTO "detail" VALUES(129,1,1);
-INSERT INTO "detail" VALUES(130,1,5);
-INSERT INTO "detail" VALUES(131,1,4);
-INSERT INTO "detail" VALUES(132,1,3);
-INSERT INTO "detail" VALUES(133,1,2);
-INSERT INTO "detail" VALUES(134,1,7);
-INSERT INTO "detail" VALUES(135,1,6);
-INSERT INTO "detail" VALUES(136,1,7);
 CREATE TABLE session
                            (session_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             user_id integer,
@@ -220,15 +206,11 @@ INSERT INTO "session" VALUES(60,1,'2019-03-29 06:03:38.275772');
 INSERT INTO "session" VALUES(61,1,'2019-03-29 06:03:47.110960');
 INSERT INTO "session" VALUES(62,1,'2019-03-29 06:12:11.912089');
 INSERT INTO "session" VALUES(63,1,'2019-03-29 06:12:22.574730');
-INSERT INTO "session" VALUES(64,1,'2019-03-29 06:15:31.913625');
-INSERT INTO "session" VALUES(65,1,'2019-03-29 06:22:49.989128');
-INSERT INTO "session" VALUES(66,1,'2019-03-29 06:23:51.405340');
-INSERT INTO "session" VALUES(67,1,'2019-03-29 06:24:36.136419');
 DELETE FROM "sqlite_sequence";
 INSERT INTO "sqlite_sequence" VALUES('book',7);
-INSERT INTO "sqlite_sequence" VALUES('user',67);
-INSERT INTO "sqlite_sequence" VALUES('session',67);
-INSERT INTO "sqlite_sequence" VALUES('detail',136);
+INSERT INTO "sqlite_sequence" VALUES('user',63);
+INSERT INTO "sqlite_sequence" VALUES('session',63);
+INSERT INTO "sqlite_sequence" VALUES('detail',122);
 CREATE TABLE user
                            (user_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             ip text UNIQUE);

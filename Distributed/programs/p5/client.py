@@ -1,4 +1,6 @@
 #python client.py localhost:50070,localhost:50060 127.0.0.1
+#python client.py localhost:50070,localhost:50060 127.0.0.1
+
 from __future__ import print_function
 from google.protobuf import empty_pb2
 from collections import deque
