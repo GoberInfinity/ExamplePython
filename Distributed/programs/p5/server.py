@@ -1,3 +1,4 @@
+#python server.py 50070 10:50060 0 ../../data/seconddb/dump.sql ../../data/s2froms1.sql ../../data/seconddb/s_db.db
 from __future__ import print_function
 from concurrent import futures
 from google.protobuf import empty_pb2
