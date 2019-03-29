@@ -2,7 +2,7 @@
 import sqlite3
 from datetime import datetime
 
-database_file = 'data/seconddb/s_db.db'
+database_file = 'data/thirddb/t_db.db'
 
 class Database:
 
