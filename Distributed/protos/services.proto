@@ -21,7 +21,7 @@ service Information {
 
 //Responses for other servers
 message CounterReply{
-  int32 counter = 1;
+  sint32 counter = 1;
 }
 
 message BooksReply{

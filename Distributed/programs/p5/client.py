@@ -19,6 +19,8 @@ class Aplication:
         self.gui =  clientgui.GuiPart(master, self.queue)
         self.counter = 0
 
+        self.servers = (str(sys.argv[1])).split(',')
+
         self.thread1 = threading.Thread(target=self.workerHour).start()
         self.thread2 = threading.Thread(target=self.workerBook).start()
         self.periodicCall()
@@ -28,9 +30,12 @@ class Aplication:
         self.master.after(100, self.periodicCall)
 
     def workerHour(self):
+        server1 = self.servers[0].split(':')
+        ip_server = server1[0]
+        port_server = server1[1]
         while True:
             try:
-                with grpc.insecure_channel('localhost:50060') as channel:
+                with grpc.insecure_channel(ip_server+':'+port_server) as channel:
                     stub = services_pb2_grpc.InformationStub(channel)
                     response = stub.SendHour(empty_pb2.Empty())
                     self.queue.put("T_" + response.hour)
@@ -39,11 +44,14 @@ class Aplication:
             time.sleep(1)
 
     def workerBook(self):
+        server1 = self.servers[0].split(':')
+        ip_server = server1[0]
+        port_server = server1[1]
         while True:
             if self.gui.getIsRequest():
                     self.gui.turnOffIsRequest()
                     try:
-                        with grpc.insecure_channel('localhost:50060') as channel:
+                        with grpc.insecure_channel(ip_server+':'+port_server) as channel:
                             stub = services_pb2_grpc.InformationStub(channel)
                             metadata = [('ip', '127.0.0.1')]
                             response2 = stub.SendBook(empty_pb2.Empty() , metadata = metadata)

@@ -1,5 +1,6 @@
 from __future__ import print_function
 from concurrent import futures
+from google.protobuf import empty_pb2
 
 import sys, os
 import logging, grpc
@@ -15,6 +16,7 @@ import threading, queue, random
 import database
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
+_CHUNKER_SIZE = 64 * 1024
 
 database_location = "../../data/firstdb/f_db.db"
 database_script_location = '../../data/firstdb/dump.sql'
@@ -25,18 +27,37 @@ g_books = []
 g_hour = ""
 g_book = ""
 
+g_needs_restore = False
+
 g_update_book_gui = False
 g_empty_books = False
 
+g_watched = None
+g_replica = None
+
+def _chunk_bytes(chunker_size):
+    index = 0
+    f = open(g_watched,"rb")
+    string = f.read()
+    data = string
+    while index < len(data):
+        yield services_pb2.File(chunk=data[index:index+chunker_size])
+        index += chunker_size
+
 class Services(services_pb2_grpc.InformationServicer):
     def SendCounter(self, request, context):
+        global g_needs_restore, g_book_counter
+
+        if g_needs_restore:
+            g_book_counter = -1
+            g_needs_restore = False
+
         return services_pb2.CounterReply(counter = g_book_counter)
 
     def SendBooks(self, request, context):
-        return services_pb2.BooksReply(books = ','.join(g_books))
+        return services_pb2.BooksReply(books = '_'.join(g_books))
 
     def SendHour(self, request, context):
-        sys.stdout.flush()
         return services_pb2.HourReply(hour = g_hour)
 
     def SendBook(self, request, context):
@@ -53,7 +74,9 @@ class Services(services_pb2_grpc.InformationServicer):
         g_update_book_gui = True
         return services_pb2.BookReply(book = book_reply)
 
-    #Missing Chunker
+    def SendDB(self, request, unused_context):
+        print("Trying chunking")
+        return _chunk_bytes(_CHUNKER_SIZE)
 
 class Aplication:
     def __init__(self, master):
@@ -79,6 +102,12 @@ class Aplication:
         #Server configurations
         self.port = str(sys.argv[1])
         self.servers = (str(sys.argv[2])).split(',')
+        self.master_server = int(sys.argv[3])
+
+        global g_watched, g_replica
+
+        g_watched = str(sys.argv[4])
+        g_replica = str(sys.argv[5])
 
         print(self.servers)
 
@@ -130,14 +159,14 @@ class Aplication:
             self.queue.put(str(n_thread) + "|" + current_time)
 
     def updateGUI(self):
-        global g_update_book_gui, g_empty_books, g_book_counter
+        global g_update_book_gui, g_empty_books, g_book_counter, g_needs_restore
         while True:
 
             if self.gui.isReset:
                 g_empty_books = False
-                g_book_counter = 0
                 self.shuffleBooks()
                 self.gui.isReset = False
+                g_needs_restore = True
 
             if g_update_book_gui:
                 if g_empty_books:
@@ -168,6 +197,88 @@ class Aplication:
             server.stop(0)
 
     def consume(self):
+        global g_book_counter, g_books
+        server1 = self.servers[0].split(':')
+        ip_server = server1[0]
+        port_server = server1[1]
+        print(port_server)
+        first_time = True
+        while True:
+            other_servers_counter = -2
+
+            try:
+                with grpc.insecure_channel('localhost:'+str(port_server)) as channel:
+                        stub = services_pb2_grpc.InformationStub(channel)
+                        response = stub.SendCounter(empty_pb2.Empty())
+                        other_servers_counter = response.counter
+                        print(response.counter)
+                        sys.stdout.flush()
+                        counter = 1
+            except:
+                print("Error trying to get the counter S1")
+                sys.stdout.flush()
+
+            if first_time and not self.master_server:
+                try:
+                    with grpc.insecure_channel('localhost:'+str(port_server)) as channel:
+                            stub = services_pb2_grpc.InformationStub(channel)
+                            response = stub.SendBooks(empty_pb2.Empty())
+                            g_books = (response.books).split('_')
+                            print(g_books)
+                            sys.stdout.flush()
+                    first_time = False
+                except:
+                    print("Error trying to get the books")
+                    sys.stdout.flush()
+
+
+            if other_servers_counter == -1 and g_book_counter == len(g_books)-1:
+                g_book_counter = -1
+                print("Server restarted")
+                sys.stdout.flush()
+                try:
+                    with grpc.insecure_channel('localhost:'+str(port_server)) as channel:
+                            stub = services_pb2_grpc.InformationStub(channel)
+                            response = stub.SendBooks(empty_pb2.Empty())
+                            g_books = (response.books).split('_')
+                            print(g_books)
+                            sys.stdout.flush()
+                except:
+                    print("Error trying to get the books")
+                    sys.stdout.flush()
+            elif other_servers_counter == -1 and first_time:
+                pass
+            elif other_servers_counter > g_book_counter:
+                print(other_servers_counter)
+                print("Server needs to update")
+                sys.stdout.flush()
+                g_book_counter = other_servers_counter
+
+
+                with grpc.insecure_channel('localhost:'+str(port_server)) as channel:
+                    stub = services_pb2_grpc.InformationStub(channel)
+                    #try:
+                    response_iterator = stub.SendDB(empty_pb2.Empty())
+                    received_bytes = bytes()
+                    for response in response_iterator:
+                        received_bytes += response.chunk
+                        print('Received %d bytes...', len(response.chunk))
+                    #except grpc.RpcError as rpc_error:
+                    #    print('Handle exception here...')
+                    #    sys.stdout.flush()
+                    #    raise rpc_error
+                #print(received_bytes)
+                f = open(g_replica, 'wb')
+                f.write(received_bytes)
+                f.close()
+
+
+                print("Server updated")
+                sys.stdout.flush()
+                first_time = False
+
+            time.sleep(1)
+        """
         other_servers_counters = []
         for server in self.servers:
             try:
@@ -178,6 +289,7 @@ class Aplication:
                 except:
                     print("Error trying to get the counter")
         #values.index(min(values))
+        """
 
     """
     def handleClient(self, connection):
