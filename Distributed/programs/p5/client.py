@@ -27,7 +27,6 @@ class Aplication:
         self.ip = str(sys.argv[2])
 
         self.thread1 = threading.Thread(target=self.workerHour).start()
-        self.thread2 = threading.Thread(target=self.workerBook).start()
         self.periodicCall()
 
     def periodicCall(self):
@@ -51,28 +50,18 @@ class Aplication:
                 ip_server = server1[0]
                 port_server = server1[1]
                 print("Error trying to get the clock trying new server")
-            time.sleep(1)
 
-    def workerBook(self):
-        server1 = self.servers[0].split(':')
-        ip_server = server1[0]
-        port_server = server1[1]
-        while True:
             if self.gui.getIsRequest():
-                    self.gui.turnOffIsRequest()
-                    try:
-                        with grpc.insecure_channel(ip_server+':'+port_server) as channel:
-                            stub = services_pb2_grpc.InformationStub(channel)
-                            metadata = [('ip', self.ip)]
-                            response2 = stub.SendBook(empty_pb2.Empty() , metadata = metadata)
-                            self.queue.put("B_" + response2.book)
-                    except:
-                        self.servers.append(self.servers.popleft())
-                        server1 = self.servers[0].split(':')
-                        ip_server = server1[0]
-                        port_server = server1[1]
-                        print("Error trying to get a book trying new server")
-        time.sleep(1)
+                self.gui.turnOffIsRequest()
+                try:
+                    with grpc.insecure_channel(ip_server+':'+port_server) as channel:
+                        stub = services_pb2_grpc.InformationStub(channel)
+                        metadata = [('ip', self.ip)]
+                        response2 = stub.SendBook(empty_pb2.Empty() , metadata = metadata)
+                        self.queue.put("B_" + response2.book)
+                except:
+                    print("Error trying to get a book trying new server")
+            time.sleep(1)
 
 root = tkinter.Tk()
 client = Aplication(root)
