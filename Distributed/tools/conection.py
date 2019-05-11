@@ -6,6 +6,8 @@ def callService(name_service, ip_server, port):
         stub = services_pb2_grpc.InformationStub(channel)
         if name_service == "GetBooks":
             response = stub.SendBooks(empty_pb2.Empty())
+        elif name_service == "GetHour":
+            response = stub.SendHour(empty_pb2.Empty())
         elif name_service == "GetCounter":
             response = stub.SendCounter(empty_pb2.Empty())
         elif name_service == "GetFile":
