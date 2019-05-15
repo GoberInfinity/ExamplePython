@@ -17,14 +17,12 @@ import services_pb2, services_pb2_grpc
 import servergui, tkinter, fchunk
 import timer, time, conection
 import threading, queue, random
-import database
+import utcdatabase
 
 _ONE_DAY_IN_SECONDS = 60 * 60 * 24
 
 
-database_location = "../../data/firstdb/f_db.db"
-database_script_location = '../../data/firstdb/dump.sql'
-database_recieved_script_location = "../../data/firstdb/dumped.sql"
+database_location = "../../data/utcdb/u_db.db"
 
 g_slaves_hour = []
 
@@ -32,6 +30,7 @@ g_book_counter = -1
 g_books = []
 g_hour = ""
 g_book = ""
+g_pause = False
 
 g_needs_restore = False
 g_update_book_gui = False
@@ -60,10 +59,11 @@ class Aplication:
         self.clock3 = None
         self.clock4 = None
 
+        self.databaseConnection = utcdatabase.UTCDatabase(database_location)
+
         #Server configurations
         self.port = str(sys.argv[1])
         self.servers = (str(sys.argv[2])).split(',')
-
 
         self.thread1 = threading.Thread(target=self.workerThread, args=[1], daemon=True).start()
         self.thread2 = threading.Thread(target=self.workerThread, args=[2], daemon=True).start()
@@ -80,7 +80,7 @@ class Aplication:
         self.master.after(100, self.periodicCall)
 
     def workerThread(self, n_thread):
-        global g_hour
+        global g_hour, g_pause
 
         if n_thread == 1:
             current_time = timer.getCurrentTime()
@@ -91,6 +91,10 @@ class Aplication:
             time.sleep(1)
             btn_id, is_editeable_btn = self.gui.getEditable(n_thread)
             setattr(self, 'clock' + str(n_thread), current_time)
+
+            if g_pause:
+                time.sleep(2)
+
             if n_thread == 1 and g_hour:
                 current_time = g_hour
             if is_editeable_btn and btn_id == n_thread:
@@ -117,7 +121,7 @@ class Aplication:
             server.stop(0)
 
     def consume(self):
-        global g_hour
+        global g_hour, g_pause
         while True:
             g_slaves_hour = []
             for server in self.servers:
@@ -128,12 +132,22 @@ class Aplication:
                 #get all the counters from the other servers
                 try:
                     c_response = conection.callService('GetHour',ip_server,port_server)
-                    g_slaves_hour.append(timer.differenceBetween(g_hour,c_response.hour))
+                    splitted_hour = c_response.hour.split(":")
+                    splitted_g_hour = g_hour.split(":")
+                    if abs(int(splitted_g_hour[0]) - int(splitted_hour[1])) >= 1:
+                        pass
+                    elif abs(int(splitted_g_hour[1]) - int(splitted_hour[1])) >= 30:
+                        pass
+                    else:
+                        g_slaves_hour.append(timer.differenceBetween(g_hour,c_response.hour))
                     sys.stdout.flush()
-                except:
-                    print(f"Error trying to get the hour from {server}")
+                except Exception as ex:
+                    print(ex)
                     sys.stdout.flush()
-            g_hour = timer.getBerkleyhour(g_hour, g_slaves_hour)
+            pause, berkely_hour = timer.getBerkleyhour(g_hour, g_slaves_hour)
+            self.databaseConnection.insertIntoHours(g_hour, berkely_hour)
+            g_hour = berkely_hour
+            self.databaseConnection.selectAllHour()
             time.sleep(4)
 
     def getClock(self, number):

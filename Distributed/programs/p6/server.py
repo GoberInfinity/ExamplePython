@@ -30,6 +30,7 @@ g_book_counter = -1
 g_books = []
 g_hour = ""
 g_book = ""
+g_pause = False
 
 g_needs_hour_update = False
 g_needs_restore = False
@@ -145,7 +146,7 @@ class Aplication:
         self.master.after(100, self.periodicCall)
 
     def workerThread(self, n_thread):
-        global g_hour, g_needs_hour_update
+        global g_hour, g_needs_hour_update, g_pause
 
         if n_thread == 1:
             current_time = timer.getCurrentTime()
@@ -156,6 +157,9 @@ class Aplication:
             time.sleep(1)
             btn_id, is_editeable_btn = self.gui.getEditable(n_thread)
             setattr(self, 'clock' + str(n_thread), current_time)
+
+            if g_pause:
+                time.sleep(2)
 
             if is_editeable_btn and btn_id == n_thread:
                pass
@@ -333,15 +337,20 @@ class Aplication:
         g_books = self.books
 
     def getNewHourThread(self):
-        global g_needs_hour_update, g_hour
+        global g_needs_hour_update, g_hour, g_pause
         while True:
             try:
                 with grpc.insecure_channel('localhost:50010') as channel:
                     stub = services_pb2_grpc.InformationStub(channel)
                     response = stub.SendHour(empty_pb2.Empty())
-                    g_hour = response.hour
-                    g_needs_hour_update = True
-                    print(f"New hour from server {g_hour}")
+                    pause = timer.itHasToPause(timer.strToTime(g_hour), timer.strToTime(response.hour))
+                    if pause:
+                        g_pause = True
+                    else:
+                        g_hour = response.hour
+                        g_needs_hour_update = True
+                        g_pause = False
+                        print(f"New hour from server {g_hour}")
             except:
                 print("Error trying to get the new hour")
             time.sleep(2)
