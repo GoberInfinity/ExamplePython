@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 import sqlite3
 from datetime import datetime
-
+#TODO
+# Detaill, session tables changed, now it has to recieve time as parameter to insert into the database
 class Database:
 
     def __init__(self, database_file):
         self.createConnection(database_file)
-        #self.__createTables()
-        #self.__insertBooks()
-        #self.selectAllBooks()
+        """ Uncomment if you want to create a new empty database """
+        self.__createTables()
+        self.__insertBooks()
+        self.selectAllBooks()
 
     def closeDatabase(self):
         self.connection = None
@@ -49,17 +51,17 @@ class Database:
         cursor.execute('''CREATE TABLE session
                            (session_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             user_id integer,
-                            created DATETIME)
+                            created text)
                             ''')
         cursor.execute('''CREATE TABLE detail
                            (detail_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             session integer,
-                            book_id integer)
+                            book_id integer,
+                            created text)
                             ''')
 
-    def insertIntoUser(self, ip):
+    def insertIntoUser(self, ip, time):
         cursor = self.createCursor()
-        time=datetime.now()
         cursor.execute('INSERT OR IGNORE INTO user (ip) VALUES (?)', [ip])
         user_id = self.getIdUser(ip)
         cursor.execute('INSERT INTO session (user_id, created) VALUES (?,?)', [user_id, time])
@@ -103,10 +105,10 @@ class Database:
             if user_id == row[1]:
                 return row[0]
 
-    def insertDetail(self, ip, book_id):
+    def insertDetail(self, ip, book_id, time):
         cursor = self.createCursor()
         session_id = self.getSession(ip)
-        cursor.execute('INSERT INTO detail (session, book_id) VALUES (?,?)', [session_id, book_id])
+        cursor.execute('INSERT INTO detail (session, book_id, created) VALUES (?,?,?)', [session_id, book_id, time])
         self.connection.commit()
         self.getAllDetaill()
 
@@ -116,4 +118,4 @@ class Database:
     def closeConnection(self):
         self.connection.close()
 
-#a = Database()
+a = Database("recovery.db")

@@ -203,8 +203,8 @@ class Aplication:
                     self.gui.book_image.image = new_image
                     if g_last_ip not in ips:
                         ips.add(g_last_ip)
-                        self.databaseConnection.insertIntoUser(g_last_ip)
-                    self.databaseConnection.insertDetail(g_last_ip,selected_book[0])
+                        self.databaseConnection.insertIntoUser(g_last_ip, g_hour)
+                    self.databaseConnection.insertDetail(g_last_ip,selected_book[0], g_hour)
                 g_update_book_gui = False
             time.sleep(0.5)
 
