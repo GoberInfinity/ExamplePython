@@ -8,9 +8,9 @@ class Database:
     def __init__(self, database_file):
         self.createConnection(database_file)
         """ Uncomment if you want to create a new empty database """
-        self.__createTables()
-        self.__insertBooks()
-        self.selectAllBooks()
+        #self.__createTables()
+        #self.__insertBooks()
+        #self.selectAllBooks()
 
     def closeDatabase(self):
         self.connection = None
@@ -118,4 +118,4 @@ class Database:
     def closeConnection(self):
         self.connection.close()
 
-a = Database("recovery.db")
+#a = Database("recovery.db")

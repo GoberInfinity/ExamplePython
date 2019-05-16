@@ -61,7 +61,7 @@ class Aplication:
                         self.queue.put("B_" + response2.book)
                 except:
                     print("Error trying to get a book trying new server")
-            time.sleep(6)
+            time.sleep(1)
 
 root = tkinter.Tk()
 client = Aplication(root)

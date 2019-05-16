@@ -159,7 +159,7 @@ class Aplication:
             setattr(self, 'clock' + str(n_thread), current_time)
 
             if g_pause:
-                time.sleep(2)
+                time.sleep(5)
 
             if is_editeable_btn and btn_id == n_thread:
                pass
