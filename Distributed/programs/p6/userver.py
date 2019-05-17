@@ -41,6 +41,7 @@ g_path_of_replica_file = None
 g_path_of_database = None
 
 g_last_ip = ""
+g_data = dict()
 
 class Services(services_pb2_grpc.InformationServicer):
 
@@ -121,7 +122,9 @@ class Aplication:
             server.stop(0)
 
     def consume(self):
-        global g_hour, g_pause
+        global g_hour, g_pause, g_data
+        ips = set()
+
         while True:
             g_slaves_hour = []
             for server in self.servers:
@@ -129,9 +132,19 @@ class Aplication:
                 ip_server = str(server_data[0])
                 port_server = str(server_data[1])
 
-                #get all the counters from the other servers
+                #get all the slave hours
                 try:
+                    start = time.time()
                     c_response = conection.callService('GetHour',ip_server,port_server)
+                    end = time.time()
+
+                    #Insert the ip and latency into the database if it´s a new one
+                    if ip_server not in ips:
+                        latency = str(end - start)
+                        self.databaseConnection.insertIntoSlaves(ip_server, latency)
+
+                    g_data[ip_server] = c_response.hour
+
                     splitted_hour = c_response.hour.split(":")
                     splitted_g_hour = g_hour.split(":")
                     if abs(int(splitted_g_hour[0]) - int(splitted_hour[1])) >= 1:
@@ -146,8 +159,10 @@ class Aplication:
                     sys.stdout.flush()
             pause, berkely_hour = timer.getBerkleyhour(g_hour, g_slaves_hour)
             self.databaseConnection.insertIntoHours(g_hour, berkely_hour)
+            self.databaseConnection.insertIntoMaster(g_data)
             g_hour = berkely_hour
-            self.databaseConnection.selectAllHour()
+            #self.databaseConnection.selectAllHour()
+            self.databaseConnection.selectAllMaster()
             time.sleep(4)
 
     def getClock(self, number):

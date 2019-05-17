@@ -41,10 +41,26 @@ class UTCDatabase:
         cursor.execute('INSERT OR IGNORE INTO hour (p_hour, c_hour) VALUES (?,?)', [master, berkley])
         self.connection.commit()
 
-    def insertIntoMaster(self, slave_id, master_id, slave_hour):
+    def insertIntoMaster(self, data):
+        if not data:
+            return
+        last_hour_id = self.getLastInsertedHour()
+        for ip, hour in data.items():
+            slave_id = int(self.getIdOfSlave(ip))
+            cursor = self.createCursor()
+            cursor.execute('INSERT OR IGNORE INTO master (slave_id, hour_id, slave_hour) VALUES (?,?,?)', [slave_id, last_hour_id, hour])
+            self.connection.commit()
+
+    def getIdOfSlave(self, ip):
         cursor = self.createCursor()
-        cursor.execute('INSERT OR IGNORE INTO master (slave_id, hour_id_hour, slave_hour) VALUES (?,?)', [slave_id, master_id, slave_hour])
-        self.connection.commit()
+        for row in cursor.execute('SELECT * FROM slave'):
+            if ip == row[1]:
+                return row[0]
+
+    def getLastInsertedHour(self):
+        cursor = self.createCursor()
+        cursor.execute('SELECT * FROM hour ORDER BY hour_id DESC LIMIT 1')
+        return int(cursor.fetchone()[0])
 
     def createCursor(self):
         return self.connection.cursor()
@@ -52,8 +68,14 @@ class UTCDatabase:
     def closeConnection(self):
         self.connection.close()
 
+    def selectAllMaster(self):
+        cursor = self.createCursor()
+        response = []
+        for row in cursor.execute('SELECT * FROM master '):
+            print(row)
+
     def selectAllHour(self):
         cursor = self.createCursor()
         response = []
-        for row in cursor.execute('SELECT * FROM hour'):
+        for row in cursor.execute('SELECT * FROM hour '):
             print(row, end=" ")
