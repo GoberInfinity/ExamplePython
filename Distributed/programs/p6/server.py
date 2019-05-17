@@ -1,6 +1,7 @@
 #python server.py 50070 10:50060 0 ../../data/seconddb/dump.sql ../../data/s2froms1.sql ../../data/seconddb/s_db.db
 #python server.py 50060 localhost:50070,localhost:50080 0 ../../data/firstdb/dump.sql ../../data/s1fromsn.sql ../../data/firstdb/f_db.db
-
+# The last two parameters are (Ip of the utc server, and ip of the machine)
+#python server.py 50060 localhost:50070,localhost:50080 1 ../../data/firstdb/dump.sql ../../data/s1fromsn.sql ../../data/firstdb/f_db.db localhost localhost
 from __future__ import print_function
 from concurrent import futures
 from google.protobuf import empty_pb2
@@ -32,6 +33,8 @@ g_hour = ""
 g_book = ""
 g_pause = False
 
+g_counter = 0
+
 g_needs_hour_update = False
 g_needs_restore = False
 g_update_book_gui = False
@@ -42,6 +45,8 @@ g_path_of_replica_file = None
 g_path_of_database = None
 
 g_last_ip = ""
+g_last_utc_port = 50060
+g_last_utc_counter = 0
 
 
 class Services(services_pb2_grpc.InformationServicer):
@@ -112,7 +117,17 @@ class Aplication:
         #Server configurations
         self.port = str(sys.argv[1])
         self.servers = (str(sys.argv[2])).split(',')
+
+        print(self.servers)
         self.master_server = int(sys.argv[3])
+        self.utc_server = (str(sys.argv[7]))
+        self.my_ip = (str(sys.argv[8]))
+
+        self.rawslaves = str(sys.argv[2]) + ',' + str(self.my_ip + ':' + self.port)
+        self.slaves = (str(sys.argv[2])).split(',')
+        self.slaves.append(str(self.my_ip + ':' + self.port))
+        self.sortedslaves = sorted(self.slaves, key= lambda x: x.split(":")[1])
+        print(self.sortedslaves)
         self.setFilePaths()
 
         self.servers_responses_counter = [-10 for _ in range(len(self.servers))]
@@ -337,12 +352,17 @@ class Aplication:
         g_books = self.books
 
     def getNewHourThread(self):
-        global g_needs_hour_update, g_hour, g_pause
+        global g_needs_hour_update, g_hour, g_pause, g_last_utc_port, g_last_utc_counter
+        attempts_to_reconnect = 1
+        attempt_counter = 0
         while True:
             try:
-                with grpc.insecure_channel('localhost:50010') as channel:
+                with grpc.insecure_channel( self.utc_server + ':50010') as channel:
+                    begin = time.time()
                     stub = services_pb2_grpc.InformationStub(channel)
                     response = stub.SendHour(empty_pb2.Empty())
+                    end = time.time()
+                    print(f"Latency is {end-begin}")
                     pause = timer.itHasToPause(timer.strToTime(g_hour), timer.strToTime(response.hour))
                     if pause:
                         g_pause = True
@@ -353,6 +373,30 @@ class Aplication:
                         print(f"New hour from server {g_hour}")
             except:
                 print("Error trying to get the new hour")
+                if attempt_counter > attempts_to_reconnect:
+                    attempt_counter = 0
+                    #If the master is down, we have to create a new utc server
+                    # we are proposing the server with the lowest port to create
+                    # the new utc server, it the pc is not that number we need
+                    # to sleep in order to wait until the new utc server is up
+                    if int(self.port) == g_last_utc_port:
+                        command = 'python userver.py 50010 ' + self.rawslaves
+                        threading.Thread(target=lambda: os.system(command), daemon=True).start()
+                    else:
+                        time.sleep(5)
+                        g_last_utc_port += 10
+                    raw_new_utc_server = self.sortedslaves[g_last_utc_counter]
+                    self.utc_server = raw_new_utc_server.split(":")[0]
+
+                    g_last_utc_counter += 1
+
+                    print(f"Last port {g_last_utc_port}")
+
+                    #Limit the server to 3
+                    if g_last_utc_port > 50080:
+                        g_last_utc_port = 50060
+                attempt_counter += 1
+
             time.sleep(2)
 
     def createNewDatabase(self):

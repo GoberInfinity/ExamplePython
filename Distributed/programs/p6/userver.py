@@ -137,6 +137,7 @@ class Aplication:
                     start = time.time()
                     c_response = conection.callService('GetHour',ip_server,port_server)
                     end = time.time()
+                    print(f"The latency is: {end -start}")
 
                     #Insert the ip and latency into the database if it´s a new one
                     if ip_server not in ips:
