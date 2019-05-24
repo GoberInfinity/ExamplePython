@@ -12,6 +12,7 @@ class Database:
         self.connection = sqlite3.connect(database_file, check_same_thread=False)
         self.getAllSessions()
         self.getAllDetaill()
+        self.getAllUsers()
 
     def selectAllBooks(self):
         cursor = self.createCursor()
