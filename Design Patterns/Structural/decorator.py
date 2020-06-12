@@ -66,12 +66,7 @@ class ConcreteComponent(Component): #Core functionality
         print("Core functionality")
 
 
-def main():
-    concrete_component = ConcreteComponent()
-    concrete_decorator_a = ConcreteDecoratorA(concrete_component)
-    concrete_decorator_b = ConcreteDecoratorB(concrete_decorator_a)
-    concrete_decorator_b.operation() # It will call B - A - core
-
-
-if __name__ == "__main__":
-    main()
+concrete_component = ConcreteComponent()
+concrete_decorator_a = ConcreteDecoratorA(concrete_component)
+concrete_decorator_b = ConcreteDecoratorB(concrete_decorator_a)
+concrete_decorator_b.operation() # It will call B - A - core
