@@ -39,8 +39,8 @@ class SparseTable:
                 
     
 a = SparseTable([7, 2, 3, 0, 5, 10, 3, 12, 18])
-print(a.query(0, 4))  
-print(a.query(4, 7))  
-print(a.query(7, 8))
+print(a.query(0, 4))  # min = 0
+print(a.query(4, 7))  # min = 3
+print(a.query(7, 8))  # min = 12
         
 

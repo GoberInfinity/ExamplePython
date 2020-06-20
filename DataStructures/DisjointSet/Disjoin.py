@@ -49,7 +49,7 @@ obj = DisjSet(5)
 obj.Union(0, 2) 
 obj.Union(4, 2) 
 obj.Union(3, 1) 
-print(obj.find(4) == obj.find(0))
-print(obj.find(1) == obj.find(0)) 
-print(obj.find(4) == obj.find(3))
-print(obj.find(0) == obj.find(2))
+print(obj.find(4) == obj.find(0)) # True
+print(obj.find(1) == obj.find(0)) # False
+print(obj.find(4) == obj.find(3)) # False
+print(obj.find(0) == obj.find(2)) # True
