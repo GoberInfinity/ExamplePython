@@ -23,7 +23,6 @@ from LinkedList.Linked_list import Element, LinkedList
 sys.path.append(os.path.abspath(os.path.join("../..", "DataStructures")))
 
 
-
 def intersection(l1, l2):
     if not l1 or not l2:
         return False
