@@ -7,17 +7,22 @@ Input: the node c from the linked list a->b->c->d->e->f
 Result: nothing is returned, but the new linked list looks like a->b->d->e->f
 """
 
-import sys, os
-sys.path.append(os.path.abspath(os.path.join('../..', 'DataStructures')))
-from LinkedList.Linked_list import LinkedList, Element
+import os
+import sys
+
+from LinkedList.Linked_list import Element, LinkedList
+
+sys.path.append(os.path.abspath(os.path.join("../..", "DataStructures")))
+
 
 def delete_middle_node(ll):
-    current = ll.head 
+    current = ll.head
     for i in range(3):
         current = current.next
     current.value = current.next.value
     current.next = current.next.next
-    
+
+
 e1 = Element(1)
 e2 = Element(2)
 e3 = Element(3)

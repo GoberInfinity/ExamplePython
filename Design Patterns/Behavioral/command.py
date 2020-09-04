@@ -44,7 +44,7 @@ class ConcreteCommand(Command):
     Receiver.
     """
 
-    def execute(self): #Calls the reciever action method 
+    def execute(self):  # Calls the reciever action method
         self._receiver.action()
 
 
@@ -56,6 +56,7 @@ class Receiver:
 
     def action(self):
         print("Reciever")
+
 
 receiver = Receiver()
 concrete_command = ConcreteCommand(receiver)

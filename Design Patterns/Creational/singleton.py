@@ -16,11 +16,12 @@ class Singleton(type):
 
     def __call__(cls, *args, **kwargs):
         if cls._instance is None:
-            #Calls the constructor of the class
-            cls._instance = super().__call__(*args, **kwargs) 
+            # Calls the constructor of the class
+            cls._instance = super().__call__(*args, **kwargs)
         return cls._instance
 
-# A metaclass is the class of a class. A class defines how an instance of the 
+
+# A metaclass is the class of a class. A class defines how an instance of the
 # class (i.e. an object) behaves while a metaclass defines how a class behaves.
 class MyClass(metaclass=Singleton):
     """

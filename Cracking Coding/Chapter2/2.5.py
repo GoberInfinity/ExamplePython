@@ -13,9 +13,13 @@ Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).That is,617 + 295.
 Output: 9 - > 1 - > 2. That is, 912.
 """
 
-import sys, os
-sys.path.append(os.path.abspath(os.path.join('../..', 'DataStructures')))
-from LinkedList.Linked_list import LinkedList, Element
+import os
+import sys
+
+from LinkedList.Linked_list import Element, LinkedList
+
+sys.path.append(os.path.abspath(os.path.join("../..", "DataStructures")))
+
 
 def sum_lists(ll_a, ll_b):
     n1, n2 = ll_a.head, ll_b.head
@@ -34,8 +38,9 @@ def sum_lists(ll_a, ll_b):
 
     if carry:
         ll.append(Element(carry))
-    print('\n')
+    print("\n")
     ll.print_linked()
+
 
 e1 = Element(7)
 e2 = Element(1)
@@ -56,4 +61,4 @@ ll2.append(e6)
 ll.print_linked()
 print("\n")
 ll2.print_linked()
-sum_lists(ll,ll2)
+sum_lists(ll, ll2)

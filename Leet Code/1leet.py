@@ -12,5 +12,6 @@ class Solution(object):
             lookup[num] = i
         return []
 
-if __name__ == '__main__':
-    print (Solution().twoSum((3, 2, 4), 6))
+
+if __name__ == "__main__":
+    print(Solution().twoSum((3, 2, 4), 6))

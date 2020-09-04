@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- coding: utf-8 -*-
 class Solution:
     def isValid(self, s):
         """
@@ -6,7 +6,7 @@ class Solution:
         :rtype: bool
         """
         stack = []
-        dict = {"]":"[", "}":"{", ")":"("}
+        dict = {"]": "[", "}": "{", ")": "("}
         for char in s:
             if char in dict.values():
                 stack.append(char)
@@ -17,6 +17,6 @@ class Solution:
                 return False
         return stack == []
 
-if __name__ == '__main__':
-    print (Solution().isValid("[]()[]")) 
-    
+
+if __name__ == "__main__":
+    print(Solution().isValid("[]()[]"))

@@ -15,6 +15,7 @@ class ListNode:
         self.val = x
         self.next = None
 
+
 class Solution:
     def mergeTwoLists(self, l1, l2):
         """
@@ -33,6 +34,6 @@ class Solution:
             head = head.next
         head.next = l1 or l2
         return dummy.next
-    
-    
+
+
 print(3 // 2)

@@ -15,6 +15,7 @@ Output: 5->4->3->2->1->NULL
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def reverseList(self, head):
         """
@@ -22,10 +23,10 @@ class Solution:
         :rtype: ListNode
         """
         if not head:
-            return None 
+            return None
         current_node = head
         reversed_list_head = None
-        while(current_node):
+        while current_node:
             element_to_append = ListNode(current_node.val)
             element_to_append.next = reversed_list_head
             reversed_list_head = element_to_append

@@ -18,7 +18,7 @@ class Component(metaclass=abc.ABCMeta):
         pass
 
 
-class Decorator(Component, metaclass=abc.ABCMeta): #The wrapper
+class Decorator(Component, metaclass=abc.ABCMeta):  # The wrapper
     """
     Maintain a reference to a Component object and define an interface
     that conforms to Component's interface.
@@ -50,13 +50,13 @@ class ConcreteDecoratorB(Decorator):
     """
 
     def operation(self):
-        # ... 
+        # ...
         print("Decorator B")
         self._component.operation()
         # ...
 
 
-class ConcreteComponent(Component): #Core functionality 
+class ConcreteComponent(Component):  # Core functionality
     """
     Define an object to which additional responsibilities can be
     attached.
@@ -69,4 +69,4 @@ class ConcreteComponent(Component): #Core functionality
 concrete_component = ConcreteComponent()
 concrete_decorator_a = ConcreteDecoratorA(concrete_component)
 concrete_decorator_b = ConcreteDecoratorB(concrete_decorator_a)
-concrete_decorator_b.operation() # It will call B - A - core
+concrete_decorator_b.operation()  # It will call B - A - core

@@ -7,15 +7,17 @@ Think about this while you're implementing:
 why is it easier to add an "insert_first"
 function than just use "append"?"""
 
+
 class Element:
     def __init__(self, value):
         self.value = value
         self.next = None
-        
+
+
 class LinkedList:
     def __init__(self, head=None):
         self.head = head
-        
+
     def append(self, new_element):
         current = self.head
         if self.head:
@@ -40,8 +42,9 @@ class LinkedList:
             return current
         return None
 
+
 class Stack:
-    def __init__(self,top=None):
+    def __init__(self, top=None):
         self.ll = LinkedList(top)
 
     def push(self, new_element):
@@ -54,7 +57,8 @@ class Stack:
         "Pop (remove) the first element off the top of the stack and return it"
         current_stack = self.ll
         return current_stack.delete_first()
-    
+
+
 # Test cases
 # Set up some Elements
 e1 = Element(1)

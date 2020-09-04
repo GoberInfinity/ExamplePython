@@ -4,6 +4,7 @@ Given the array of IDs, which contains many duplicate integers and one unique in
 Note: All integers except one appear exactly 2 times.
 """
 
+
 class Solution:
     def singleNumber(self, nums):
         """
@@ -14,5 +15,6 @@ class Solution:
         for num in nums:
             solution ^= num
         return solution
-    
-print(Solution().singleNumber([1,1,2,2,3,4,4]))
+
+
+print(Solution().singleNumber([1, 1, 2, 2, 3, 4, 4]))

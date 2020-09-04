@@ -13,11 +13,7 @@ from collections import deque
 
 q = deque()
 
-q.append('eat')     # add a new entry to the right side
-q.append('sleep')   
-q.append('code')
-q.pop()             # return and remove the rightmost item
-
-
-
-
+q.append("eat")  # add a new entry to the right side
+q.append("sleep")
+q.append("code")
+q.pop()  # return and remove the rightmost item

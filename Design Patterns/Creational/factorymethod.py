@@ -73,6 +73,7 @@ class ConcreteProduct2(Product):
     def interface(self):
         print("Product 2 operation")
 
+
 concrete_creator = ConcreteCreator1()
 concrete_creator.product.interface()
 concrete_creator.some_operation()

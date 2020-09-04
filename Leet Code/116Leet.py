@@ -34,17 +34,18 @@ Given the following perfect binary tree,
 #         self.right = None
 #         self.next = None
 
+
 class Solution:
     # @param root, a tree link node
     # @return nothing
     def connect(self, root):
         if not root or not root.left:
             return None
-        self.connectSub(root.left,root.right)
-        
-    def connectSub(self,left,right):
+        self.connectSub(root.left, root.right)
+
+    def connectSub(self, left, right):
         left.next = right
         if left.left:
-            self.connectSub(left.right,right.left)
-            self.connectSub(left.left,left.right)
-            self.connectSub(right.left,right.right)
+            self.connectSub(left.right, right.left)
+            self.connectSub(left.left, left.right)
+            self.connectSub(right.left, right.right)

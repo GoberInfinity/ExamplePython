@@ -14,6 +14,7 @@ Given "foo", "bar", return false.
 Given "paper", "title", return true.
 """
 
+
 class Solution:
     def isIsomorphic(self, s, t):
         """

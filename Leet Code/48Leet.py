@@ -40,6 +40,7 @@ rotate the input matrix in-place such that it becomes:
 
 """
 
+
 class Solution:
     def rotate(self, matrix):
         """
@@ -50,5 +51,5 @@ class Solution:
         n = len(matrix[0])
         for i in range(n):
             for j in range(n):
-                if j<i:
-                    matrix[i][j],matrix[j][i] = matrix[j][i],matrix[i][j]
+                if j < i:
+                    matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]

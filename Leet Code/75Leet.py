@@ -18,6 +18,7 @@ array with total number of 0's, then 1's and followed by 2's.
 Could you come up with an one-pass algorithm using only constant space?
 """
 
+
 class Solution:
     def sortColors(self, nums):
         """
@@ -32,7 +33,6 @@ class Solution:
                 white += 1
             elif nums[white] == 2:
                 nums[blue], nums[white] = nums[white], nums[blue]
-                blue -=1
+                blue -= 1
             else:
-                white += 1        
-    
+                white += 1

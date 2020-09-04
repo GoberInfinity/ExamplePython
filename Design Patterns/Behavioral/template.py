@@ -85,5 +85,6 @@ class ConcreteClass2(AbstractClass):
     def hook1(self) -> None:
         print("ConcreteClass2 says: Overridden Hook1")
 
+
 ConcreteClass1().template_method()
 ConcreteClass2().template_method()

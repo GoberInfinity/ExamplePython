@@ -70,7 +70,6 @@ class WordsCollection(Iterable):
         self._collection.append(item)
 
 
-
 # The client code may or may not know about the Concrete Iterator or
 # Collection classes, depending on the level of indirection you want to keep
 # in your program.

@@ -6,7 +6,8 @@ def binary_exponentiation(a, n):
             result = result * a
         a = a * a
         n = n >> 1
-    return result 
- 
-for n in range(0,50):
+    return result
+
+
+for n in range(0, 50):
     print(f"2^{n} ={binary_exponentiation(2,n)}")

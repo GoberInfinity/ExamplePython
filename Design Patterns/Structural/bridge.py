@@ -12,8 +12,10 @@ class Abstraction:
         self.implementation = implementation
 
     def operation(self):
-        return (f"Abstraction: Base operation with:\n"
-                f"{self.implementation.operation_implementation()}")
+        return (
+            f"Abstraction: Base operation with:\n"
+            f"{self.implementation.operation_implementation()}"
+        )
 
 
 class ExtendedAbstraction(Abstraction):
@@ -22,8 +24,10 @@ class ExtendedAbstraction(Abstraction):
     """
 
     def operation(self):
-        return (f"ExtendedAbstraction: Extended operation with:\n"
-                f"{self.implementation.operation_implementation()}")
+        return (
+            f"ExtendedAbstraction: Extended operation with:\n"
+            f"{self.implementation.operation_implementation()}"
+        )
 
 
 class Implementation(ABC):
@@ -69,6 +73,7 @@ def client_code(abstraction: Abstraction):
     print(abstraction.operation(), end="")
 
     # ...
+
 
 implementation = ConcreteImplementationA()
 abstraction = Abstraction(implementation)

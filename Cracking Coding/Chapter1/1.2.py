@@ -7,11 +7,13 @@ Hint: Is whitespace is significant?
 """
 import unittest
 from collections import Counter
- 
+
+
 def is_Permutation(f_string, s_string):
     f_string = sorted(f_string)
     s_string = sorted(s_string)
     return f_string == s_string
+
 
 """
 def is_Permutation(f_string, s_string):
@@ -27,16 +29,17 @@ def is_Permutation(f_string, s_string):
     return True
 """
 
+
 class Test(unittest.TestCase):
     dataT = (
-        ('abcd', 'bacd'),
-        ('3563476', '7334566'),
-        ('wef34f', 'wffe34'),
+        ("abcd", "bacd"),
+        ("3563476", "7334566"),
+        ("wef34f", "wffe34"),
     )
     dataF = (
-        ('abcd', 'd2cba'),
-        ('2354', '1234'),
-        ('dcw4f', 'dcw5f'),
+        ("abcd", "d2cba"),
+        ("2354", "1234"),
+        ("dcw4f", "dcw5f"),
     )
 
     def test_cp(self):
@@ -48,5 +51,6 @@ class Test(unittest.TestCase):
         for test_strings in self.dataF:
             result = is_Permutation(*test_strings)
             self.assertFalse(result)
+
 
 unittest.main()

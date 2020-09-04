@@ -25,6 +25,7 @@ Return the following binary tree:
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
     def buildTree(self, preorder, inorder):
         """
@@ -34,7 +35,7 @@ class Solution:
         """
         if inorder:
             index_root = inorder.index(preorder.pop(0))
-            root = TreeNode(inorder[index_root]) 
+            root = TreeNode(inorder[index_root])
             root.left = self.buildTree(preorder, inorder[0:index_root])
-            root.right = self.buildTree(preorder, inorder[index_root+1:])
+            root.right = self.buildTree(preorder, inorder[index_root + 1 :])
             return root

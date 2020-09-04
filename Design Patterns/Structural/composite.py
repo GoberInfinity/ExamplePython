@@ -108,8 +108,6 @@ class Composite(Component):
         return f"Branch({','.join(results)})"
 
 
-
-
 # This way the client code can support the simple leaf components...
 simple = Leaf()
 print("Client: I've got a simple component:")

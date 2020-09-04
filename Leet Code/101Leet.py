@@ -18,7 +18,8 @@ For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
 #         self.val = x
 #         self.left = None
 #         self.right = None
-from collections import deque   
+from collections import deque
+
 
 class Solution:
     def isSymmetric(self, root):
@@ -28,9 +29,9 @@ class Solution:
         """
         if not root:
             return True
-  
+
         q = deque([root.left, root.right])
-        
+
         while q:
             left, right = q.popleft(), q.popleft()
 
@@ -38,6 +39,6 @@ class Solution:
                 continue
             elif (not left or not right) or (left.val != right.val):
                 return False
-            q += [left.left, right.right, left.right, right.left]  
-            
+            q += [left.left, right.right, left.right, right.left]
+
         return True

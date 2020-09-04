@@ -14,43 +14,49 @@ exact same node (by reference) as the jth node of the second linked list, then
 they are intersecting.
 """
 
-import sys, os
-sys.path.append(os.path.abspath(os.path.join('../..', 'DataStructures')))
-from LinkedList.Linked_list import LinkedList, Element
 import copy
+import os
+import sys
 
-def intersection(l1,l2):
+from LinkedList.Linked_list import Element, LinkedList
+
+sys.path.append(os.path.abspath(os.path.join("../..", "DataStructures")))
+
+
+
+def intersection(l1, l2):
     if not l1 or not l2:
-        return False 
-    
+        return False
+
     def get_tail_and_size(l):
         size = 1
         current = l.head
         while current.next:
             size += 1
             current = current.next
-        return (size,current)
+        return (size, current)
 
     l1_size, l1_tail = get_tail_and_size(l1)
     l2_size, l2_tail = get_tail_and_size(l1)
 
     if l1_tail is not l2_tail:
         return False
-    
+
     shorter = l1.head if l1_size < l2_size else l2.head
     longer = l2.head if l2_size > l1_size else l1.head
-    
+
     diff = abs(l1_size - l2_size)
-    
+
     for i in range(diff):
         longer = longer.next
-        
+
     while longer.value != shorter.value:
         longer = longer.next
-        shorter = shorter.next 
-        
+        shorter = shorter.next
+
     return longer.value
-    
+
+
 e1 = Element(1)
 e2 = Element(2)
 e3 = Element(3)
@@ -72,4 +78,4 @@ l2.append(e2p)
 l2.append(e3p)
 l2.append(e4p)
 
-print(intersection(ll,l2))
+print(intersection(ll, l2))

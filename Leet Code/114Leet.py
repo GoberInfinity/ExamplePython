@@ -32,6 +32,7 @@ The flattened tree should look like:
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
     def flatten(self, root):
         """
@@ -39,18 +40,18 @@ class Solution:
         :rtype: void Do not return anything, modify root in-place instead.
         """
         if not root:
-            return None 
-        mlist = self.bfs(root,[]) 
-        self.inPlace(root,mlist)
-        
-    def bfs(self,tree,nodes):
+            return None
+        mlist = self.bfs(root, [])
+        self.inPlace(root, mlist)
+
+    def bfs(self, tree, nodes):
         if tree:
             nodes.append(tree.val)
-            self.bfs(tree.left,nodes)
-            self.bfs(tree.right,nodes)
+            self.bfs(tree.left, nodes)
+            self.bfs(tree.right, nodes)
         return nodes
-    
-    def inPlace(self, root,mList):
+
+    def inPlace(self, root, mList):
         current = root
         mList.pop(0)
         while mList:
@@ -61,8 +62,9 @@ class Solution:
             else:
                 current.right.val = mList.pop(0)
             current = current.right
-            
-#Morris Traversal
+
+
+# Morris Traversal
 """
 def flatten(self, root):
     if not root:

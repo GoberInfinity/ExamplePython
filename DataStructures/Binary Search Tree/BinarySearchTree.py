@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 
+
 class Node(object):
     def __init__(self, value):
         self.value = value
         self.left = None
         self.right = None
-		
+
+
 class BST(object):
     def __init__(self, root):
         self.root = Node(root)
@@ -37,6 +39,7 @@ class BST(object):
             else:
                 return self.search_helper(current.left, find_val)
         return False
+
 
 # Set up tree
 tree = BST(4)

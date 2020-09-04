@@ -32,18 +32,23 @@ Explanation
 +------+-----+---+---+---+---+---+---+---+---+
                                                
 """
+
+
 def knapSack(W, wt, val, n):
-    result = [[0 for _ in range(W+1)] for _ in range(n+1)]
-    for i in range(n+1):
-        for w in range(W+1):
-            if i==0 or w==0:
+    result = [[0 for _ in range(W + 1)] for _ in range(n + 1)]
+    for i in range(n + 1):
+        for w in range(W + 1):
+            if i == 0 or w == 0:
                 result[i][w] = 0
-            if wt[i-1] <= w:
-                result[i][w] = max(val[i-1]+result[i-1][w-wt[i-1]],result[i-1][w])
+            if wt[i - 1] <= w:
+                result[i][w] = max(
+                    val[i - 1] + result[i - 1][w - wt[i - 1]], result[i - 1][w]
+                )
             else:
-                result[i][w] = result[i-1][w]
+                result[i][w] = result[i - 1][w]
     return result[n][W]
-                
+
+
 val = [1, 4, 5, 7]
 wt = [1, 3, 4, 5]
 W = 7

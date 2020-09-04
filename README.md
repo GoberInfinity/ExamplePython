@@ -1,29 +1,23 @@
-# Example Python 
-Algorithms and Data Structures implementations with Python.
+# Example Python
 
-## Prerequisities
+Algorithms, Data Structures and Design Patterns implementations with Python.
 
-[Python 3.6.x](https://www.python.org/downloads/release/python-362/) <br />
+### Prerequisites
 
-## Implemented Algorithms
+[Python 3.8.x](https://www.python.org/downloads/)
 
-1. Binary Search.
-2. Eratosthenes.
-3. Fibonacci with dynamic programming.
+### Table of Contents
 
-## Implemented Data Structures
-
-1. Binary Heap.
-3. Binary Search Tree.
-4. Binary Tree.
-5. Deque.
-6. Double Linked List.
-7. Graph
-8. Hash Table
-9. Linked List
-10. Queue
-11. Stack
-
-
-## Authors
-**Reyes Fragoso Roberto** - [Portfolio](http://robertoreyes.me)
+1. Data Structures
+   1. Double Linked List
+   1. Graph
+   1. Single Linked List
+1. Design Patterns
+   1. Behavioral
+   1. Creational
+   1. Structural
+1. Python syntax
+   1. List Comprehension
+   1. Print
+   1. Walrus Operator
+1.

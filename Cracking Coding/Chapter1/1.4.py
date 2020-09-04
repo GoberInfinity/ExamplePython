@@ -11,10 +11,11 @@ Output: True (permutations:"taco cat'; "atco cta'; etc.)
 """
 import unittest
 
+
 def is_pal_perm(string):
-    lookup_table = [0 for _ in range(ord('z') - ord('a') + 1)]
+    lookup_table = [0 for _ in range(ord("z") - ord("a") + 1)]
     odd_letters = 0
-    
+
     for char in string:
         char_index = to_index(char)
         if char_index != -1:
@@ -25,11 +26,12 @@ def is_pal_perm(string):
                 odd_letters -= 1
     return odd_letters <= 1
 
+
 def to_index(c):
-    a = ord('a')
-    z = ord('z')
-    A = ord('A')
-    Z = ord('Z')
+    a = ord("a")
+    z = ord("z")
+    A = ord("A")
+    Z = ord("Z")
     val = ord(c)
 
     if a <= val <= z:
@@ -38,22 +40,25 @@ def to_index(c):
         return val - A
     return -1
 
+
 class Test(unittest.TestCase):
-    '''Test Cases'''
+    """Test Cases"""
+
     data = [
-        ('Tact Coa', True),
-        ('jhsabckuj ahjsbckj', True),
-        ('Able was I ere I saw Elba', True),
-        ('So patient a nurse to nurse a patient so', False),
-        ('Random Words', False),
-        ('Not a Palindrome', False),
-        ('no x in nixon', True),
-        ('azAZ', True)]
+        ("Tact Coa", True),
+        ("jhsabckuj ahjsbckj", True),
+        ("Able was I ere I saw Elba", True),
+        ("So patient a nurse to nurse a patient so", False),
+        ("Random Words", False),
+        ("Not a Palindrome", False),
+        ("no x in nixon", True),
+        ("azAZ", True),
+    ]
 
     def test_pal_perm(self):
         for [test_string, expected] in self.data:
             actual = is_pal_perm(test_string)
             self.assertEqual(actual, expected)
-            
+
+
 print(unittest.main())
-            

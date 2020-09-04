@@ -51,5 +51,6 @@ class Subsystem2:
     def operation2(self):
         print("Sub 2 Op 2")
 
+
 facade = Facade()
 facade.operation()

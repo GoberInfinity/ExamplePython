@@ -2,24 +2,26 @@
 """
 """
 
-class Element:    
-    def __init__(self,value):
-        self.next = None 
+
+class Element:
+    def __init__(self, value):
+        self.next = None
         self.value = value
 
+
 class LinkedList:
-    def __init__(self,head=None):
+    def __init__(self, head=None):
         self.head = head
-    
-    def append(self,new_element):
+
+    def append(self, new_element):
         current = self.head
         if current:
             while current.next:
                 current = current.next
             current.next = new_element
-        else:   
+        else:
             self.head = new_element
-            
+
     def get_position(self, position):
         """Get an element from a particular position.
         Assume the first position is "1".
@@ -28,18 +30,18 @@ class LinkedList:
         current = self.head
         if position < 1:
             return None
-        
+
         if current:
             while current:
                 if counter == position:
                     return current
                 else:
                     counter += 1
-                    current = current.next 
+                    current = current.next
         else:
-            return None 
-        return None 
-    
+            return None
+        return None
+
     def insert(self, new_element, position):
         """Insert a new node at the given position.
         Assume the first position is "1".
@@ -47,27 +49,27 @@ class LinkedList:
         the 2nd and 3rd elements."""
         counter = 1
         current = self.head
-    
-        if position == 1 :
+
+        if position == 1:
             new_element.next = current
             self.head = new_element
         else:
             counter += 1
             while current:
-                if counter == position:        
+                if counter == position:
                     tail = current.next
                     current.next = new_element
                     new_element.next = tail
                     break
                 else:
                     current = current.next
-                    counter += 1  
+                    counter += 1
         pass
-    
+
     def delete(self, value):
         """Delete the first node with a given value."""
         current = self.head
-        
+
         if value == current.value:
             self.head = current.next
         else:
@@ -80,13 +82,14 @@ class LinkedList:
                 else:
                     current = current.next
         pass
-    
+
     def print_linked(self):
         current = self.head
         while current:
             print(current.value, end=" ")
             current = current.next
-        
+
+
 """    
 e1 = Element(1)
 e2 = Element(2)

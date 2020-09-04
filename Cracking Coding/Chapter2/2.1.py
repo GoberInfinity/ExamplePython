@@ -2,45 +2,49 @@
 """
 Write code to remove duplicates from an unsorted linked list.
 """
-class Element:    
-    def __init__(self,value):
-        self.next = None 
+
+
+class Element:
+    def __init__(self, value):
+        self.next = None
         self.value = value
 
+
 class LinkedList:
-    def __init__(self,head=None):
+    def __init__(self, head=None):
         self.head = head
-    
-    def append(self,new_element):
+
+    def append(self, new_element):
         current = self.head
         if current:
             while current.next:
                 current = current.next
             current.next = new_element
-        else:   
+        else:
             self.head = new_element
-            
+
     def print_linked(self):
         current = self.head
         while current:
             print(current.value, end=" ")
             current = current.next
-            
+
     def remove_dups(self):
         if not self.head:
             return None
-        
+
         current = self.head
         seen = set([current.value])
         while current.next:
-            
+
             if current.next.value in seen:
                 current.next = current.next.next
             else:
                 seen.add(current.next.value)
                 current = current.next
         pass
-    
+
+
 e1 = Element(1)
 e2 = Element(2)
 e3 = Element(3)

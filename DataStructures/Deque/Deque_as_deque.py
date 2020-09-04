@@ -7,10 +7,9 @@ collection.
 from collections import deque
 
 d = deque()
-d.append('1')
-d.append('2')
-d.append('3')
-d.appendleft('f')
+d.append("1")
+d.append("2")
+d.append("3")
+d.appendleft("f")
 len(d)
-d.popleft()  
-
+d.popleft()

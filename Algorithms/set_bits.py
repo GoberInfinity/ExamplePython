@@ -4,6 +4,7 @@ Given a number, tell number of bits set in the number in its binary
 representation. 
 """
 
+
 class Solution:
     # @param number : int
     # @return an integer
@@ -13,5 +14,6 @@ class Solution:
             counter += number & 1
             number >>= 1
         return counter
+
 
 print(Solution().numSetBits(-15))

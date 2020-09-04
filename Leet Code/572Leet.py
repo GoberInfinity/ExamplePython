@@ -40,8 +40,8 @@ Given tree t:
 #         self.left = None
 #         self.right = None
 
+
 class Solution:
-    
     def isSubtree(self, s, t):
         """
         :type s: TreeNode
@@ -55,12 +55,14 @@ class Solution:
         if self.isSubtree(s.left, t) or self.isSubtree(s.right, t):
             return True
         return False
-    
+
     def check(self, s, t):
         if not s and not t:
             return True
         if not s or not t:
-               return False
-        return (s.val == t.val and
-                self.check(s.left, t.left) and 
-                self.check(s.right, t.right))
+            return False
+        return (
+            s.val == t.val
+            and self.check(s.left, t.left)
+            and self.check(s.right, t.right)
+        )

@@ -1,0 +1,9 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+
+black=19.10b0=py_4
+flake8=3.8.3=py_0
+isort=5.4.2=py38h32f6830_0
+pre-commit=2.7.1=py38h32f6830_0
+python=3.8.5=h60c2a47_5_cpython

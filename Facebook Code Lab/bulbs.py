@@ -15,8 +15,10 @@ Explanation :
 	press switch 2 : [1 1 1 0]
 	press switch 3 : [1 1 1 1]
 """
+
+
 class Solution:
-    def bulbs(self,A):
+    def bulbs(self, A):
         if not A:
             return 0
         n = 0
@@ -24,8 +26,9 @@ class Solution:
         for bulb in A:
             if bulb == status:
                 n += 1
-                status = int( not status)
+                status = int(not status)
         return n
+
 
 class Solution2:
     def twoSum(self, nums, target):
@@ -37,11 +40,13 @@ class Solution2:
         if not nums:
             return []
         checkup = {}
-        for i,num in enumerate(nums):
+        for i, num in enumerate(nums):
             complement = target - num
             if checkup.get(complement):
-                return [checkup.get(complement),i]
+                return [checkup.get(complement), i]
             else:
-                checkup = {num : i}
+                checkup = {num: i}
         return []
-print(Solution2().twoSum([3,3],6))
+
+
+print(Solution2().twoSum([3, 3], 6))

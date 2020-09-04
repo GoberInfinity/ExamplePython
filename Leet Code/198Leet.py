@@ -11,6 +11,7 @@ Given a list of non-negative integers representing the amount of money of each
 the police. 
 """
 
+
 class Solution:
     def rob(self, nums):
         """
@@ -23,7 +24,7 @@ class Solution:
             prev2 = prev1
             prev1 = current
         return current
-        
+
         """ Second approach
         answer = [0] * (len(nums)+2)
         for num in range(2,len(nums)+2): 
