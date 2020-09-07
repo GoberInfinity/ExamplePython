@@ -20,4 +20,7 @@ Algorithms, Data Structures and Design Patterns implementations with Python.
    1. List Comprehension
    1. Print
    1. Walrus Operator
-1.
+
+## TODO:
+
+Put credits on the README
