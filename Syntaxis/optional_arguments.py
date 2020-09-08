@@ -1,0 +1,45 @@
+# The best practice is to always specify optional
+# arguments using the keyword names and never pass them as positional arguments (*args).
+
+
+def flow_rate(weight_diff, time_diff, period=1, units_per_kg=1):
+    return ((weight_diff / units_per_kg) / time_diff) * period
+
+
+weight_diff = 0.5
+time_diff = 3
+pounds_per_hour = flow_rate(weight_diff, time_diff, period=3600, units_per_kg=2.2)
+
+
+# Default argument values are evaluated only once per module which usually happens when a program starts up.
+# After the module containing this code is loaded, the datetime.now default argument will never be evaluated again.
+
+
+def log(message, when=datetime.now()):
+    print(f"{when}, {message}")
+
+
+log("Hi there!")  # >>> 2020-11-15 21:10:10.371432: Hi there!
+time.sleep(0.1)
+log("Hi again!")  # >>> 2020-11-15 21:10:10.371432: Hi again!
+
+# Default arguments are only evaluated once: during function definition at module
+# load time. This can cause odd behaviors for dynamic values (like {} or []).
+# Use None as the default value for keyword arguments that have a dynamic value.
+# Document the actual default behavior in the function"s docstring.
+
+
+def decode(data, default={}):
+    try:
+        return json.loads(data)
+    except ValueError:
+        return default
+
+
+foo = decode("bad data")
+foo["stuff"] = 5
+bar = decode("also bad")
+bar["meep"] = 1
+print(foo)  # {"stuff": 5, "meep": 1}
+print(bar)  # {"stuff": 5, "meep": 1}
+
