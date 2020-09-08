@@ -23,4 +23,5 @@ Algorithms, Data Structures and Design Patterns implementations with Python.
 
 ## TODO:
 
-Put credits on the README
+1. Put credits on the README
+1. Add information about which code you can run (Only data structures and design patterns)
