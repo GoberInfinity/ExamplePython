@@ -10,6 +10,17 @@ weight_diff = 0.5
 time_diff = 3
 pounds_per_hour = flow_rate(weight_diff, time_diff, period=3600, units_per_kg=2.2)
 
+# In Python 3, you can demand clarity by defining your functions with keywordonly
+# arguments (*). These arguments can only be supplied by keyword, never by position.
+# Here, I redefine the safe_division function to accept keyword-only arguments.
+
+
+def flow_clarity(weight_diff, time_diff, *, period=1, units_per_kg=1):
+    return ((weight_diff / units_per_kg) / time_diff) * period
+
+
+# pounds_per_hour = flow_clarity(weight_diff, time_diff, 3600, 2.2) # Error
+pounds_per_hour = flow_clarity(weight_diff, time_diff, period=3600, units_per_kg=2.2)
 
 # Default argument values are evaluated only once per module which usually happens when a program starts up.
 # After the module containing this code is loaded, the datetime.now default argument will never be evaluated again.
