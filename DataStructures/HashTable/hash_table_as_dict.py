@@ -1,4 +1,5 @@
 # Built in data structure
+# Avoid dictionaries that contain dictionaries
 empty_dict = dict()
 non_empty_dict = {"key", "val"}
 
