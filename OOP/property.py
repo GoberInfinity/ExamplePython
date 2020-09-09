@@ -5,7 +5,7 @@
 # methods must match the intended property name.
 # Ensure that @property methods are fast; do slow or complex work using normal methods.
 # The big problem with the @property attributes of the same class.
-# They also can’t be reused by unrelated classes.
+# They also can’t be reused by unrelated classes, use Descriptors for reusable @property methods
 
 
 class BoundedResistance:
