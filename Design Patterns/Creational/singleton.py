@@ -33,11 +33,11 @@ class MyClass(metaclass=Singleton):
 
 
 """
-The expression MyClass() creates a new instance of class MyClass. 
+The expression MyClass() creates a new instance of class MyClass.
 When the interpreter encounters MyClass(), the following occurs:
 
-1.The __call__() method of MyClass parent class is called. So type’s __call__() method is invoked.
-2.That __call__() method in turn invokes the following: __new__(), __init__()
+1. __init__ is called when MyClass is already constructed
+2. The __call__() is called when you make instances of MyClass
 """
 m1 = MyClass()
 m2 = MyClass()
