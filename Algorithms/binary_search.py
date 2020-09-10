@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import bisect
+
+
 def binarySearch(a_numbers, e_lookup):
     """
     :type a_numbers: list
@@ -34,3 +37,8 @@ testlist = [
     42,
 ]
 print(binarySearch(testlist, 13))
+
+# The bisect module’s functions, such as bisect_left, provide an efficient binary
+# search through a sequence of sorted items.
+index = bisect.bisect_left(testlist, 19)
+print(index)
