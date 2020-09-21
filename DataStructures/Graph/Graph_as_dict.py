@@ -29,7 +29,7 @@ class Graph:
     def recursive_dfs(self, start, path):
         path.append(start)
         for node in self.grap[start]:
-            if not node in path:
+            if node not in path:
                 path = self.recursive_dfs(node, path)
         return path
 
@@ -55,10 +55,10 @@ class Graph:
         path = path + [start]
         if start == end:
             return path
-        if not start in self.grap:
+        if start not in self.grap:
             return None
         for node in self.grap[start]:
-            if not node in path:
+            if node not in path:
                 newpath = self.find_path(node, end, path)
                 if newpath:
                     return newpath
@@ -68,11 +68,11 @@ class Graph:
         path = path + [start]
         if start == end:
             return [path]
-        if not start in self.grap:
+        if start not in self.grap:
             return []
         paths = []
         for node in self.grap[start]:
-            if not node in path:
+            if node not in path:
                 newpaths = self.find_all_path(node, end, path)
                 for newpath in newpaths:
                     paths.append(newpath)

@@ -22,4 +22,4 @@ class Sub(metaclass=Meta):
     pass
 
 
-Foo.attr
+Sub.attr  # noqa

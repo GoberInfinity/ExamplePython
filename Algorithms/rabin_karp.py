@@ -32,7 +32,7 @@ class RollingHash:
             self.window_end += 1
 
     def window_text(self):
-        return self.text[self.window_start:self.window_end]
+        return self.text[self.window_start : self.window_end]
 
 
 def rabin_karp(word, text):

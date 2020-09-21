@@ -1,3 +1,4 @@
+# flake8: noqa
 class Solution(object):
     def reverse(self, x):
         """

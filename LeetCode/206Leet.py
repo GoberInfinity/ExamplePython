@@ -1,3 +1,4 @@
+# flake8: noqa
 """
 
 Reverse a singly linked list.

@@ -1,3 +1,6 @@
+import pprint
+
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -153,7 +156,7 @@ class Graph:
         """
         path.append(start_node.value)
         for edge in start_node.edges:
-            if not edge.node_to.value in path:
+            if edge.node_to.value not in path:
                 path = self.dfs_helper(edge.node_to, path)
         return path
 
@@ -186,7 +189,7 @@ class Graph:
         while ret_list:
             node = ret_list.pop(0)
             for edge in node.edges:
-                if not edge.node_to.value in path:
+                if edge.node_to.value not in path:
                     path.append(edge.node_to.value)
                     ret_list.append(self.find_node(edge.node_to.value))
 
@@ -262,7 +265,6 @@ graph.insert_edge(9471, 5, 2)  # Sao Paolo <-> London
 # for this problem and should produce None in the
 # Adjacency List, etc.
 
-import pprint
 
 pp = pprint.PrettyPrinter(indent=2)
 

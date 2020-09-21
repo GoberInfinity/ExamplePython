@@ -22,4 +22,4 @@ repos:
         language: system
         entry: flake8 .
         types: [python]
-        args: ["--ignore=W605"]
+        args: ["--ignore=W503,W605,E203"]

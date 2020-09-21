@@ -1,8 +1,11 @@
+from collections import defaultdict
+
+
 def recursive_dfs(graph, start, path=[]):
     """recursive depth first search from start"""
     path = path + [start]
     for node in graph[start]:
-        if not node in path:
+        if node not in path:
             path = recursive_dfs(graph, node, path)
     return path
 
@@ -26,7 +29,7 @@ def iterative_bfs(graph, start, path=[]):
         v = q.pop(0)
         print(v)
 
-        if not v in path:
+        if v not in path:
             path = path + [v]
             q = q + graph[v]
     return path
@@ -43,7 +46,7 @@ graph = {"A": ["B", "C"], "B": ["D", "E"], "C": ["D", "E"], "D": ["E"], "E": ["A
 g = {1: [2, 3], 2: [4, 5], 4: [2], 5: [2], 3: [1]}
 print(iterative_bfs(g, 1))
 
-# Class to represent a graph
+
 class Graph:
     def __init__(self, vertices):
         self.graph = defaultdict(list)  # dictionary containing adjacency List

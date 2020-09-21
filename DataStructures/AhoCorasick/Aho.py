@@ -37,7 +37,7 @@ def aho_create_statemachine(patterns):
         ) in current_node.goto.items():  # The vertex after the transition
             queue.append(next_node)
             fail_node = current_node.fail
-            while fail_node != None and not key in fail_node.goto:
+            while fail_node is not None and key not in fail_node.goto:
                 fail_node = fail_node.fail
             next_node.fail = fail_node.goto[key] if fail_node else root
             next_node.out += next_node.fail.out
@@ -52,9 +52,9 @@ def aho_find_all(text, root, callback):
     # otherwise follow the suffix link
 
     for current in range(len(text)):
-        while node != None and not text[current] in node.goto:
+        while node is not None and not text[current] in node.goto:
             node = node.fail
-        if node == None:
+        if node is None:
             node = root
             continue
         node = node.goto[text[current]]

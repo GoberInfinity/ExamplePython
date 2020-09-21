@@ -11,17 +11,17 @@ def perm(lis):
     elif len(lis) == 1:
         return [lis]
     else:
-        l = []
+        result = []
         for i in range(len(lis)):
             x = lis[i]
-            xs = lis[:i] + lis[i + 1:]
+            xs = lis[:i] + lis[i + 1 :]
             print(f"i: {i}, x: {x} , xs{xs}")
             print(lis[:i])
             print("-" * 50)
             for p in perm(xs):
-                l.append([x] + p)
-                print(f"***called l.append[{x}]+{p} = {l}")
-        return l
+                result.append([x] + p)
+                print(f"***called l.append[{x}]+{p} = {result}")
+        return result
 
 
 print(perm(list("abc")))
