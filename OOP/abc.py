@@ -1,8 +1,9 @@
 # The built-in collections.abc module defines a set of abstract base classes
-# that provide all of the typical methods for each container type.
-# When you subclass from these abstract base classes and forget to implement required methods
+# that provide all of the typical methods for each container type
+# When you subclass from these abstract base classes
+# and you forget to implement required methods
 # the module will tell you something is wrong. (Like Hashable or Sequence)
-# Inherit directly from Python"s container types (like list or dict) for simple use cases.
+# Inherit directly from Python's container types (like dict) for simple use cases
 
 from collections.abc import Set
 
@@ -44,4 +45,3 @@ class ListSet(Set):
 set1 = ListSet("ABCDEF")
 set2 = ListSet("DEFGHI")
 intersect = set1 & set2
-

@@ -3,13 +3,15 @@ def prefix_array(string):
     prefixes = [0] * length
 
     for current_index in range(1, length):
-        # When there is a missmatch, start_comparing tells about where to start comparing next
+        # When there is a missmatch,
+        # start_comparing tells about where to start comparing next
         # the main idea is to skip the letters that already matched
         start_comparing = prefixes[current_index - 1]
         while start_comparing > 0 and string[current_index] != string[start_comparing]:
             start_comparing = prefixes[start_comparing - 1]
         if string[current_index] == string[start_comparing]:
-            # The index of the string where you should begin to compare after a missmatch (non matching chars)
+            # Index of the string where you should begin to compare
+            # after a missmatch (non matching chars)
             start_comparing += 1
         prefixes[current_index] = start_comparing
     return prefixes

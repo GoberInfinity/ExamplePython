@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Add a couple methods to our LinkedList class,
 and use that to implement a Stack.
 You have 4 functions below to fill in:

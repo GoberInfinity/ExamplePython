@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-"""
-
-
 class Solution:
     # @param {integer[]} nums
     # @return {integer[]}

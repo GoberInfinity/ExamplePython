@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 def fib(n):
     """
     :type n: int

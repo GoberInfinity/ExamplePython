@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 Note: This is a debugg version, to see what happened with the recursion
-call 
+call
 """
 
 
@@ -15,7 +14,7 @@ def perm(lis):
         l = []
         for i in range(len(lis)):
             x = lis[i]
-            xs = lis[:i] + lis[i + 1 :]
+            xs = lis[:i] + lis[i + 1:]
             print(f"i: {i}, x: {x} , xs{xs}")
             print(lis[:i])
             print("-" * 50)
@@ -28,7 +27,7 @@ def perm(lis):
 print(perm(list("abc")))
 
 """
-Uncomment if you would like to see the logic behind x and xs 
+Uncomment if you would like to see the logic behind x and xs
 lis = [1,2,3,4,5,6,7,8]
 def debug(lis):
     for i in range(len(lis)):
@@ -37,6 +36,6 @@ def debug(lis):
         print(x)
         print(f"lis[:i] = lis[:{i}] = " + str(lis[:i]))
         print(f"lis[i + 1:] = lis[{i} + 1:] = " + str(lis[i + 1:]))
-        print("--"*19)     
+        print("--"*19)
 print(debug(lis))
 """

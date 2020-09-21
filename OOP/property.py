@@ -1,11 +1,12 @@
-# Define new class interfaces using simple public attributes, and avoid set and get methods.
-# if you decide you need special behavior when an attribute is set, you can migrate to
-# the @property decorator and its corresponding setter attribute.
+# Define new class interfaces using simple public attributes,
+# and avoid set and get methods
+# if you decide you need special behavior when an attribute is set,
+# you can migrate to the @property decorator and its corresponding setter attribute.
 # In order to work properly the name of both the setter and getter
 # methods must match the intended property name.
 # Ensure that @property methods are fast; do slow or complex work using normal methods.
-# The big problem with the @property attributes of the same class.
-# They also can’t be reused by unrelated classes, use Descriptors for reusable @property methods
+# The problem with @property is that they can’t be reused by unrelated classes,
+# use Descriptors for reusable @property methods
 
 
 class BoundedResistance:

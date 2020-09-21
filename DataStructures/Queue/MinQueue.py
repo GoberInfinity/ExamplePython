@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# -*- coding: utf-8 -*-
 class MinQueue:
     def __init__(self):
         self.stack_1 = []

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class Solution:
     def removeDuplicates(self, nums):
         """

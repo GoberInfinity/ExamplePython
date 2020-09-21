@@ -22,8 +22,10 @@ def flow_clarity(weight_diff, time_diff, *, period=1, units_per_kg=1):
 # pounds_per_hour = flow_clarity(weight_diff, time_diff, 3600, 2.2) # Error
 pounds_per_hour = flow_clarity(weight_diff, time_diff, period=3600, units_per_kg=2.2)
 
-# Default argument values are evaluated only once per module which usually happens when a program starts up.
-# After the module containing this code is loaded, the datetime.now default argument will never be evaluated again.
+# Default argument values are evaluated only once per module
+# which usually happens when a program starts up.
+# After the module containing this code is loaded,
+# the datetime.now default argument will never be evaluated again.
 
 
 def log(message, when=datetime.now()):
@@ -53,4 +55,3 @@ bar = decode("also bad")
 bar["meep"] = 1
 print(foo)  # {"stuff": 5, "meep": 1}
 print(bar)  # {"stuff": 5, "meep": 1}
-

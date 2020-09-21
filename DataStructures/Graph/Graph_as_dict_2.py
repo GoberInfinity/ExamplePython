@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-
 def recursive_dfs(graph, start, path=[]):
     """recursive depth first search from start"""
     path = path + [start]
@@ -64,7 +61,7 @@ class Graph:
 
         # Recur for all the vertices adjacent to this vertex
         for i in self.graph[v]:
-            if visited[i] == False:
+            if visited[i] is False:
                 self.topologicalSortUtil(i, visited, stack)
 
         # Push current vertex to stack which stores result
@@ -82,7 +79,7 @@ class Graph:
         # Sort starting from all vertices one by one
         for i in range(self.V):
             print(visited)
-            if visited[i] == False:
+            if visited[i] is False:
                 self.topologicalSortUtil(i, visited, stack)
 
         # Print contents of stack

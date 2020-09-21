@@ -1,5 +1,5 @@
-# A mix-in is a small class that only defines a
-# set of additional methods that a class should provide. Mix-in classes don’t define their
+# A mix-in is a small class that only defines a set of additional methods
+# that a class should provide. Mix-in classes don’t define their
 # own instance attributes nor require their __init__ constructor to be called.
 # Avoid using multiple inheritance if mix-in classes can achieve the same outcome
 # Compose mixins to create complex functionality from simple behaviors

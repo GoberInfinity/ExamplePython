@@ -13,8 +13,9 @@ list(generator)
 
 # The problem when you store the generator in a list is that contents could be large.
 # Copying the iterator could cause your program to run out of memory and crash.
-# One way around this is to provide a new container class that implements the iterator protocol
-# The iter built-in function calls the __iter__ . The __iter__ method must return an iterator object
+# To solve this is to provide a new container class that implements iterator protocol
+# The iter built-in function calls __iter__
+# The __iter__ method must return an iterator object
 # (which itself implements the __next__ method). Then the for loop repeatedly calls the
 # next built-in function on the iterator object until it’s exhausted (raises a
 # StopIteration exception).
@@ -30,7 +31,8 @@ class ReadIntFromFile(object):
                 yield int(line)
 
 
-# sum method in normalize will call ReadVisits.__iter__ to allocate a new iterator object.
+# sum method in normalize will call ReadVisits.__iter__
+# to allocate a new iterator object.
 # The for loop will also call __iter__ to allocate a second iterator object.
 # Each of those iterators will be advanced and exhausted independently.
 # The only downside of this approach is that it reads the input data multiple times.

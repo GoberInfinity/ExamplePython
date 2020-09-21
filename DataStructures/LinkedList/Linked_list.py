@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 """
 
@@ -74,7 +73,7 @@ class LinkedList:
             self.head = current.next
         else:
             while current:
-                if current.next == None:
+                if current.next is None:
                     break
                 elif current.next.value == value:
                     current.next = current.next.next
@@ -90,7 +89,7 @@ class LinkedList:
             current = current.next
 
 
-"""    
+"""
 e1 = Element(1)
 e2 = Element(2)
 e3 = Element(3)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Print all the subsets of a set
 """

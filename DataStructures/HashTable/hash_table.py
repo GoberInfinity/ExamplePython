@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Write a HashTable class that stores strings
 in a hash table, where keys are calculated
@@ -13,7 +12,7 @@ class HashTable(object):
     def store(self, string):
         hv = self.calculate_hash_value(string)
         if hv != -1:
-            if self.table[hv] != None:
+            if self.table[hv] is not None:
                 self.table[hv].append(string)
             else:
                 self.table[hv] = [string]
@@ -21,7 +20,7 @@ class HashTable(object):
     def lookup(self, string):
         hv = self.calculate_hash_value(string)
         if hv != -1:
-            if self.table[hv] != None:
+            if self.table[hv] is not None:
                 if string in self.table[hv]:
                     return hv
         return -1

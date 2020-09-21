@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 my_name = "Zed A. Shaw"
 a = "a"
 formatter = "{} {} {} {}"

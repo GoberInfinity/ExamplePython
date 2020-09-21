@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Implementation of a Trie with a dictionaryy
 """

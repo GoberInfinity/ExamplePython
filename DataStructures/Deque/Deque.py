@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """
 Deque
 
-Note: This is not the best approach to use Queue, use them if you want to 
+Note: This is not the best approach to use Queue, use them if you want to
 manipulate the method of a Queue.
 
 """

@@ -20,8 +20,9 @@ class Grade:
         return self._values.get(instance, 0)
 
     # The _values dictionary will hold a reference to every instance of Exam ever
-    # passed to __set__ over the lifetime of the program. This causes instances to never have
-    # their reference count go to zero, preventing cleanup by the garbage collector.
+    # passed to __set__ over the lifetime of the program.
+    # This causes instances to never have their reference count go to zero,
+    # preventing cleanup by the garbage collector.
     # To fix this, I can use Python"s weakref built-in module.
     def __set__(self, instance, value):
         if not (0 <= value <= 100):

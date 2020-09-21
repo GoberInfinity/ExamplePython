@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Given an integer, reverse it.
 """

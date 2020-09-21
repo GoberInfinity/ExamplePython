@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-class Node(object):
+class Node:
     def __init__(self, value):
         self.value = value
         self.edges = []
         self.visited = False
 
 
-class Edge(object):
+class Edge:
     def __init__(self, value, node_from, node_to):
         self.value = value
         self.node_from = node_from
@@ -21,7 +20,7 @@ class Edge(object):
 # of node numbers
 
 
-class Graph(object):
+class Graph:
     def __init__(self, nodes=None, edges=None):
         self.nodes = nodes or []
         self.edges = edges or []
@@ -149,7 +148,7 @@ class Graph(object):
         output should be a list of numbers corresponding to the
         values of the traversed nodes.
         ARGUMENTS: start_node is the starting Node
-        MODIFIES: the value of the visited property of nodes in self.nodes 
+        MODIFIES: the value of the visited property of nodes in self.nodes
         RETURN: a list of the traversed node values (integers).
         """
         path.append(start_node.value)
@@ -287,7 +286,8 @@ print("\nBreadth First Search")
 pp.pprint(graph.bfs_names(2))
 pp.pprint(graph.nodes)
 # test error reporting
-# pp.pprint(['Sao Paolo', 'Mountain View', 'San Francisco', 'London', 'Shanghai', 'Berlin'])
+# pp.pprint([
+# 'Sao Paolo', 'Mountain View', 'San Francisco', 'London', 'Shanghai', 'Berlin'])
 
 # Should print:
 # Breadth First Search

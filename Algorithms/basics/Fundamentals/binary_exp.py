@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 def binary_exponentiation(a, n):
     result = 1
     while n:

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Given a number encode it into a spreadsheet column title.
 1 => A

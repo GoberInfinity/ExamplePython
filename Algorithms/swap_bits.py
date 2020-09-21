@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Given an integer and incices of 2 bits, swap the bits.
 """

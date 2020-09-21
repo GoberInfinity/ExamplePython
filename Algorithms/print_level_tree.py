@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 
 """
@@ -25,7 +24,7 @@ class Solution:
             return TreeNode(nums[0])
         middle = len(nums) // 2
         left_part = nums[:middle]
-        right_part = nums[middle + 1 : len(nums)]
+        right_part = nums[middle + 1: len(nums)]
         tree = TreeNode(nums[middle])
         tree.left = self.sortedArrayToBST(left_part)
         tree.right = self.sortedArrayToBST(right_part)

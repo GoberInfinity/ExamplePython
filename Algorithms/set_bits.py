@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 """
-Given a number, tell number of bits set in the number in its binary 
-representation. 
+Given a number, tell number of bits set in the number in its binary
+representation.
 """
 
 

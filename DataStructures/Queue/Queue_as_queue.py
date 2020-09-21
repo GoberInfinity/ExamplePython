@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import queue
 
 # The constructor for a FIFO queue is as follows:

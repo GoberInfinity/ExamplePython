@@ -19,8 +19,9 @@ sort_priority(numbers, group)
 
 # In Python 3, there is special syntax for getting data out of a closure. The nonlocal
 # statement is used to indicate that scope traversal should happen upon assignment for a
-# specific variable name. The only limit is that nonlocal won’t traverse up to the modulelevel
-# scope (to avoid polluting globals).
+# specific variable name.
+# The only limit is that nonlocal won’t traverse up to the modulelevel scope
+# (to avoid polluting globals).
 
 
 def sort_priority2(numbers, group):

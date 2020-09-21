@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Given a binary tree, flatten it to a linked list in-place.
 
@@ -10,7 +9,7 @@ Given
        2   5
       / \   \
      3   4   6
-     
+
 The flattened tree should look like:
    1
     \
@@ -69,10 +68,10 @@ class Solution:
 def flatten(self, root):
     if not root:
         return
-    
+
     # using Morris Traversal of BT
     node=root
-    
+
     while node:
         if node.left:
             pre=node.left

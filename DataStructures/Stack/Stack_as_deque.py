@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """
-Stack as Deque 
+Stack as Deque
 
-It provides you with a double ended queue which means that you can 
+It provides you with a double ended queue which means that you can
 append and delete elements from either side of the list
 
 https://docs.python.org/3/library/collections.html#collections.deque

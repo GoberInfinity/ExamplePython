@@ -2,7 +2,9 @@
 # reduce visual noise.
 # The contextlib built-in module provides a contextmanager decorator that
 # makes it easy to use your own functions in with statements
-# At the point where the generator yields, the block nested in the with statement is executed. The generator is then resumed after the block is exited.
+# At the point where the generator yields,
+# the block nested in the with statement is executed.
+# The generator is then resumed after the block is exited.
 
 from contextlib import contextmanager
 
@@ -10,7 +12,8 @@ from contextlib import contextmanager
 @contextmanager
 def tag(name):
     print(f"{name}")
-    # At the point where the generator yields, the block nested in the with statement is executed.
+    # At the point where the generator yields,
+    # the block nested in the with statement is executed.
     # The generator is then resumed after the block is exited.
     yield
     print(f"{name}")
@@ -29,7 +32,7 @@ def create_connection(connection):
     try:
         yield connection
     finally:
-        print(f"Close connection")
+        print("Close connection")
 
 
 with create_connection("database") as string:

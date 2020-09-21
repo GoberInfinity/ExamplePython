@@ -24,7 +24,8 @@ class SegmentTree:
             # If there are more than one elements,
             # then recur for left and right subtrees
             # and store the sum of values in this node
-            # that the left child of a vertex at index i is stored at index 2i+1, and the right one at index 2i+2
+            # that the left child of a vertex at index i is stored at index 2i+1,
+            # and the right one at index 2i+2
             left_child_vertex = 2 * index_current_vertex + 1
             right_child_vertex = 2 * index_current_vertex + 2
             self.build(left_child_vertex, seg_tree_left_limit, middle)

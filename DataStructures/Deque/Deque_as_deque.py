@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """
-Double-ended queue, is an ordered collection of items similar to the queue. 
-It has two ends, a front and a rear, and the items remain positioned in the 
-collection. 
+Double-ended queue, is an ordered collection of items similar to the queue.
+It has two ends, a front and a rear, and the items remain positioned in the
+collection.
 """
 from collections import deque
 

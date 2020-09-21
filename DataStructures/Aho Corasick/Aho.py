@@ -11,7 +11,7 @@ def aho_create_trie(patterns):
     for pattern in patterns:
         node = root
         for symbol in pattern:
-            # Will insert key with a value default_value if key is not in the dictionary.
+            # Will insert key with a value default_value if key is not in the dictionary
             node = node.goto.setdefault(
                 symbol, AhoNode()
             )  # Create the edge(transition)
@@ -58,7 +58,8 @@ def aho_find_all(text, root, callback):
             node = root
             continue
         node = node.goto[text[current]]
-        # At every node follow the output links to get patterns occurring till the current position.
+        # At every node follow the output links
+        # to get patterns occurring till the current position.
         for pattern in node.out:
             callback(current - len(pattern) + 1, pattern)
 

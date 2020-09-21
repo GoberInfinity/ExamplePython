@@ -19,4 +19,3 @@ def decorator(func):
 @decorator
 def some_function():
     return True
-
