@@ -11,11 +11,11 @@ class Graph:
     def __init__(self):
         self.grap = {}
 
-    def addNode(self, id):
-        self.grap[id] = None
+    def addNode(self, uid):
+        self.grap[uid] = None
 
-    def addArc(self, id, arc):
-        self.grap[id] = arc
+    def addArc(self, uid, arc):
+        self.grap[uid] = arc
 
     def addGraph(self, graph):
         self.grap = graph
@@ -23,8 +23,8 @@ class Graph:
     def getAll(self):
         return self.grap
 
-    def getArc(self, id):
-        return self.grap.get(id)
+    def getArc(self, uid):
+        return self.grap.get(uid)
 
     def recursive_dfs(self, start, path):
         path.append(start)

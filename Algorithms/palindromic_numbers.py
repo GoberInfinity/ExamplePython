@@ -19,7 +19,7 @@ class Solution:
         while x > reversed_number:
             reversed_number = reversed_number * 10 + x % 10
             x //= 10
-        return x == reversed_number or x == (reversed_number // 10)
+        return x in (reversed_number, reversed_number // 10)
 
 
 print(Solution().isPalindrome(151))

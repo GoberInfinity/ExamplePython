@@ -11,6 +11,7 @@ PEP 8 suggests unique styles of naming for different parts in the language. This
 - Module-level constants should be in ALL_CAPS format.
 - Instance methods in classes should use self as the name of the first parameter (which refers to the object).
 - Class methods should use cls as the name of the first parameter (which refers to the class).
+- (id, str) are bad name variables
 
 ### Expressions and Statements
 

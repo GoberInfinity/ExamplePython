@@ -5,12 +5,12 @@ class Solution:
         :rtype: bool
         """
         stack = []
-        dict = {"]": "[", "}": "{", ")": "("}
+        brackets = {"]": "[", "}": "{", ")": "("}
         for char in s:
-            if char in dict.values():
+            if char in brackets.values():
                 stack.append(char)
-            elif char in dict.keys():
-                if stack == [] or dict.get(char) != stack.pop():
+            elif char in brackets.keys():
+                if stack == [] or brackets.get(char) != stack.pop():
                     return False
             else:
                 return False

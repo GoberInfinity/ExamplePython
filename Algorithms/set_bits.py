@@ -7,7 +7,7 @@ representation.
 class Solution:
     # @param number : int
     # @return an integer
-    def numSetBits(number):
+    def numSetBits(self, number):
         counter = 0
         while number:
             counter += number & 1
