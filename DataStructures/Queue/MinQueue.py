@@ -12,8 +12,7 @@ class MinQueue:
     def get_min(self):
         if not self.stack_1 or not self.stack_2:
             return self.stack_1[-1][1] if not self.stack_2 else self.stack_2[-1][1]
-        else:
-            return min(self.stack_1[-1][1], self.stack_2[-1][1])
+        return min(self.stack_1[-1][1], self.stack_2[-1][1])
 
     def pop(self):
         if not self.stack_2:
