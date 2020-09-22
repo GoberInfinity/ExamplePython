@@ -10,3 +10,12 @@ def divide(a, b):
         return a / b
     except ZeroDivisionError as e:
         raise ValueError("Invalid inputs") from e
+
+
+# Remember to NOT put an else after a return. PYL-R1705
+# Only applies to non functional environments
+# Info: https://stackoverflow.com/a/57539298/8425653
+# if is_internal_link(link):
+#   return check_internal_link(link)
+# else:
+#   return check_external_link(link)

@@ -10,7 +10,8 @@ class Solution(object):
 
         if x < 0:
             return -self.reverse(-x)
-        elif x == 0:
+
+        if x == 0:
             return 0
 
         while not reverse:

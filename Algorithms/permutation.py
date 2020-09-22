@@ -8,20 +8,19 @@ def perm(lis):
     print(lis)
     if len(lis) == 0:
         return []
-    elif len(lis) == 1:
+    if len(lis) == 1:
         return [lis]
-    else:
-        result = []
-        for i in range(len(lis)):
-            x = lis[i]
-            xs = lis[:i] + lis[i + 1 :]
-            print(f"i: {i}, x: {x} , xs{xs}")
-            print(lis[:i])
-            print("-" * 50)
-            for p in perm(xs):
-                result.append([x] + p)
-                print(f"***called l.append[{x}]+{p} = {result}")
-        return result
+    result = []
+    for i in range(len(lis)):
+        x = lis[i]
+        xs = lis[:i] + lis[i + 1 :]
+        print(f"i: {i}, x: {x} , xs{xs}")
+        print(lis[:i])
+        print("-" * 50)
+        for p in perm(xs):
+            result.append([x] + p)
+            print(f"***called l.append[{x}]+{p} = {result}")
+    return result
 
 
 print(perm(list("abc")))

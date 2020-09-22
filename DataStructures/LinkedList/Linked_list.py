@@ -34,11 +34,9 @@ class LinkedList:
             while current:
                 if counter == position:
                     return current
-                else:
-                    counter += 1
-                    current = current.next
-        else:
-            return None
+                counter += 1
+                current = current.next
+
         return None
 
     def insert(self, new_element, position):
@@ -89,7 +87,6 @@ class LinkedList:
             current = current.next
 
 
-"""
 e1 = Element(1)
 e2 = Element(2)
 e3 = Element(3)
@@ -107,7 +104,7 @@ print(ll.head.next.next.value)
 print(ll.get_position(3).value)
 
 # Test insert
-ll.insert(e4,3)
+ll.insert(e4, 3)
 # Should print 4 now
 print(ll.get_position(3).value)
 
@@ -119,5 +116,3 @@ print(ll.get_position(1).value)
 print(ll.get_position(2).value)
 # Should print 3 now
 print(ll.get_position(3).value)
-print("-"*10)
-"""
