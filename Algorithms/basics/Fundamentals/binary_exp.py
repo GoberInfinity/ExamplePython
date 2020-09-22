@@ -8,5 +8,5 @@ def binary_exponentiation(a, n):
     return result
 
 
-for n in range(0, 50):
-    print(f"2^{n} ={binary_exponentiation(2,n)}")
+for number in range(0, 50):
+    print(f"2^{number} ={binary_exponentiation(2,number)}")

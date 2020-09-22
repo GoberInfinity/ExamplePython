@@ -9,9 +9,9 @@ def flow_rate(weight_diff, time_diff, period=1, units_per_kg=1):
     return ((weight_diff / units_per_kg) / time_diff) * period
 
 
-weight_diff = 0.5
-time_diff = 3
-pounds_per_hour = flow_rate(weight_diff, time_diff, period=3600, units_per_kg=2.2)
+weight_diff_eg = 0.5
+time_diff_eg = 3
+pounds_per_hour = flow_rate(weight_diff_eg, time_diff_eg, period=3600, units_per_kg=2.2)
 
 # In Python 3, you can demand clarity by defining your functions with keywordonly
 # arguments (*). These arguments can only be supplied by keyword, never by position.
@@ -23,7 +23,9 @@ def flow_clarity(weight_diff, time_diff, *, period=1, units_per_kg=1):
 
 
 # pounds_per_hour = flow_clarity(weight_diff, time_diff, 3600, 2.2) # Error
-pounds_per_hour = flow_clarity(weight_diff, time_diff, period=3600, units_per_kg=2.2)
+pounds_per_hour = flow_clarity(
+    weight_diff_eg, time_diff_eg, period=3600, units_per_kg=2.2
+)
 
 # Default argument values are evaluated only once per module
 # which usually happens when a program starts up.

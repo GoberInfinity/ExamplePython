@@ -87,8 +87,9 @@ class ConcreteStateB(State):
         self.context.transition_to(ConcreteStateA())
 
 
-context = Context(ConcreteStateA())  # Initial state
-context.handle1()  # Current state may have been changed by context or the object itself
-context.handle2()
+current_context = Context(ConcreteStateA())  # Initial state
+# Current state may have been changed by context or the object itself
+current_context.handle1()
+current_context.handle2()
 
-context.handle2()  # Final state, cannot change the state
+current_context.handle2()  # Final state, cannot change the state

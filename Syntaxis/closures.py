@@ -12,9 +12,9 @@ def sort_priority(values, group):
     values.sort(key=helper)
 
 
-numbers = [8, 3, 1, 2, 5, 4, 7, 6]
-group = {2, 3, 5, 7}
-sort_priority(numbers, group)
+numbers_eg = [8, 3, 1, 2, 5, 4, 7, 6]
+group_eg = {2, 3, 5, 7}
+sort_priority(numbers_eg, group_eg)
 # >>> [2, 3, 5, 7, 1, 4, 6, 8]
 
 # In Python 3, there is special syntax for getting data out of a closure. The nonlocal
@@ -57,6 +57,6 @@ class Sorter(object):
         return (1, x)
 
 
-sorter = Sorter(group)
-numbers.sort(key=sorter)
+sorter = Sorter(group_eg)
+numbers_eg.sort(key=sorter)
 assert sorter.found is True

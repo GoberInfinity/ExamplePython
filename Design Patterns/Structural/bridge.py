@@ -75,10 +75,10 @@ def client_code(abstraction: Abstraction):
     # ...
 
 
-implementation = ConcreteImplementationA()
-abstraction = Abstraction(implementation)
-print(abstraction.operation())
+implementation_a = ConcreteImplementationA()
+abstraction_a = Abstraction(implementation_a)
+print(abstraction_a.operation())
 
-implementation = ConcreteImplementationB()
-abstraction = ExtendedAbstraction(implementation)
-print(abstraction.operation())
+implementation_b = ConcreteImplementationB()
+abstraction_b = ExtendedAbstraction(implementation_b)
+print(abstraction_b.operation())

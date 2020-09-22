@@ -45,8 +45,8 @@ def knapSack(W, wt, val, n):
     return result[n][W]
 
 
-val = [1, 4, 5, 7]
-wt = [1, 3, 4, 5]
-W = 7
-n = len(val)
-print(knapSack(W, wt, val, n))
+val_eg = [1, 4, 5, 7]
+wt_eg = [1, 3, 4, 5]
+W_eg = 7
+n_eg = len(val_eg)
+print(knapSack(W_eg, wt_eg, val_eg, n_eg))

@@ -41,6 +41,6 @@ class RealSubject(Subject):
         print("Expensive operation")
 
 
-real_subject = RealSubject()
-proxy = Proxy(real_subject)
+real_subject_eg = RealSubject()
+proxy = Proxy(real_subject_eg)
 proxy.request()

@@ -79,18 +79,18 @@ class Graph:
         return paths
 
 
-graph = Graph()
+graph_eg = Graph()
 graphTree = Graph()
 
-graph.addGraph(
+graph_eg.addGraph(
     {"A": ["B", "C"], "B": ["D", "E"], "C": ["D", "E"], "D": ["E"], "E": ["A"]}
 )
 graphTree.addGraph({1: [2, 3], 2: [4, 5], 4: [2], 5: [2], 3: [1]})
 
-print(graph.recursive_dfs("A", []))
-print(graph.iterative_dfs("A", []))
-print(graph.find_path("A", "E", []))
-print(graph.find_all_path("A", "E", []))
+print(graph_eg.recursive_dfs("A", []))
+print(graph_eg.iterative_dfs("A", []))
+print(graph_eg.find_path("A", "E", []))
+print(graph_eg.find_all_path("A", "E", []))
 print(graphTree.recursive_dfs(1, []))
 print(graphTree.iterative_dfs(1, []))
 print(graphTree.iterative_bfs(1, []))

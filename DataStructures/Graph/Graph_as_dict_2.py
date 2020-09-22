@@ -42,7 +42,7 @@ def iterative_bfs(graph, start, path):
    |   \ | /
    +---- E
 """
-graph = {"A": ["B", "C"], "B": ["D", "E"], "C": ["D", "E"], "D": ["E"], "E": ["A"]}
+graphEg = {"A": ["B", "C"], "B": ["D", "E"], "C": ["D", "E"], "D": ["E"], "E": ["A"]}
 g = {1: [2, 3], 2: [4, 5], 4: [2], 5: [2], 3: [1]}
 print(iterative_bfs(g, 1, []))
 

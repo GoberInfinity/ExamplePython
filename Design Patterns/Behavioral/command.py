@@ -58,8 +58,8 @@ class Receiver:
         print("Reciever")
 
 
-receiver = Receiver()
-concrete_command = ConcreteCommand(receiver)
+receiver_eg = Receiver()
+concrete_command = ConcreteCommand(receiver_eg)
 invoker = Invoker()
 invoker.store_command(concrete_command)
 invoker.execute_commands()

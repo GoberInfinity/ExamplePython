@@ -72,19 +72,19 @@ class WordsCollection(Iterable):
 # The client code may or may not know about the Concrete Iterator or
 # Collection classes, depending on the level of indirection you want to keep
 # in your program.
-collection = WordsCollection([])
-collection.add_item("First")
-collection.add_item("Second")
-collection.add_item("Third")
+collectionExample = WordsCollection([])
+collectionExample.add_item("First")
+collectionExample.add_item("Second")
+collectionExample.add_item("Third")
 
-it = collection.__iter__()
+it = collectionExample.__iter__()
 print(next(it))
 print(next(it))
 print(next(it))
 
 print("Traversal:")
-for elem in collection:
+for elem in collectionExample:
     print(elem)
 
 print("Reverse traversal:")
-print("\n".join(collection.get_reverse_iterator()), end="")
+print("\n".join(collectionExample.get_reverse_iterator()), end="")

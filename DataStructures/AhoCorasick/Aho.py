@@ -68,7 +68,7 @@ def on_occurence(pos, patterns):
     print(f"At pos {pos} found pattern: {patterns}")
 
 
-patterns = ["a", "ab", "abc", "bc", "c", "cba"]
-text = "abcba"
-root = aho_create_statemachine(patterns)
-aho_find_all(text, root, on_occurence)
+patterns_to_search = ["a", "ab", "abc", "bc", "c", "cba"]
+text_to_search = "abcba"
+state_machine = aho_create_statemachine(patterns_to_search)
+aho_find_all(text_to_search, state_machine, on_occurence)
