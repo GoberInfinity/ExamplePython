@@ -37,7 +37,7 @@ class Solution:
 
             if not left and not right:
                 continue
-            elif (not left or not right) or (left.val != right.val):
+            if (not left or not right) or (left.val != right.val):
                 return False
             q += [left.left, right.right, left.right, right.left]
 
