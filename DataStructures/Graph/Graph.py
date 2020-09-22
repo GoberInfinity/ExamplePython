@@ -145,7 +145,7 @@ class Graph:
         for node in self.nodes:
             node.visited = False
 
-    def dfs_helper(self, start_node, path=[]):
+    def dfs_helper(self, start_node, path):
         """TODO: Write the helper function for a recursive implementation
         of Depth First Search iterating through a node's edges. The
         output should be a list of numbers corresponding to the
@@ -168,7 +168,7 @@ class Graph:
         RETURN: a list of the node values (integers)."""
         self._clear_visited()
         start_node = self.find_node(start_node_num)
-        return self.dfs_helper(start_node)
+        return self.dfs_helper(start_node, [])
 
     def dfs_names(self, start_node_num):
         """Return the results of dfs with numbers converted to names."""

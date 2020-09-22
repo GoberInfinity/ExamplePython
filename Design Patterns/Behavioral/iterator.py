@@ -52,7 +52,7 @@ class WordsCollection(Iterable):
     iterator instances, compatible with the collection class.
     """
 
-    def __init__(self, collection: List[Any] = []):
+    def __init__(self, collection: List[Any]):
         self._collection = collection
 
     def __iter__(self) -> AlphabeticalOrderIterator:
@@ -72,7 +72,7 @@ class WordsCollection(Iterable):
 # The client code may or may not know about the Concrete Iterator or
 # Collection classes, depending on the level of indirection you want to keep
 # in your program.
-collection = WordsCollection()
+collection = WordsCollection([])
 collection.add_item("First")
 collection.add_item("Second")
 collection.add_item("Third")

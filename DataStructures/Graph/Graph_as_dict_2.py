@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 
-def recursive_dfs(graph, start, path=[]):
+def recursive_dfs(graph, start, path):
     """recursive depth first search from start"""
     path = path + [start]
     for node in graph[start]:
@@ -10,7 +10,7 @@ def recursive_dfs(graph, start, path=[]):
     return path
 
 
-def iterative_dfs(graph, start, path=[]):
+def iterative_dfs(graph, start, path):
     """iterative depth first search from start"""
     q = [start]
     while q:
@@ -21,7 +21,7 @@ def iterative_dfs(graph, start, path=[]):
     return path
 
 
-def iterative_bfs(graph, start, path=[]):
+def iterative_bfs(graph, start, path):
     """iterative breadth first search from start"""
     q = [start]
     while q:
@@ -44,7 +44,7 @@ def iterative_bfs(graph, start, path=[]):
 """
 graph = {"A": ["B", "C"], "B": ["D", "E"], "C": ["D", "E"], "D": ["E"], "E": ["A"]}
 g = {1: [2, 3], 2: [4, 5], 4: [2], 5: [2], 3: [1]}
-print(iterative_bfs(g, 1))
+print(iterative_bfs(g, 1, []))
 
 
 class Graph:
