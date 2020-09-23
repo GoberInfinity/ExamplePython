@@ -7,7 +7,7 @@ empty_dict = {}  # or dict()
 non_empty_dict = {"key", "val"}
 
 # Get a key from dict with a a default value if the key doesn't exist
-empty_dict.get("non_existant_key", None)
+empty_dict.get("non_existant_key", "default value")
 
 # List comprehension to generate a dictionary
 random_dict = {key: 0 for key in range(10)}

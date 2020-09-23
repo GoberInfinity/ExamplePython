@@ -51,7 +51,9 @@ class Graph:
                 nodes[node.value] = node
                 if all(nodes.values()):
                     break
-        for node_val in nodes:
+
+        for node_val in nodes.keys():
+            print(node_val)
             nodes[node_val] = nodes[node_val] or self.insert_node(node_val)
         node_from = nodes[node_from_val]
         node_to = nodes[node_to_val]
