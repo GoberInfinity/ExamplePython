@@ -9,7 +9,7 @@ class Solution:
         reverse = False
 
         if x < 0:
-            return -self.reverse(-x)
+            return -int(self.reverse(-x))
 
         if x == 0:
             return 0
@@ -26,3 +26,4 @@ class Solution:
 
 if __name__ == "__main__":
     print(Solution().reverse(1534236469))
+    print(Solution().reverse(132456))

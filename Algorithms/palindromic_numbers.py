@@ -10,7 +10,7 @@ def isPalindrome(x):
     """
     if x < 0 or (x % 10 == 0 and x != 0):
         return False
-    if x > 0 and x <= 9:
+    if 9 >= x > 0:
         return True
     reversed_number = 0
     while x > reversed_number:

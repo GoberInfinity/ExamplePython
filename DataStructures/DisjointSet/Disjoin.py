@@ -4,7 +4,7 @@ class DisjSet:
         # initialize sets of n items
         # The rank can be by size of the trees as rank or depth of the tree
         self.rank = [1] * n
-        self.parent = [i for i in range(n)]
+        self.parent = list(range(n))
 
     # Find(A) == Find(B) - check if two objects A and B are in same component or not.
     def find(self, x):

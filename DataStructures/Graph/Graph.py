@@ -52,8 +52,7 @@ class Graph:
                 if all(nodes.values()):
                     break
 
-        for node_val in nodes.keys():
-            print(node_val)
+        for node_val in nodes:
             nodes[node_val] = nodes[node_val] or self.insert_node(node_val)
         node_from = nodes[node_from_val]
         node_to = nodes[node_to_val]
@@ -133,7 +132,7 @@ class Graph:
         if len(self.node_names) > 0:
             return len(self.node_names)
         max_index = -1
-        if len(self.nodes):
+        if self.nodes:
             for node in self.nodes:
                 if node.value > max_index:
                     max_index = node.value
