@@ -21,8 +21,8 @@ class FrequencyList(list):
 
 
 foo = FrequencyList(["a", "b", "a", "c", "b", "a", "d"])
-len(foo)
-foo.frequency()
+print(len(foo))
+print(foo.frequency())
 
 
 class ListSet(Set):

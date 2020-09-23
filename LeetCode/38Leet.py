@@ -10,7 +10,7 @@ class Solution:
         elem = serie[0]
         elem_counter = 0
 
-        for x in range(n - 1):
+        for _ in range(n - 1):
             answer = ""
             for number in serie:
                 if elem == number:

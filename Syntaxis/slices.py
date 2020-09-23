@@ -10,9 +10,9 @@ letters = ["a", "b", "c", "d", "e", "f", "g", "h"]
 # as much as possible.
 # If your program can’t afford the time or memory required for two steps,
 # consider using islice from the itertools.
-letters[:]  # Copy of the elements
-letters[:5]  # [0, 5)
-letters[:-1]  # [0, last)
-letters[4:]  # [4, )
-letters[-3:]  # [-3,)
-letters[::-1]  # Reverse of the elements
+print(letters[:])  # Copy of the elements
+print(letters[:5])  # [0, 5)
+print(letters[:-1])  # [0, last)
+print(letters[4:])  # [4, )
+print(letters[-3:])  # [-3,)
+print(letters[::-1])  # Reverse of the elements

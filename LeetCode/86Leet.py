@@ -17,7 +17,7 @@ Output: 1->2->2->4->3->5
 #         self.next = None
 
 
-def partition(self, head, x):
+def partition(head, x):
     h1 = l1 = ListNode(0)
     h2 = l2 = ListNode(0)
     while head:

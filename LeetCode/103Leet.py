@@ -36,7 +36,7 @@ class Solution:
             return []
         res, temp, stack, flag = [], [], [root], 1
         while stack:
-            for i in range(len(stack)):
+            for _ in range(len(stack)):
                 node = stack.pop(0)
                 temp += [node.val]
                 if node.left:

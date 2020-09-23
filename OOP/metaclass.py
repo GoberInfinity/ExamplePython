@@ -22,4 +22,4 @@ class Sub(metaclass=Meta):
     pass
 
 
-Sub.attr  # noqa
+print(Sub.attr)  # noqa

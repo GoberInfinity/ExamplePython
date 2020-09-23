@@ -39,7 +39,7 @@ def lists():
 
     # Searching For Values In A List
     a_list.count("g")
-    "new" in a_list
+    print("new" in a_list)
 
     # Removing Items From A List
     del a_list[1]
