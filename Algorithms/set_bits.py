@@ -1,18 +1,16 @@
 """
 Given a number, tell number of bits set in the number in its binary
 representation.
+Note: Only works for positive numbers
 """
 
 
-class Solution:
-    # @param number : int
-    # @return an integer
-    def numSetBits(self, number):
-        counter = 0
-        while number:
-            counter += number & 1
-            number >>= 1
-        return counter
+def numSetBits(number):
+    counter = 0
+    while number:
+        counter += number & 1
+        number >>= 1
+    return counter
 
 
-print(Solution().numSetBits(-15))
+print(numSetBits(15))

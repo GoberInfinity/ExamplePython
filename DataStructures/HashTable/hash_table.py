@@ -10,7 +10,7 @@ class HashTable(object):
         self.table = [None] * 10000
 
     def store(self, string):
-        hv = self.calculate_hash_value(string)
+        hv = HashTable._calculate_hash_value(string)
         if hv != -1:
             if self.table[hv] is not None:
                 self.table[hv].append(string)
@@ -18,14 +18,15 @@ class HashTable(object):
                 self.table[hv] = [string]
 
     def lookup(self, string):
-        hv = self.calculate_hash_value(string)
+        hv = HashTable._calculate_hash_value(string)
         if hv != -1:
             if self.table[hv] is not None:
                 if string in self.table[hv]:
                     return hv
         return -1
 
-    def calculate_hash_value(self, string):
+    @staticmethod
+    def _calculate_hash_value(string):
         """Helper function to calulate a
         hash value from a string."""
         return (ord(string[0]) * 100) + ord(string[1])
@@ -36,7 +37,7 @@ hash_table = HashTable()
 
 # Test calculate_hash_value
 # Should be 8568
-print(hash_table.calculate_hash_value("UDACITY"))
+print(HashTable._calculate_hash_value("UDACITY"))
 
 # Test lookup edge case
 # Should be -1

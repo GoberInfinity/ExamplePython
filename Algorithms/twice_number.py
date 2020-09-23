@@ -5,15 +5,12 @@ appears twice.
 """
 
 
-class Solution:
-    # @param nums : List[int]
-    # @return an integer
-    def findDuplicate(self, nums):
-        seen = set()
-        for num in nums:
-            if num in seen:
-                return num
-            seen.add(num)
+def findDuplicate(nums):
+    seen = set()
+    for num in nums:
+        if num in seen:
+            return num
+        seen.add(num)
 
 
-print(Solution().findDuplicate([1, 2, 3, 3, 4, 5]))
+print(findDuplicate([1, 2, 3, 3, 4, 5]))
