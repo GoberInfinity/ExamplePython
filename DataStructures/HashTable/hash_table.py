@@ -5,7 +5,7 @@ using the first two letters of the string.
 """
 
 
-class HashTable(object):
+class HashTable:
     def __init__(self):
         self.table = [None] * 10000
 

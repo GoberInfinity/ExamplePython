@@ -21,7 +21,7 @@ list(generator)
 # StopIteration exception).
 
 
-class ReadIntFromFile(object):
+class ReadIntFromFile:
     def __init__(self, data_path):
         self.data_path = data_path
 

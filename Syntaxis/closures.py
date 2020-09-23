@@ -45,7 +45,7 @@ def sort_priority2(numbers, group):
 # in a helper class.
 
 
-class Sorter(object):
+class Sorter:
     def __init__(self, group):
         self.group = group
         self.found = False

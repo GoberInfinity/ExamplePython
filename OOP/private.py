@@ -6,7 +6,7 @@
 # the subclasses are out of your control
 
 
-class ApiClass(object):
+class ApiClass:
     def __init__(self):
         self.__value = 5
 
