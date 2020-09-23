@@ -1,6 +1,9 @@
 # Built in data structure
 # Avoid dictionaries that contain dictionaries
-empty_dict = dict()
+# It is relatively slower to initialize an empty dictionary by calling dict() than
+# using the empty literal, because the name dict must be looked up in the global scope
+# in case it has been rebound.
+empty_dict = {}  # or dict()
 non_empty_dict = {"key", "val"}
 
 # Get a key from dict with a a default value if the key doesn't exist

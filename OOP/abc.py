@@ -27,7 +27,7 @@ foo.frequency()
 
 class ListSet(Set):
     def __init__(self, iterable):
-        self.elements = lst = list()
+        self.elements = lst = []
         for element in iterable:
             if element not in lst:
                 lst.append(element)
