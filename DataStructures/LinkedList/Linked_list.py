@@ -58,9 +58,8 @@ class LinkedList:
                     current.next = new_element
                     new_element.next = tail
                     break
-                else:
-                    current = current.next
-                    counter += 1
+                current = current.next
+                counter += 1
         pass
 
     def delete(self, value):
@@ -73,11 +72,10 @@ class LinkedList:
             while current:
                 if current.next is None:
                     break
-                elif current.next.value == value:
+                if current.next.value == value:
                     current.next = current.next.next
                     break
-                else:
-                    current = current.next
+                current = current.next
         pass
 
     def print_linked(self):
