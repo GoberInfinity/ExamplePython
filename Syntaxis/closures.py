@@ -59,4 +59,6 @@ class Sorter:
 
 sorter = Sorter(group_eg)
 numbers_eg.sort(key=sorter)
-assert sorter.found is True
+
+# It should print True
+print(sorter.found is True)

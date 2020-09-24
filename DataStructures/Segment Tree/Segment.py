@@ -20,7 +20,7 @@ class SegmentTree:
         if seg_tree_left_limit == seg_tree_right_limit:
             self.seg_tree[index_current_vertex] = self.arr[seg_tree_left_limit]
         else:
-            middle = self._mid(seg_tree_left_limit, seg_tree_right_limit)
+            middle = SegmentTree.mid(seg_tree_left_limit, seg_tree_right_limit)
             # If there are more than one elements,
             # then recur for left and right subtrees
             # and store the sum of values in this node
@@ -46,7 +46,7 @@ class SegmentTree:
         if query_left == seg_tree_left and query_right == seg_tree_right:
             return self.seg_tree[index_current_node]
 
-        middle = self._mid(seg_tree_left, seg_tree_right)
+        middle = SegmentTree.mid(seg_tree_left, seg_tree_right)
         left = 2 * index_current_node + 1
         right = 2 * index_current_node + 2
         return self._querySum(
@@ -64,7 +64,7 @@ class SegmentTree:
         if seg_tree_left == seg_tree_right:  # [2..2]
             self.seg_tree[index_current_node] = new_val
         else:
-            middle = self._mid(seg_tree_left, seg_tree_right)
+            middle = SegmentTree.mid(seg_tree_left, seg_tree_right)
             left = 2 * index_current_node + 1
             right = 2 * index_current_node + 2
             if index_val <= middle:
@@ -79,7 +79,8 @@ class SegmentTree:
                 self.seg_tree[left] + self.seg_tree[right]
             )
 
-    def _mid(self, low, high):
+    @staticmethod
+    def mid(low, high):
         return low + ((high - low) // 2)
 
 

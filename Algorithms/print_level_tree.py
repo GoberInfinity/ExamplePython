@@ -47,7 +47,7 @@ def level(root):
             if current.right:
                 que.append(current.right)
             max_elements -= 1
-        print(""),
+        print("", end="\n")
 
 
 level(Solution().sortedArrayToBST([-10, -3, 0, 5, 9]))

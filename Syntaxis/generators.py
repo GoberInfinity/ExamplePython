@@ -9,7 +9,7 @@ next(generator)
 
 # Different ways to consume all the generator
 list(generator)
-[print(number) for number in generator]
+print([number for number in generator])
 
 # The problem when you store the generator in a list is that contents could be large.
 # Copying the iterator could cause your program to run out of memory and crash.
