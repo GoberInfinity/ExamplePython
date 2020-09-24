@@ -1,5 +1,8 @@
 # Example Python
 
+[![DeepSource](https://deepsource.io/gh/GoberInfinity/ExamplePython.svg/?label=active+issues&show_trend=true)](https://deepsource.io/gh/GoberInfinity/ExamplePython/?ref=repository-badge)
+[![DeepSource](https://deepsource.io/gh/GoberInfinity/ExamplePython.svg/?label=resolved+issues&show_trend=true)](https://deepsource.io/gh/GoberInfinity/ExamplePython/?ref=repository-badge)
+
 Algorithms, Data Structures and Design Patterns implementations with Python.
 
 ### Prerequisites
