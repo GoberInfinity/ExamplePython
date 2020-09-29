@@ -16,6 +16,27 @@ You can model a graph in different ways:
 - **Edge List**
   Array of **E** edges, each edge is an element in the array containing the vertex numbers. If edges have weights, add either a third element to the array.
 
+## Algorithms
+
+```
+1 --> 2 --> 4
+      |    ^
+      |   /
+      v /
+      3 --> 5
+```
+
+- **Topological sort**
+
+In order to have a topological sorting the graph must not contain any cycles.
+
+It is an ordering of the vertices in such a way, that if there is an edge directed towards vertex $v_b$ from vertex $v_a$, then $v_a$ comes before $v_b$.
+
+Using the example above there are two topological orders:
+
+1. **1,2,3,4,5**
+1. **1,2,3,5,4**
+
 ## Useful Information
 
 - _Find the smallest set of vertices from which all nodes in the graph are reachable_
@@ -24,3 +45,4 @@ You can model a graph in different ways:
 ## References
 
 1. https://www.khanacademy.org/computing/computer-science/algorithms/graph-representation/a/representing-graphs
+1. https://www.hackerearth.com/practice/algorithms/graphs/topological-sort/tutorial/

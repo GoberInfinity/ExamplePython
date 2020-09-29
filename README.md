@@ -16,15 +16,30 @@ Algorithms, Data Structures and Design Patterns implementations with Python.
    1. Graph
    1. Single Linked List
 1. Design Patterns
-   1. Behavioral
-   1. Creational
-   1. Structural
-1. Python syntax
-   1. List Comprehension
-   1. Print
-   1. Walrus Operator
-
-## TODO:
-
-1. Put credits on the README
-1. Add information about which code you can run (Only data structures and design patterns)
+   - Behavioral
+     - Command
+     - Iterator
+     - Observer
+     - State
+     - Strategy
+     - Template
+   - Creational
+     - Abstract factory
+     - Factory method
+   - Structural
+     - Adapter
+     - Bridge
+     - Composite
+     - Decorator
+     - Facade
+     - Proxy
+1. OOP
+   - Abstract Base Classes
+   - \_\_call\_\_
+   - Context Manager
+   - Decorators
+   - Descriptors
+   - Meta classes
+   - Mixins
+   - Private attributes
+   - @property
