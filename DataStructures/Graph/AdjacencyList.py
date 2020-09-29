@@ -8,7 +8,7 @@ from collections import defaultdict, deque
 
 
 class Graph:
-    def __init_(self):
+    def __init__(self):
         self.graph = defaultdict(list)
 
     def create_graph_from(self, dict_graph):
@@ -63,7 +63,7 @@ class Graph:
                     return complete_path
         return None
 
-    def topological_sort(self, start, path, visited):
+    def topological_sort(self, path, visited):
         for node in self.graph:
             if not visited[node]:
                 self._topological_sort_util(node, path, visited)
@@ -73,7 +73,7 @@ class Graph:
         visited[start] = True
         for node in self.graph[start]:
             if not visited[node]:
-                self.topological_sort(node, path, visited)
+                self._topological_sort_util(node, path, visited)
         path.appendleft(start)
 
 
@@ -83,23 +83,23 @@ acyclic_graph = {5: [0, 2], 4: [0, 1], 2: [3], 3: [1], 0: [], 1: []}
 
 eg.create_graph_from(cyclic_graph)
 
-path = []
-visited_nodes = [False] * (max(eg.graph) + 1)
-print(eg.recursive_dfs(1, path, visited_nodes))
+result_path = []
+empty_visited_nodes = [False] * (max(eg.graph) + 1)
+print(eg.recursive_dfs(1, result_path, empty_visited_nodes))
 
-path = []
-visited_nodes = [False] * (max(eg.graph) + 1)
-print(eg.iterative_dfs(1, path, visited_nodes))
+result_path = []
+empty_visited_nodes = [False] * (max(eg.graph) + 1)
+print(eg.iterative_dfs(1, result_path, empty_visited_nodes))
 
-path = []
-visited_nodes = [False] * (max(eg.graph) + 1)
-print(eg.bfs(1, path, visited_nodes))
+result_path = []
+empty_visited_nodes = [False] * (max(eg.graph) + 1)
+print(eg.bfs(1, result_path, empty_visited_nodes))
 
-path = []
-visited_nodes = [False] * (max(eg.graph) + 1)
-print(eg.find_path_between(1, 5, path, visited_nodes))
+result_path = []
+empty_visited_nodes = [False] * (max(eg.graph) + 1)
+print(eg.find_path_between(1, 5, result_path, empty_visited_nodes))
 
 eg.create_graph_from(acyclic_graph)
 topological_sorted = deque()
-visited_nodes = [False] * (max(eg.graph) + 1)
-print(eg.topological_sort(5, topological_sorted, visited_nodes))
+empty_visited_nodes = [False] * (max(eg.graph) + 1)
+print(eg.topological_sort(topological_sorted, empty_visited_nodes))
