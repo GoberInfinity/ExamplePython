@@ -15,14 +15,6 @@ class Edge:
         self.node_to = node_to
 
 
-# You only need to change code with docs strings that have TODO.
-# Specifically: Graph.dfs_helper and Graph.bfs
-# New methods have been added to associate node numbers with names
-# Specifically: Graph.set_node_names
-# and the methods ending in "_names" which will print names instead
-# of node numbers
-
-
 class Graph:
     def __init__(self, nodes=None, edges=None):
         self.nodes = nodes or []
@@ -230,10 +222,6 @@ class Graph:
 
 
 graphEg = Graph()
-
-# You do not need to change anything below this line.
-# You only need to implement Graph.dfs_helper and Graph.bfs
-
 graphEg.set_node_names(
     (
         "Mountain View",  # 0

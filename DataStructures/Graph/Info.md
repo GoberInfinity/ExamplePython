@@ -2,8 +2,8 @@
 
 ## Concepts
 
-- **In degree**: Edges coming out
-- **Out degree**: Edges coming in
+- **In degree**: Edges coming in
+- **Out degree**: Edges coming out
 
 ## Representation
 
@@ -26,16 +26,32 @@ You can model a graph in different ways:
       3 --> 5
 ```
 
+- **BFS**
+
+  Begin from a selected node and traverse the graph layerwise thus exploring the neighbor nodes (nodes which are directly connected to source node) then you must move towards the next-level neighbor nodes.
+
+  Using the example above an example of BFS is:
+
+  - 1,2,3,4,5
+
+- **DFS**
+
+  Recursive algorithm that searches exhaustively all the nodes by going ahead, if possible, else by backtracking. Backtrack means that when you are moving forward and there are no more nodes along the current path, you move backwards on the same path to find nodes to traverse.
+
+  Using the example above an example of DFS is:
+
+  - 1,2,4,3,5
+
 - **Topological sort**
 
-In order to have a topological sorting the graph must not contain any cycles.
+  In order to have a topological sorting the graph must not contain any cycles. It is an ordering of the vertices in such a way, that if there is an edge directed towards vertex $v_b$ from vertex $v_a$, then $v_a$ comes before $v_b$.
 
-It is an ordering of the vertices in such a way, that if there is an edge directed towards vertex $v_b$ from vertex $v_a$, then $v_a$ comes before $v_b$.
+  The first vertex in topological sorting is always a vertex with in degree 0. Topological Sorting for a graph is not possible if the graph is not a DAG
 
-Using the example above there are two topological orders:
+  Using the example above there are two topological orders:
 
-1. **1,2,3,4,5**
-1. **1,2,3,5,4**
+  - 1,2,3,4,5
+  - 1,2,3,5,4
 
 ## Useful Information
 

@@ -8,7 +8,7 @@ class Graph:
             [0 for _ in range(self.num_of_vertex)] for _ in range(self.num_of_vertex)
         ]
 
-    def edge_between(self, a, b):
+    def add_edge_between(self, a, b):
         self.matrix[a][b] = 1
         self.matrix[b][a] = 1
         return self.matrix
@@ -16,4 +16,4 @@ class Graph:
 
 eg = Graph(3)
 print(eg.matrix)
-print(eg.edge_between(0, 2))
+print(eg.add_edge_between(0, 2))

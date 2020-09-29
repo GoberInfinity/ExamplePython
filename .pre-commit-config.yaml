@@ -1,25 +1,18 @@
 # See https://pre-commit.com/ for usage and config
+
 repos:
-  - repo: local
+  - repo: https://github.com/pre-commit/mirrors-isort
+    rev: v5.5.3
     hooks:
       - id: isort
-        name: isort
-        stages: [commit]
-        language: system
-        entry: isort .
-        types: [python]
 
+  - repo: https://github.com/psf/black
+    rev: 20.8b1 # Replace by any tag/version: https://github.com/psf/black/tags
+    hooks:
       - id: black
-        name: black
-        stages: [commit]
-        language: system
-        entry: black .
-        types: [python]
+        language_version: python3.8 # Should be a command that runs python3.6+
 
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.3 # pick a git hash / tag to point to
+    hooks:
       - id: flake8
-        name: flake8
-        stages: [commit]
-        language: system
-        entry: flake8 .
-        types: [python]
-        args: ["--ignore=W503,W605,E203"]
