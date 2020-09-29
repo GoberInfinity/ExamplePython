@@ -77,29 +77,29 @@ class Graph:
         path.appendleft(start)
 
 
+def create_empty_visited_nodes_and_path():
+    return ([], [False] * (max(eg.graph) + 1))
+
+
 eg = Graph()
 cyclic_graph = {1: [2, 3], 2: [4, 5], 4: [2], 5: [2], 3: [1]}
 acyclic_graph = {5: [0, 2], 4: [0, 1], 2: [3], 3: [1], 0: [], 1: []}
 
 eg.create_graph_from(cyclic_graph)
 
-result_path = []
-empty_visited_nodes = [False] * (max(eg.graph) + 1)
+result_path, empty_visited_nodes = create_empty_visited_nodes_and_path()
 print(eg.recursive_dfs(1, result_path, empty_visited_nodes))
 
-result_path = []
-empty_visited_nodes = [False] * (max(eg.graph) + 1)
+result_path, empty_visited_nodes = create_empty_visited_nodes_and_path()
 print(eg.iterative_dfs(1, result_path, empty_visited_nodes))
 
-result_path = []
-empty_visited_nodes = [False] * (max(eg.graph) + 1)
+result_path, empty_visited_nodes = create_empty_visited_nodes_and_path()
 print(eg.bfs(1, result_path, empty_visited_nodes))
 
-result_path = []
-empty_visited_nodes = [False] * (max(eg.graph) + 1)
+result_path, empty_visited_nodes = create_empty_visited_nodes_and_path()
 print(eg.find_path_between(1, 5, result_path, empty_visited_nodes))
 
 eg.create_graph_from(acyclic_graph)
 topological_sorted = deque()
-empty_visited_nodes = [False] * (max(eg.graph) + 1)
+_, empty_visited_nodes = create_empty_visited_nodes_and_path()
 print(eg.topological_sort(topological_sorted, empty_visited_nodes))
