@@ -23,20 +23,22 @@ class Graph:
         self._node_map = {}
 
     def set_node_names(self, names):
-        """The Nth name in names should correspond to node number N.
+        """
+        The Nth name in names should correspond to node number N.
         Node numbers are 0 based (starting at 0).
         """
         self.node_names = list(names)
 
     def insert_node(self, new_node_val):
-        "Insert a new node with value new_node_val"
         new_node = Node(new_node_val)
         self.nodes.append(new_node)
         self._node_map[new_node_val] = new_node
         return new_node
 
     def insert_edge(self, new_edge_val, node_from_val, node_to_val):
-        "Insert a new edge, creating new nodes if necessary"
+        """
+        Insert a new edge, creating new nodes if necessary
+        """
         nodes = {node_from_val: None, node_to_val: None}
         for node in self.nodes:
             if node.value in nodes:
@@ -54,13 +56,17 @@ class Graph:
         self.edges.append(new_edge)
 
     def get_edge_list(self):
-        """Return a list of triples that looks like this:
-        (Edge Value, From Node, To Node)"""
+        """
+        Return a list of triples that looks like this:
+        (Edge Value, From Node, To Node)
+        """
         return [(e.value, e.node_from.value, e.node_to.value) for e in self.edges]
 
     def get_edge_list_names(self):
-        """Return a list of triples that looks like this:
-        (Edge Value, From Node Name, To Node Name)"""
+        """
+        Return a list of triples that looks like this:
+        (Edge Value, From Node Name, To Node Name)
+        """
         return [
             (
                 edge.value,
@@ -71,8 +77,8 @@ class Graph:
         ]
 
     def get_adjacency_list(self):
-        """Return a list of lists.
-        The indecies of the outer list represent "from" nodes.
+        """
+        Return a list of lists.
         Each section in the list will store a list
         of tuples that looks like this:
         (To Node, Edge Value)"""
@@ -84,11 +90,13 @@ class Graph:
         return [a or None for a in adjacency_list]  # replace []'s with None
 
     def get_adjacency_list_names(self):
-        """Each section in the list will store a list
+        """
+        Each section in the list will store a list
         of tuples that looks like this:
         (To Node Name, Edge Value).
         Node names should come from the names set
-        with set_node_names."""
+        with set_node_names.
+        """
         adjacency_list = self.get_adjacency_list()
 
         def convert_to_names(pair, graph=self):
@@ -106,11 +114,6 @@ class Graph:
         ]
 
     def get_adjacency_matrix(self):
-        """Return a matrix, or 2D list.
-        Row numbers represent from nodes,
-        column numbers represent to nodes.
-        Store the edge values in each spot,
-        and a 0 if no edge exists."""
         max_index = self.find_max_index()
         adjacency_matrix = [[0] * (max_index) for _ in range(max_index)]
         for edg in self.edges:
@@ -119,8 +122,10 @@ class Graph:
         return adjacency_matrix
 
     def find_max_index(self):
-        """Return the highest found node number
-        Or the length of the node names if set with set_node_names()."""
+        """
+        Return the highest found node number
+        Or the length of the node names if set with set_node_names().
+        """
         if len(self.node_names) > 0:
             return len(self.node_names)
         max_index = -1
@@ -131,7 +136,9 @@ class Graph:
         return max_index
 
     def find_node(self, node_number):
-        "Return the node with value node_number or None"
+        """
+        Return the node with value node_number or None
+        """
         return self._node_map.get(node_number)
 
     def _clear_visited(self):
@@ -139,14 +146,6 @@ class Graph:
             node.visited = False
 
     def dfs_helper(self, start_node, path):
-        """TODO: Write the helper function for a recursive implementation
-        of Depth First Search iterating through a node's edges. The
-        output should be a list of numbers corresponding to the
-        values of the traversed nodes.
-        ARGUMENTS: start_node is the starting Node
-        MODIFIES: the value of the visited property of nodes in self.nodes
-        RETURN: a list of the traversed node values (integers).
-        """
         path.append(start_node.value)
         for edge in start_node.edges:
             if edge.node_to.value not in path:
@@ -154,26 +153,14 @@ class Graph:
         return path
 
     def dfs(self, start_node_num):
-        """Outputs a list of numbers corresponding to the traversed nodes
-        in a Depth First Search.
-        ARGUMENTS: start_node_num is the starting node number (integer)
-        MODIFIES: the value of the visited property of nodes in self.nodes
-        RETURN: a list of the node values (integers)."""
         self._clear_visited()
         start_node = self.find_node(start_node_num)
         return self.dfs_helper(start_node, [])
 
     def dfs_names(self, start_node_num):
-        """Return the results of dfs with numbers converted to names."""
         return [self.node_names[num] for num in self.dfs(start_node_num)]
 
     def bfs(self, start_node_num):
-        """TODO: Create an iterative implementation of Breadth First Search
-        iterating through a node's edges. The output should be a list of
-        numbers corresponding to the traversed nodes.
-        ARGUMENTS: start_node_num is the node number (integer)
-        MODIFIES: the value of the visited property of nodes in self.nodes
-        RETURN: a list of the node values (integers)."""
         node = self.find_node(start_node_num)
         self._clear_visited()
         ret_list = [node]
@@ -188,36 +175,10 @@ class Graph:
 
         return path
 
-    """ Udacity Code
-    def bfs(self, start_node_num):
-        /"/"/"An iterative implementation of Breadth First Search
-        iterating through a node's edges. The output should be a list of
-        numbers corresponding to the traversed nodes.
-        ARGUMENTS: start_node_num is the node number (integer)
-        MODIFIES: the value of the visited property of nodes in self.nodes
-        RETURN: a list of the node values (integers)./"/"/"
-        node = self.find_node(start_node_num)
-        self._clear_visited()
-        ret_list = []
-        # Your code here
-        queue = [node]
-        node.visited = True
-        def enqueue(n, q=queue):
-            n.visited = True
-            q.append(n)
-        def unvisited_outgoing_edge(n, e):
-            return ((e.node_from.value == n.value) and
-                    (not e.node_to.visited))
-        while queue:
-            node = queue.pop(0)
-            ret_list.append(node.value)
-            for e in node.edges:
-                if unvisited_outgoing_edge(node, e):
-                    enqueue(e.node_to)
-        return ret_list """
-
     def bfs_names(self, start_node_num):
-        """Return the results of bfs with numbers converted to names."""
+        """
+        Return the results of bfs with numbers converted to names.
+        """
         return [self.node_names[num] for num in self.bfs(start_node_num)]
 
 

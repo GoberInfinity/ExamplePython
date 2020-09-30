@@ -53,6 +53,12 @@ You can model a graph in different ways:
   - 1,2,3,4,5
   - 1,2,3,5,4
 
+## Edge Cases
+
+- Graph with cycles
+- Graph with not connected nodes `1->2 3`
+- Graph that have connected nodes but you can not reach them `1->2<-3 `
+
 ## Useful Information
 
 - _Find the smallest set of vertices from which all nodes in the graph are reachable_

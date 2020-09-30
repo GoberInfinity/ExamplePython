@@ -1,11 +1,7 @@
-"""
-"""
-
-
 class Element:
     def __init__(self, value):
-        self.next = None
         self.value = value
+        self.next = None
 
 
 class LinkedList:
@@ -22,14 +18,16 @@ class LinkedList:
             self.head = new_element
 
     def get_position(self, position):
-        """Get an element from a particular position.
+        """
+        Get an element from a particular position.
         Assume the first position is "1".
-        Return "None" if position is not in the list."""
-        counter = 1
-        current = self.head
+        Return "None" if position is not in the list.
+        """
         if position < 1:
             return None
 
+        counter = 1
+        current = self.head
         if current:
             while current:
                 if counter == position:
@@ -40,10 +38,12 @@ class LinkedList:
         return None
 
     def insert(self, new_element, position):
-        """Insert a new node at the given position.
+        """
+        Insert a new node at the given position.
         Assume the first position is "1".
         Inserting at position 3 means between
-        the 2nd and 3rd elements."""
+        the 2nd and 3rd elements.
+        """
         counter = 1
         current = self.head
 
@@ -60,10 +60,11 @@ class LinkedList:
                     break
                 current = current.next
                 counter += 1
-        pass
 
     def delete(self, value):
-        """Delete the first node with a given value."""
+        """
+        Delete the first node with a given value.
+        """
         current = self.head
 
         if value == current.value:
