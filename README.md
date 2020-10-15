@@ -11,10 +11,11 @@ Algorithms, Data Structures and Design Patterns implementations with Python.
 
 ### Table of Contents
 
+Note: The .md files have latex code in them, if you use vs code try to install [Markdown Preview Enhanced plugin](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) to see the information correctly
+
 1. Data Structures
-   1. Double Linked List
-   1. Graph
-   1. Single Linked List
+   - Graph
+   - Single Linked List
 1. Design Patterns
    - Behavioral
      - Command

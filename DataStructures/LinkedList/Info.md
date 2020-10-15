@@ -12,15 +12,22 @@ It follows that linked lists should be used for large lists of data where the to
 
 - **Fast Slow Pointer**
 
-  You begin with two pointers to the initial node, you need to move two times the fast pointers each time the slow pointer moves forward. Applications:
+  Applications:
 
   - Middle of the linked list
   - Detect cycle in linked list
+
+## Questions
+
+- Is it possible to know the length of the linked list?
+- What's the representations of the linked list?
 
 ## Useful Information
 
 - **Return the head of a modified linked list**
   Before beginning to traverse the linked list remember to create an extra node that keeps track of the first element and modify the second one.
+
+- **Hash table to reference to node**
 
 ## References
 
