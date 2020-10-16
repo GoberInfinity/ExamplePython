@@ -5,6 +5,20 @@
 - **Leaf**: A non-root node with no children.
 - **Ancestor**: $a$ is an ancestor of $b$ if $b$ is located in a left or right subtree whose root node is $a$.
 - **Heigh**: Number of edges between the root node and its furthest leaf.
+- **Diameter**: Length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+
+## Representation
+
+You can model a binary tree in different ways:
+
+- **List**
+  To represent a binary tree as list you need to use the index $i$ of the element in order to get its left and right child:
+
+  - Left: $i * 2 + 1$
+  - Right: $i * 2 + 2$
+
+- **Object**
+  Each node can have two child nodes (left, right), you can reach any node traversing though the root.
 
 ## Algorithms
 
@@ -18,7 +32,26 @@
 
 - Preoder: (Root, Left, Right) or follow the $-$ symbols: 1,2,3
 - Inorder: (Left, Root, Right) or follow the $*$ symbols: 2,1,3
+
+  Applications:
+
+  - Retrieves the keys in ascending sorted order a binary search tree
+
+- Reverse in-order: (Right , Root, Left)
+
+  Applications:
+
+  - Retrieves the keys in descending sorted order in binary search tree
+
 - Postorder: (Left, Right, Root) or follow the $+$ symbols: 2,3,1
+
+  Applications:
+
+  - Delete/Copy of a binary tree
+
+- Breadth-first search:
+
+  Traverse all the elements of the tree level by level: 1,2,3
 
 ## Useful Information
 
@@ -30,6 +63,19 @@
 
 - _Topological Sort_
   The pre-order traversal is a topologically sorted one, because a parent node is processed before any of its child nodes is done.
+
+- _Is binary tree a bonary search tree?_
+  In a binary search tree inorder traversal retrieves the keys in ascending sorted order
+
+- _Delete/Copy a binary tree_
+  Post order traversal ensures that the parent cannot be deleted/copied before all children are finished.
+
+- _DFS vs BFS in infinite trees_
+  Given a binary tree of infinite depth, depth-first search will never end because it will never reach an leaf node, breadth-first traversal will traverse a binary tree of infinite depth without problem.
+
+  On the other hand, given a tree where the root has infinitely children, a depth-first search will visit all nodes (assuming it is not post-order, in which case it never reaches the root). By contrast, a breadth-first search will never reach the grandchildren, as it seeks to exhaust the children first.
+
+  Thus, **simple depth-first or breadth-first searches do not traverse every infinite tree**, and are not efficient on very large trees.However, hybrid methods can traverse any (countably) infinite tree
 
 ## References
 
