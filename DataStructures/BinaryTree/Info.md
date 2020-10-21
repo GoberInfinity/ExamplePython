@@ -80,6 +80,10 @@ You can model a binary tree in different ways:
   ![morris](/Imgs/DataStructures/BinaryTree/morris.jpg)
   Figure 1. Example of a morris traversal, blue numbers indicates the creation order of the links and the red numbers the deletion order.
 
+## Questions
+
+- What kind of binary tree is the tree?
+
 ## Edge Cases
 
 - Trees with only right/left sub trees
@@ -95,9 +99,6 @@ You can model a binary tree in different ways:
 
 - _Topological Sort_
   The pre-order traversal is a topologically sorted one, because a parent node is processed before any of its child nodes is done.
-
-- _Is binary tree a bonary search tree?_
-  In a binary search tree inorder traversal retrieves the keys in ascending sorted order
 
 - _Delete/Copy a binary tree_
   Post order traversal ensures that the parent cannot be deleted/copied before all children are finished.

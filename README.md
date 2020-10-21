@@ -16,6 +16,8 @@ Note: The .md files have latex code in them, if you use vs code try to install [
 1. Data Structures
    - Graph
    - Single Linked List
+   - Binary Tree
+   - Binary Search Tree
 1. Design Patterns
    - Behavioral
      - Command
