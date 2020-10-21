@@ -53,6 +53,38 @@ You can model a binary tree in different ways:
 
   Traverse all the elements of the tree level by level: 1,2,3
 
+- Inorder Morris Traversal:
+  It helps to traverse a binary tree without stack or recursion, the algorithms says that:
+
+  ```
+  current = root
+  while current it not null
+    if not current.left
+      print current
+      current = current.right
+    else
+      # It's important to validate that the predecessor is not the same as
+      # current if we don't do that, we're going to create an infinite loop)
+      predecessor = find the right most node of the left subtree of current
+      if not exists predecessor.right
+        # It creates the blue arrows
+        predecessor.right = current
+        current = current.left
+      else
+        # Deletes the blue arrows in order to re create the original tree
+        predecessor.right = none
+        print current
+        current = current.right
+  ```
+
+  ![morris](/Imgs/DataStructures/BinaryTree/morris.jpg)
+  Figure 1. Example of a morris traversal, blue numbers indicates the creation order of the links and the red numbers the deletion order.
+
+## Edge Cases
+
+- Trees with only right/left sub trees
+- Infinite trees
+
 ## Useful Information
 
 - _Height of tree_

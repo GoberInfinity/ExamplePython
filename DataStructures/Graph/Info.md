@@ -46,7 +46,9 @@ You can model a graph in different ways:
 
   In order to have a topological sorting the graph must not contain any cycles. It is an ordering of the vertices in such a way, that if there is an edge directed towards vertex $v_b$ from vertex $v_a$, then $v_a$ comes before $v_b$.
 
-  The first vertex in topological sorting is always a vertex with in degree 0. Topological Sorting for a graph is not possible if the graph is not a DAG
+  The first vertex in topological sorting is always a vertex with in degree 0. Topological Sorting for a graph is not possible if the graph is not a DAG.
+
+  In topological sort you only need to perform a DFS and when you reach the base case (current has no more nodes to visit) you need to append current to the left of a list
 
   Using the example above there are two topological orders:
 
