@@ -2,7 +2,20 @@
 
 ## Notes
 
-Is a binary tree whose internal nodes each store a key greater than all the keys in the node's left subtree and less than those in its right subtree. Binary search trees allow binary search for fast lookup, addition and removal of data items. The whole lookup takes time proportional to the binary logarithm of the number of items stored in the tree.
+Is a binary tree whose internal nodes each store a key greater than all the keys in the node's left subtree and less than those in its right subtree.
+
+Binary search trees allow binary search for fast lookup, addition and removal of data items. The whole lookup takes time proportional to the binary logarithm of the number of items stored in the tree.
+
+You can use a binary tree to create a priority queue
+
+## Types
+
+- Self-balancing binary search trees:
+  - AVL
+  - Red-black
+- Splay: Automatically moves frequently accessed elements nearer to the root.
+- Treap: Each node also holds a (randomly chosen) priority and the parent node has higher priority than its children, it has the best average performance.
+- T-trees: Trees optimized to reduce storage space overhead, widely used for in-memory databases
 
 ## Algorithms
 
