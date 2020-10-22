@@ -1,6 +1,6 @@
 # Binary Tree
 
-## Concepts:
+## Concepts
 
 - **Leaf**: A non-root node with no children.
 - **Ancestor**: $a$ is an ancestor of $b$ if $b$ is located in a left or right subtree whose root node is $a$.
