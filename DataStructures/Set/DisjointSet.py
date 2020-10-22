@@ -43,7 +43,7 @@ class DisjSet:
                 self.rank[xset] = self.rank[xset] + 1
 
 
-# Driver code
+# https://cp-algorithms.com/data_structures/disjoint_set_union.html
 obj = DisjSet(5)
 obj.Union(0, 2)
 obj.Union(4, 2)

@@ -24,8 +24,12 @@ Hash collisions are practically unavoidable when hashing. Therefore, almost all 
   ![open_addressing](/Imgs/DataStructures/Dict/open_addressing.jpg)
   Figure 2. Hash collision resolved by open addressing with linear probing (interval=1). Note that "Ted Baker" has a unique hash, but nevertheless collided with "Sandra Dee", that had previously collided with "John Smith"
 
+When an insert is made such that the number of entries in a hash table exceeds the product of the **load factor** and the current capacity then the hash table will need to be rehashed. Rehashing includes increasing the size of the underlying data structure and mapping existing items to new bucket locations.
+
 ## Concepts
 
+- **Capacity**: Number of buckets in the hash table, and the initial capacity is simply the capacity at the time the hash table is created.
+- **Load Factor**: The load factor is a measure of how full the hash table is allowed to get before its capacity is automatically increased.
 - **Hash Function**: A function that takes data as input and outputs a hash code used as index in a hash table
 - **Collision**: Hash function generates the same index for more than one key
 - **Prove Sequence**: Sequence (e.g. 0,1,2 ...) of slots examined during a key search. Probe sequence must be permutation of slot numbers.We examine every slot in the table if we have to.But no slot is examined more than once.
