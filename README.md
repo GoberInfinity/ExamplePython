@@ -19,6 +19,7 @@ Note: The .md files have latex code in them, if you use vs code try to install [
    - Binary Tree
    - Binary Search Tree
    - Dict
+   - Set
 1. Design Patterns
    - Behavioral
      - Command
