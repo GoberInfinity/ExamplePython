@@ -42,7 +42,7 @@ class LinkedList:
         return None
 
 
-class Stack:
+class LinkedListStack:
     def __init__(self, top=None):
         self.ll = LinkedList(top)
 
@@ -66,7 +66,7 @@ e3 = Element(3)
 e4 = Element(4)
 
 # Start setting up a Stack
-stack = Stack(e1)
+stack = LinkedListStack(e1)
 
 # Test stack functionality
 stack.push(e2)

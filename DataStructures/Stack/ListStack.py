@@ -4,7 +4,7 @@ manipulate the method of a Stack.
 """
 
 
-class Stack:
+class ListStack:
     def __init__(self):
         self.items = []
 
@@ -24,7 +24,7 @@ class Stack:
         return len(self.items)
 
 
-s = Stack()  # instance of a class Stack
+s = ListStack()  # instance of a class Stack
 print(s.isEmpty())
 s.push(4)
 s.push("dog")
