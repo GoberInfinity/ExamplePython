@@ -1,6 +1,6 @@
-import queue
+from queue import PriorityQueue
 
-q = queue.PriorityQueue()
+q = PriorityQueue()
 
 q.put((100, "a not agent task"))
 q.put((5, "a highly agent task"))
