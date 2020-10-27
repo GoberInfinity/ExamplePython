@@ -31,9 +31,8 @@ class BITree:
 
             # Update index to that of parent in update View
             index += index & (-index)
-            """   0   ->   2   ->   3
-                0   0    2  0     2   1
-            """
+            #      0   ->   2   ->   3
+            #    0   0    2  0     2   1
 
     # Search in bit_array
     def query(self, index):
