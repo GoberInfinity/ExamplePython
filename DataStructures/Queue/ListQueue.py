@@ -4,7 +4,7 @@ manipulate the method of a Queue.
 """
 
 
-class Queue:
+class ListQueue:
     def __init__(self):
         self.items = []
 
@@ -21,7 +21,7 @@ class Queue:
         return len(self.items)
 
 
-q = Queue()
+q = ListQueue()
 q.enqueue(4)
 q.enqueue("dog")
 q.enqueue(True)
