@@ -2,9 +2,13 @@
 
 ## Fast and Slow Pointer
 
-You begin with two pointers/positioning to the initial node/element, you need to move two times the fast pointers each time the slow pointer moves forward.
+You begin with two pointers/positioning to the initial node/element, you need to move two times the fast pointers each time the slow pointer moves forward or move the fast pointer with a certain criteria
 
 Related to: [linked list](../DataStructures/LinkedList/Info.md),[list]()
+
+## Two pointers
+
+One pointer starts from the beginning while the other pointer starts from the end, the algorithm ends when they both meet or they reach certain criteria.
 
 ## Sliding window
 
