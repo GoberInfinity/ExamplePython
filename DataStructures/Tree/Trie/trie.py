@@ -1,7 +1,3 @@
-"""
-Implementation of a Trie with a dictionaryy
-"""
-
 from collections import defaultdict
 
 
