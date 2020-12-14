@@ -22,7 +22,14 @@ Unordered collection data type with no duplicate elements
 - **Cardinality of the Cartesian product**: |S x T| = |S| \* |T|
 - **Disjoint sets**: Two sets are called disjoint if their intersection is empty.
 
+## Algorithms:
+
+- **Power Set**
+
+![](/Imgs/DataStructures/Set/powerset.png)
+
 ## References
 
 https://en.wikipedia.org/wiki/Set_(abstract_data_type)
 https://people.cs.pitt.edu/~milos/courses/cs441/lectures/Class7.pdf
+https://leetcode.com/problems/subsets/solution/
